@@ -16,17 +16,19 @@ import edu.bluejack20_2.chantuy.views.`curhat-by-topic`.CurhatByTopicFragment
 import edu.bluejack20_2.chantuy.views.`hottest-curhat`.HottestCurhatFragment
 import edu.bluejack20_2.chantuy.views.`newest-curhat`.NewestCurhatFragment
 import edu.bluejack20_2.chantuy.views.`search-curhat`.SearchCurhatFragment
+import edu.bluejack20_2.chantuy.views.user_profile.UserProfileFragment
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
     private lateinit var bottomNavigation: BottomNavigationView
-    private val PAGES_COUNT = 4
+    private val PAGES_COUNT = 5
     private val menuIdList : List<Int> = listOf(
         R.id.hottest_menu_item,
         R.id.newest_menu_item,
         R.id.topic_menu_item,
-        R.id.search_menu_item
+        R.id.search_menu_item,
+        R.id.profile_menu_item
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,6 +96,10 @@ class MainActivity : AppCompatActivity() {
                     viewPager.currentItem = 3
                     return@OnNavigationItemSelectedListener true
                 }
+                R.id.profile_menu_item -> {
+                    viewPager.currentItem = 4
+                    return@OnNavigationItemSelectedListener true
+                }
                 else -> false
             }
         }
@@ -113,8 +119,8 @@ class MainActivity : AppCompatActivity() {
                 1 -> currentFragment = NewestCurhatFragment()
                 2 -> currentFragment = CurhatByTopicFragment()
                 3 -> currentFragment = SearchCurhatFragment()
+                4 -> currentFragment = UserProfileFragment()
             }
-
             return currentFragment
         }
 
