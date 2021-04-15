@@ -1,19 +1,51 @@
 package edu.bluejack20_2.chantuy
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import edu.bluejack20_2.chantuy.views.`curhat-by-topic`.CurhatByTopicFragment
+import edu.bluejack20_2.chantuy.views.`hottest-curhat`.HottestCurhatFragment
+import edu.bluejack20_2.chantuy.views.`newest-curhat`.NewestCurhatFragment
+import edu.bluejack20_2.chantuy.views.`search-curhat`.SearchCurhatFragment
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var viewPager: ViewPager2
+    private val PAGES_COUNT = 4;
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        //TEMPORARY
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        //TEMPORARY
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val goToTestBtn: Button = findViewById(R.id.goToTestBtn) //dapetin button dg id goToTestBtn
-        goToTestBtn.setOnClickListener { // set click listener nya
-            val testActivityIntent = Intent(this, TestActivity::class.java)
-            startActivity(testActivityIntent) // pindah activity
+        //Set View Pager
+        val pagerAdapter = CurhatViewSlidePagerAdapter(this)
+        viewPager = findViewById(R.id.curhatViewPager)
+        viewPager.adapter = pagerAdapter
+    }
+
+    private inner class CurhatViewSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+
+        override fun getItemCount(): Int = PAGES_COUNT
+
+        override fun createFragment(position: Int): Fragment {
+            lateinit var currentFragment: Fragment
+            when (position) {
+                0 -> currentFragment = HottestCurhatFragment()
+                1 -> currentFragment = NewestCurhatFragment()
+                2 -> currentFragment = CurhatByTopicFragment()
+                3 -> currentFragment = SearchCurhatFragment()
+            }
+
+            return currentFragment
         }
+
     }
 }
