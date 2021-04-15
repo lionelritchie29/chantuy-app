@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -21,12 +20,14 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        val curhat = getItem(position)
-        holder.textView.text = position.toString()
+        val curhat = getItem(position)
+        holder.content.text = curhat.content
+        holder.username.text = "User"
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var textView : TextView = view.findViewById(R.id.textView4)
+        val content : TextView = view.findViewById(R.id.curhat_card_content)
+        val username: TextView = view.findViewById(R.id.curhat_card_username)
     }
 }
 
