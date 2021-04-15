@@ -2,4 +2,8 @@
     <string name="app_name">Chantuy</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hottest">Hottest</string>
+    <string name="newest">Newest</string>
+    <string name="topic">Topic</string>
+    <string name="search">Search</string>
 </resources>
