@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <item
         android:id="@+id/hottest_menu_item"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/hottest" />
+        android:icon="@drawable/baseline_home_20"
+        android:title="@string/hottest"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/newest_menu_item"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/newest" />
+        android:icon="@drawable/baseline_today_24"
+        android:title="@string/newest"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/topic_menu_item"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/topic" />
+        android:icon="@drawable/baseline_category_24"
+        android:title="@string/topic"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/search_menu_item"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/search" />
+        android:icon="@drawable/baseline_search_20"
+        android:title="@string/search"
+        app:showAsAction="always"/>
 </menu>
