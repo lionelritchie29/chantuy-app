@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -35,7 +36,25 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setViewPager()
-        setMenuListener()
+        setBottomMenuItemListener()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.action_bar_items, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.settings_menu_item -> {
+                Log.i("MainActivity", "Settings clicked!")
+            }
+            R.id.notification_menu_item -> {
+                Log.i("MainActivity", "Notifications clicked!")
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun disableNightMode() {
@@ -56,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         viewPager.registerOnPageChangeCallback(curhatPageChangeCallback)
     }
 
-    private fun setMenuListener() {
+    private fun setBottomMenuItemListener() {
         val menuOnItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {item ->
             when (item.itemId) {
                 R.id.hottest_menu_item -> {

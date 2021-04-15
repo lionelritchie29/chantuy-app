@@ -6,4 +6,6 @@
     <string name="newest">Newest</string>
     <string name="topic">Topic</string>
     <string name="search">Search</string>
+    <string name="notifications">Notifications</string>
+    <string name="settings">Settings</string>
 </resources>
