@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.curhat-by-topic.CurhatByTopicFragment">
+    tools:context=".views.curhat_by_topic.CurhatByTopicFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

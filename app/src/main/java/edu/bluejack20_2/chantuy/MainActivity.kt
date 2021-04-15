@@ -5,17 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import edu.bluejack20_2.chantuy.views.`curhat-by-topic`.CurhatByTopicFragment
-import edu.bluejack20_2.chantuy.views.`hottest-curhat`.HottestCurhatFragment
-import edu.bluejack20_2.chantuy.views.`newest-curhat`.NewestCurhatFragment
-import edu.bluejack20_2.chantuy.views.`search-curhat`.SearchCurhatFragment
+import edu.bluejack20_2.chantuy.views.curhat_by_topic.CurhatByTopicFragment
+import edu.bluejack20_2.chantuy.views.hottest_curhat.HottestCurhatFragment
+import edu.bluejack20_2.chantuy.views.newest_curhat.NewestCurhatFragment
+import edu.bluejack20_2.chantuy.views.search_curhat.SearchCurhatFragment
 import edu.bluejack20_2.chantuy.views.user_profile.UserProfileFragment
 
 class MainActivity : AppCompatActivity() {
