@@ -19,7 +19,14 @@ import edu.bluejack20_2.chantuy.views.`search-curhat`.SearchCurhatFragment
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
-    private val PAGES_COUNT = 4;
+    private lateinit var bottomNavigation: BottomNavigationView
+    private val PAGES_COUNT = 4
+    private val menuIdList : List<Int> = listOf(
+        R.id.hottest_menu_item,
+        R.id.newest_menu_item,
+        R.id.topic_menu_item,
+        R.id.search_menu_item
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         disableNightMode();
@@ -39,6 +46,14 @@ class MainActivity : AppCompatActivity() {
         val pagerAdapter = CurhatViewSlidePagerAdapter(this)
         viewPager = findViewById(R.id.curhatViewPager)
         viewPager.adapter = pagerAdapter
+
+        val curhatPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                bottomNavigation.selectedItemId = menuIdList[position]
+            }
+        }
+
+        viewPager.registerOnPageChangeCallback(curhatPageChangeCallback)
     }
 
     private fun setMenuListener() {
@@ -64,7 +79,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val bottomNavigation: BottomNavigationView = findViewById(R.id.navigation)
+        bottomNavigation = findViewById(R.id.navigation)
         bottomNavigation.setOnNavigationItemSelectedListener(menuOnItemSelectedListener)
     }
 
@@ -83,6 +98,8 @@ class MainActivity : AppCompatActivity() {
 
             return currentFragment
         }
+
+
 
     }
 }
