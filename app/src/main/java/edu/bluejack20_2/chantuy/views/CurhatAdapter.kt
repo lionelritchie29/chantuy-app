@@ -21,8 +21,8 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val curhat = getItem(position)
-        holder.content.text = curhat.content
-        holder.username.text = "User"
+//        holder.content.text = curhat.content
+        holder.username.text = "Anonymous"
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
