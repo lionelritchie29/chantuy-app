@@ -13,4 +13,8 @@
     <string name="date_placeholder">16 Apr 2021 @ 10.29</string>
     <string name="image_content_placeholder">Image Placeholder</string>
     <string name="curhat_content_placeholder">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs</string>
+    <string name="curhat_card_like_desc">Like Curhat</string>
+    <string name="curhat_card_dislike_desc">Dislike curhat</string>
+    <string name="view_more">View More</string>
+    <string name="curhat_comment_count_viewholder">4</string>
 </resources>
