@@ -1,6 +1,7 @@
 package edu.bluejack20_2.chantuy.views.login
 
 import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -14,6 +15,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.firebase.ui.auth.AuthUI
+import com.google.rpc.context.AttributeContext
+import edu.bluejack20_2.chantuy.MainActivity
 
 import edu.bluejack20_2.chantuy.R
 
@@ -37,9 +41,9 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
 
+
             // disable login button unless both username / password is valid
             login.isEnabled = loginState.isDataValid
-
             if (loginState.usernameError != null) {
                 username.error = getString(loginState.usernameError)
             }
@@ -61,6 +65,8 @@ class LoginActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK)
 
             //Complete and destroy login activity once successful
+            val intent  = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()
         })
 

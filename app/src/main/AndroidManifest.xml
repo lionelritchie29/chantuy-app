@@ -10,10 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chantuy">
         <activity
-            android:name="edu.bluejack20_2.chantuy.views.login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
-        <activity android:name=".views.login.LoginActivity">
-
+            android:name=".views.login.LoginActivity"
+            android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.insert_curhat.InsertCurhatActivity" /> <!-- <activity android:name=".views.insert_curhat.InsertCurhatActivity" /> -->
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

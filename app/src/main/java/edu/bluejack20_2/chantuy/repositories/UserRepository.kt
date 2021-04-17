@@ -5,21 +5,37 @@ import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
+import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.views.user_profile.UserProfileViewModel
 
 class UserRepository {
     companion object{
-
+        val COLLECTION_NAME="users"
 
         fun getUserByEmail(email:String):Task<QuerySnapshot>{
             val db= Firebase.firestore
-            val user = db.collection("users").whereEqualTo("email",email)
+            val user = db.collection(COLLECTION_NAME).whereEqualTo("email",email)
             return user.get()
+        }
+
+        fun getUserByEmail(email: String,callback: (List<User>) -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+            db.collection(UserRepository.COLLECTION_NAME).whereEqualTo("email",email).get()
+                    .addOnSuccessListener {topicDocs ->
+                        val users = mutableListOf<User>()
+                        for (topicDoc in topicDocs) {
+                            val user = topicDoc.toObject(User::class.java)
+                            user.id = topicDoc.id
+                            users.add(user)
+                        }
+                        callback(users)
+                    }
         }
 
     }

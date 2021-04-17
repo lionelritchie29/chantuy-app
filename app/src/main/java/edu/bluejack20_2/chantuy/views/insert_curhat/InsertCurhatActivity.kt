@@ -54,6 +54,7 @@ class InsertCurhatActivity : AppCompatActivity() {
                     CurhatRepository.addCurhat(content.text.toString(), newTopicId) {
                         Toast.makeText(this, "Insert Success", Toast.LENGTH_SHORT)
                         moveToMainActivity()
+
                     }
                 })
             } else {
