@@ -6,8 +6,7 @@ import com.google.firebase.firestore.ServerTimestamp
 import java.util.*
 
 data class CurhatComment (
-    @DocumentId var id: String = "",
-    //var user: User,
+    var user: String = "",
     var content: String = "",
     @ServerTimestamp var createdAt: Timestamp? = null,
     @ServerTimestamp var updatedAt: Timestamp ? = null

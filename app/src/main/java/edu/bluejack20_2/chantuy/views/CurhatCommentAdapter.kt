@@ -98,7 +98,7 @@ object CurhatCommentDiffCallback : DiffUtil.ItemCallback<DataItem>() {
 sealed class DataItem {
     data class CurhatCommentItem(val comment: CurhatComment): DataItem() {
         override val id: String
-            get() = comment.id
+            get() = comment.createdAt.toString()
     }
 
     object DetailHeader: DataItem() {
