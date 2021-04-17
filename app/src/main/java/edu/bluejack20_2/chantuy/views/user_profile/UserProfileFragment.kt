@@ -27,20 +27,28 @@ class UserProfileFragment : Fragment() {
 //        val recyclerView: RecyclerView = rootView.findViewById(R.id.curhat_recycler_view)
 
 
-
         val curhatAdapter = CurhatAdapter()
-        val recyclerView: RecyclerView = rootView.findViewById(R.id.recent_post_rview)
-        recyclerView.adapter = curhatAdapter
+        val curhatRecyclerView: RecyclerView = rootView.findViewById(R.id.recent_post_rview)
+        curhatRecyclerView.adapter = curhatAdapter
 
 
         val nameView : TextView = rootView.findViewById(R.id.user_profile_name)
 
         val currUserObserver = Observer<User>{newUser->
+            nameView.setText(newUser.Name)
 
-            nameView.setText(viewModel.currUser?.value?.Name)
-//            curhatAdapter.submitList(curhats)
         }
+
+
+
         viewModel.currUser.observe(this,currUserObserver)
+        viewModel.recentCurhats.observe(viewLifecycleOwner, Observer {curhats ->
+            curhatAdapter.submitList(curhats)
+            Log.i("Testing","masuk kok")
+        })
+
+
+
         return rootView
 
     }
