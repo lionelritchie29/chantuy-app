@@ -1,10 +1,12 @@
 package edu.bluejack20_2.chantuy
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -13,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import edu.bluejack20_2.chantuy.views.curhat_by_topic.CurhatByTopicFragment
 import edu.bluejack20_2.chantuy.views.hottest_curhat.HottestCurhatFragment
+import edu.bluejack20_2.chantuy.views.insert_curhat.InsertCurhatActivity
 import edu.bluejack20_2.chantuy.views.newest_curhat.NewestCurhatFragment
 import edu.bluejack20_2.chantuy.views.search_curhat.SearchCurhatFragment
 import edu.bluejack20_2.chantuy.views.user_profile.UserProfileFragment
@@ -38,6 +41,15 @@ class MainActivity : AppCompatActivity() {
 
         setViewPager()
         setBottomMenuItemListener()
+        setAddCurhatListener()
+    }
+
+    private fun setAddCurhatListener() {
+        val addBtn: Button = findViewById(R.id.add_curhat_btn)
+        addBtn.setOnClickListener {
+            val intent = Intent(this, InsertCurhatActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

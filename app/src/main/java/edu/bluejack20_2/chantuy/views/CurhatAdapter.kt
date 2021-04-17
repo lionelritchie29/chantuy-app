@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.Curhat
+import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 
 class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiffCallback) {
 
@@ -21,13 +22,18 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val curhat = getItem(position)
-//        holder.content.text = curhat.content
-        holder.username.text = "Anonymous"
+        holder.bind(curhat)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val content : TextView = view.findViewById(R.id.curhat_card_content)
         val username: TextView = view.findViewById(R.id.curhat_card_username)
+        val postedDate: TextView = view.findViewById(R.id.curhat_card_date)
+
+        fun bind(curhat: Curhat) {
+            content.text = curhat.content
+            postedDate.text = curhat.createdAt
+        }
     }
 }
 

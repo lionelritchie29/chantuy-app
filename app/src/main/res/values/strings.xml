@@ -18,4 +18,9 @@
     <string name="view_more">View More</string>
     <string name="curhat_comment_count_viewholder">4</string>
     <string name="hottest_curhat_text">Hottest Curhats</string>
+    <string name="new_curhat">New Curhat</string>
+    <string name="insert_curhat_content">What is in your mind?</string>
+    <string name="insert_curhat_content_hint">Content</string>
+    <string name="choose_topic">Choose Topic</string>
+    <string name="add_curhat">Add Curhat</string>
 </resources>

@@ -1,8 +1,10 @@
 package edu.bluejack20_2.chantuy.repositories
 
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.models.Curhat
+import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import java.util.*
 import kotlin.random.Random
 
@@ -27,8 +29,8 @@ class CurhatRepository {
         fun addDummy() {
             val data1 = hashMapOf(
                     "content" to "Hari ini adalah hari yang menyenangkan, aku baru saja dapat pacar baru",
-                    "createdAt" to Calendar.getInstance().time.toString(),
-                    "updatedAt" to Calendar.getInstance().time.toString(),
+                    "createdAt" to CurhatViewUtil.formatDate(Calendar.getInstance().time),
+                    "updatedAt" to CurhatViewUtil.formatDate(Calendar.getInstance().time),
                     "likeCount" to Random.nextInt(5, 50),
                     "dislikeCount" to Random.nextInt(0, 50),
                     "viewCount" to Random.nextInt(5, 100),
@@ -38,8 +40,8 @@ class CurhatRepository {
 
             val data2 = hashMapOf(
                     "content" to "LL dan JP sedang mengerjakan TPA mobile tentang curhat curhat gitu deh keren bingitss",
-                    "createdAt" to Calendar.getInstance().time.toString(),
-                    "updatedAt" to Calendar.getInstance().time.toString(),
+                    "createdAt" to CurhatViewUtil.formatDate(Calendar.getInstance().time),
+                    "updatedAt" to CurhatViewUtil.formatDate(Calendar.getInstance().time),
                     "likeCount" to Random.nextInt(5, 50),
                     "dislikeCount" to Random.nextInt(0, 50),
                     "viewCount" to Random.nextInt(5, 100),
@@ -49,8 +51,8 @@ class CurhatRepository {
 
             val data3 = hashMapOf(
                     "content" to "Gaada apa yang mau jalan jalan sama gua dimasa pandemi ini gua stress bangettt guess sumpah :(",
-                    "createdAt" to Calendar.getInstance().time.toString(),
-                    "updatedAt" to Calendar.getInstance().time.toString(),
+                    "createdAt" to CurhatViewUtil.formatDate(Calendar.getInstance().time),
+                    "updatedAt" to CurhatViewUtil.formatDate(Calendar.getInstance().time),
                     "likeCount" to Random.nextInt(5, 50),
                     "dislikeCount" to Random.nextInt(0, 50),
                     "viewCount" to Random.nextInt(5, 100),
