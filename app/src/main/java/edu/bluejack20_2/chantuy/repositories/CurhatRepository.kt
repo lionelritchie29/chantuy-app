@@ -1,9 +1,13 @@
 package edu.bluejack20_2.chantuy.repositories
 
 import android.util.Log
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.models.Curhat
+import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import java.util.*
 import kotlin.random.Random
@@ -65,5 +69,15 @@ class CurhatRepository {
             db.collection("curhats").add(data2)
             db.collection("curhats").add(data3)
         }
+        fun countUserPost(id:String): Task<QuerySnapshot> {
+            val db= Firebase.firestore
+            val curhats = db.collection("curhats").whereEqualTo("user","users/"+id)
+            Log.d("Testing","users/"+id)
+
+            return curhats.get()
+        }
+
     }
+
 }
+

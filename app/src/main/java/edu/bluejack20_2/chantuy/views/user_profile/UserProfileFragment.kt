@@ -21,6 +21,7 @@ class UserProfileFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_user_profile, container, false)
+
         val viewModel = UserProfileViewModel()
 
         viewModel.getUser()
@@ -33,19 +34,24 @@ class UserProfileFragment : Fragment() {
 
 
         val nameView : TextView = rootView.findViewById(R.id.user_profile_name)
-
         val currUserObserver = Observer<User>{newUser->
-            nameView.setText(newUser.Name)
-
+            nameView.setText(newUser.name)
         }
-
-
-
         viewModel.currUser.observe(this,currUserObserver)
-        viewModel.recentCurhats.observe(viewLifecycleOwner, Observer {curhats ->
-            curhatAdapter.submitList(curhats)
-            Log.i("Testing","masuk kok")
-        })
+
+
+        val curhatCountView : TextView = rootView.findViewById(R.id.total_post)
+
+        val totalPostObserver = Observer<Int>{totalPostCount->
+            curhatCountView.setText(""+ totalPostCount + " curhat(s) posted")
+        }
+        viewModel.curhatCount.observe(this,totalPostObserver)
+
+//
+//
+//        viewModel.recentCurhats.observe(viewLifecycleOwner, Observer {curhats ->
+//            curhatAdapter.submitList(curhats)
+//        })
 
 
 
