@@ -4,6 +4,160 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary_blue_very_light"
     tools:context=".views.curhat_detail.CurhatDetailActivity">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="7dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/curhat_detail_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/app_name"
+                android:textColor="@color/primary_blue"
+                app:layout_constraintBottom_toBottomOf="@+id/curhat_detail_user_image"
+                app:layout_constraintStart_toEndOf="@+id/curhat_detail_user_image"
+                app:layout_constraintTop_toTopOf="@+id/curhat_detail_user_image" />
+
+            <ImageView
+                android:id="@+id/curhat_detail_user_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/image_content_placeholder"
+                android:src="@drawable/baseline_account_circle_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/curhat_detail_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/date_placeholder"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/curhat_detail_user_image" />
+
+            <TextView
+                android:id="@+id/curhat_detail_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/curhat_content_placeholder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/curhat_detail_date" />
+
+            <ImageButton
+                android:id="@+id/curhat_detail_thumb_up_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/outline_thumb_up_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageButton8"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/curhat_detail_content" />
+
+            <ImageButton
+                android:id="@+id/imageButton8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/outline_sentiment_satisfied_24"
+                app:layout_constraintBottom_toBottomOf="@+id/curhat_detail_thumb_up_btn"
+                app:layout_constraintEnd_toStartOf="@+id/imageButton9"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/curhat_detail_thumb_up_btn"
+                app:layout_constraintTop_toTopOf="@+id/curhat_detail_thumb_up_btn" />
+
+            <ImageButton
+                android:id="@+id/imageButton9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_visibility_24"
+                app:layout_constraintBottom_toBottomOf="@+id/imageButton8"
+                app:layout_constraintEnd_toStartOf="@+id/imageButton10"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imageButton8"
+                app:layout_constraintTop_toTopOf="@+id/imageButton8" />
+
+            <ImageButton
+                android:id="@+id/imageButton10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/outline_thumb_down_24"
+                app:layout_constraintBottom_toBottomOf="@+id/imageButton9"
+                app:layout_constraintEnd_toStartOf="@+id/imageButton11"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imageButton9"
+                app:layout_constraintTop_toTopOf="@+id/imageButton9" />
+
+            <ImageButton
+                android:id="@+id/imageButton11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/outline_whatshot_24"
+                app:layout_constraintBottom_toBottomOf="@+id/imageButton10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imageButton10"
+                app:layout_constraintTop_toTopOf="@+id/imageButton10" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/curhat_detail_comment_header_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/outline_comment_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
+    <TextView
+        android:id="@+id/curhat_detail_comment_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/comment_count_background"
+        android:text="8 Comments"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/curhat_detail_comment_header_img"
+        app:layout_constraintStart_toEndOf="@+id/curhat_detail_comment_header_img"
+        app:layout_constraintTop_toTopOf="@+id/curhat_detail_comment_header_img" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/curhat_detail_comment_header_img" />
 </androidx.constraintlayout.widget.ConstraintLayout>
