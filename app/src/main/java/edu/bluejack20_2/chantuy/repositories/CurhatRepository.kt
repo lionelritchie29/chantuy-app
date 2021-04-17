@@ -1,6 +1,7 @@
 package edu.bluejack20_2.chantuy.repositories
 
 import android.util.Log
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.models.Curhat
@@ -29,35 +30,35 @@ class CurhatRepository {
         fun addDummy() {
             val data1 = hashMapOf(
                     "content" to "Hari ini adalah hari yang menyenangkan, aku baru saja dapat pacar baru",
-                    "createdAt" to CurhatViewUtil.formatDate(Calendar.getInstance().time),
-                    "updatedAt" to CurhatViewUtil.formatDate(Calendar.getInstance().time),
                     "likeCount" to Random.nextInt(5, 50),
                     "dislikeCount" to Random.nextInt(0, 50),
                     "viewCount" to Random.nextInt(5, 100),
                     "topic" to "topics/4dX2GpFcubGlAFNVTnRW",
-                    "user" to "users/9xktLUHQWHXQ1wrWOTw0"
+                    "user" to "users/9xktLUHQWHXQ1wrWOTw0",
+                    "createdAt" to Timestamp.now(),
+                    "updatedAt" to Timestamp.now()
             )
 
             val data2 = hashMapOf(
                     "content" to "LL dan JP sedang mengerjakan TPA mobile tentang curhat curhat gitu deh keren bingitss",
-                    "createdAt" to CurhatViewUtil.formatDate(Calendar.getInstance().time),
-                    "updatedAt" to CurhatViewUtil.formatDate(Calendar.getInstance().time),
                     "likeCount" to Random.nextInt(5, 50),
                     "dislikeCount" to Random.nextInt(0, 50),
                     "viewCount" to Random.nextInt(5, 100),
                     "topic" to "topics/4dX2GpFcubGlAFNVTnRW",
-                    "user" to "users/9xktLUHQWHXQ1wrWOTw0"
+                    "user" to "users/9xktLUHQWHXQ1wrWOTw0",
+                    "createdAt" to Timestamp.now(),
+                    "updatedAt" to Timestamp.now()
             )
 
             val data3 = hashMapOf(
                     "content" to "Gaada apa yang mau jalan jalan sama gua dimasa pandemi ini gua stress bangettt guess sumpah :(",
-                    "createdAt" to CurhatViewUtil.formatDate(Calendar.getInstance().time),
-                    "updatedAt" to CurhatViewUtil.formatDate(Calendar.getInstance().time),
                     "likeCount" to Random.nextInt(5, 50),
                     "dislikeCount" to Random.nextInt(0, 50),
                     "viewCount" to Random.nextInt(5, 100),
                     "topic" to "topics/4dX2GpFcubGlAFNVTnRW",
-                    "user" to "users/9xktLUHQWHXQ1wrWOTw0"
+                    "user" to "users/9xktLUHQWHXQ1wrWOTw0",
+                    "createdAt" to Timestamp.now(),
+                    "updatedAt" to Timestamp.now()
             )
 
             val db = FirebaseFirestore.getInstance()
