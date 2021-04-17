@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "50225828438",
+    "project_id": "chantuy-app",
+    "storage_bucket": "chantuy-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50225828438:android:b11d294b910dd5fe7521f7",
+        "android_client_info": {
+          "package_name": "edu.bluejack20_2.chantuy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50225828438-0jitt3jaj8hmm3uhdgrutk1jtb34ru5m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.bluejack20_2.chantuy",
+            "certificate_hash": "b4aa8f7dada2cf68bf9cb0f758d4c28a4e3727ba"
+          }
+        },
+        {
+          "client_id": "50225828438-crvuq0chg08kfol9oo845isqam6f8eg1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.bluejack20_2.chantuy",
+            "certificate_hash": "bfd6b27f2eca2bd63b69189193b72dccf2241814"
+          }
+        },
+        {
+          "client_id": "50225828438-jbu8d0kr5p5mknrpuqh0rqefte79elog.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBk9hlfujU5KBDFmiLzYUUnS0MmRWaT9ss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50225828438-jbu8d0kr5p5mknrpuqh0rqefte79elog.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
