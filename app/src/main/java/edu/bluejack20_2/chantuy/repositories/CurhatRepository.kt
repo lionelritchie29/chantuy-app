@@ -1,6 +1,8 @@
 package edu.bluejack20_2.chantuy.repositories
 
 import android.util.Log
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
@@ -9,9 +11,11 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.models.Curhat
+import edu.bluejack20_2.chantuy.models.CurhatComment
 import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
+import org.w3c.dom.Comment
 import java.util.*
 import kotlin.random.Random
 
@@ -75,10 +79,46 @@ class CurhatRepository {
                     "updatedAt" to FieldValue.serverTimestamp()
             )
 
+            val mapper = jacksonObjectMapper()
             val db = FirebaseFirestore.getInstance()
-            db.collection("curhats").add(data1)
-            db.collection("curhats").add(data2)
-            db.collection("curhats").add(data3)
+            db.collection("curhats").add(data1).addOnSuccessListener { curhat ->
+                val comments : List<CurhatComment> = listOf(
+                    CurhatComment("", "Mana ada menyenangkan broder", Timestamp.now(), Timestamp.now()),
+                    CurhatComment("", "Menyenangkan dong kawanku", Timestamp.now(), Timestamp.now()),
+                    CurhatComment("", "Ga Menyenangkan dong kawanku", Timestamp.now(), Timestamp.now()),
+                    CurhatComment("", "Brandon penyelamat hidup", Timestamp.now(), Timestamp.now()),
+                    CurhatComment("", "Clar otw jadian sama fs", Timestamp.now(), Timestamp.now())
+                )
+
+                db.collection("comments").document(curhat.id).set(hashMapOf(
+                    "comments" to comments
+                ))
+            }
+
+            db.collection("curhats").add(data2).addOnSuccessListener { curhat ->
+                val comments : List<CurhatComment> = listOf(
+                    CurhatComment("", "TPA game adalah jalan hidupku", Timestamp.now(), Timestamp.now()),
+                    CurhatComment("", "TPA desktop skip", Timestamp.now(), Timestamp.now()),
+                    CurhatComment("", "TPA web buset nguli imba", Timestamp.now(), Timestamp.now()),
+                    CurhatComment("", "TPA mobile lg kerjain skrg", Timestamp.now(), Timestamp.now()),
+                    CurhatComment("", "TPA jarkom gangerti", Timestamp.now(), Timestamp.now())
+                )
+
+                db.collection("comments").document(curhat.id).set(hashMapOf(
+                    "comments" to comments
+                ))
+            }
+
+            db.collection("curhats").add(data3).addOnSuccessListener { curhat ->
+                val comments : List<CurhatComment> = listOf(
+                    CurhatComment("", "Jalan - jalan mulu", Timestamp.now(), Timestamp.now()),
+                    CurhatComment("", "yee suka2 TS nya dong", Timestamp.now(), Timestamp.now())
+                )
+
+                db.collection("comments").document(curhat.id).set(hashMapOf(
+                    "comments" to comments
+                ))
+            }
         }
         fun countUserPost(id:String): Task<QuerySnapshot> {
             val db= Firebase.firestore

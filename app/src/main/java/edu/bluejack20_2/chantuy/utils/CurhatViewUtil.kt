@@ -8,7 +8,7 @@ class CurhatViewUtil {
     companion object {
         fun formatDate(timestamp: Timestamp?) : String {
             val sdf = SimpleDateFormat("dd-MM-yyyy 'at' HH:mm:ss")
-            return sdf.format(timestamp!!.toDate())
+            return sdf.format(timestamp?.toDate())
         }
     }
 }
