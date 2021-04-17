@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Chantuy">
+        <activity android:name=".views.insert_curhat.InsertCurhatActivity"></activity>
+        <activity android:name=".views.insert_curhat.InsertCurhatActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
