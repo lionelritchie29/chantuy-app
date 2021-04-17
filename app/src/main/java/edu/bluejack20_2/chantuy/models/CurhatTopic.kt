@@ -1,3 +1,7 @@
 package edu.bluejack20_2.chantuy.models
 
-data class CurhatTopic (var id: String = "", var name: String = "")
+import com.google.firebase.firestore.DocumentId
+
+data class CurhatTopic (
+        @DocumentId var id: String = "",
+        var name: String = "")

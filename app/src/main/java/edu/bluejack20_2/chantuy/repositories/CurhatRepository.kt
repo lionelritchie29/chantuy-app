@@ -2,9 +2,11 @@ package edu.bluejack20_2.chantuy.repositories
 
 import android.util.Log
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.models.Curhat
+import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import java.util.*
 import kotlin.random.Random
@@ -16,7 +18,7 @@ class CurhatRepository {
             val db = FirebaseFirestore.getInstance()
 
             db.collection("curhats").get()
-                    .addOnSuccessListener {curhatDocs ->
+                    .addOnSuccessListener { curhatDocs ->
                         val curhats = mutableListOf<Curhat>()
                         for (curhatDoc in curhatDocs) {
                             val curhat = curhatDoc.toObject(Curhat::class.java)
@@ -27,6 +29,14 @@ class CurhatRepository {
                     }
         }
 
+        fun addCurhat(content: String, topicId: String, callback: () -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+                val curhat = Curhat("", topicId, content, 0, 0, 0, Timestamp.now(), Timestamp.now())
+                db.collection("curhats").add(curhat)
+                        .addOnSuccessListener { callback() }
+        }
+
         fun addDummy() {
             val data1 = hashMapOf(
                     "content" to "Hari ini adalah hari yang menyenangkan, aku baru saja dapat pacar baru",
@@ -35,8 +45,8 @@ class CurhatRepository {
                     "viewCount" to Random.nextInt(5, 100),
                     "topic" to "topics/4dX2GpFcubGlAFNVTnRW",
                     "user" to "users/9xktLUHQWHXQ1wrWOTw0",
-                    "createdAt" to Timestamp.now(),
-                    "updatedAt" to Timestamp.now()
+                    "createdAt" to FieldValue.serverTimestamp(),
+                    "updatedAt" to FieldValue.serverTimestamp()
             )
 
             val data2 = hashMapOf(
@@ -46,8 +56,8 @@ class CurhatRepository {
                     "viewCount" to Random.nextInt(5, 100),
                     "topic" to "topics/4dX2GpFcubGlAFNVTnRW",
                     "user" to "users/9xktLUHQWHXQ1wrWOTw0",
-                    "createdAt" to Timestamp.now(),
-                    "updatedAt" to Timestamp.now()
+                    "createdAt" to FieldValue.serverTimestamp(),
+                    "updatedAt" to FieldValue.serverTimestamp()
             )
 
             val data3 = hashMapOf(
@@ -57,8 +67,8 @@ class CurhatRepository {
                     "viewCount" to Random.nextInt(5, 100),
                     "topic" to "topics/4dX2GpFcubGlAFNVTnRW",
                     "user" to "users/9xktLUHQWHXQ1wrWOTw0",
-                    "createdAt" to Timestamp.now(),
-                    "updatedAt" to Timestamp.now()
+                    "createdAt" to FieldValue.serverTimestamp(),
+                    "updatedAt" to FieldValue.serverTimestamp()
             )
 
             val db = FirebaseFirestore.getInstance()
