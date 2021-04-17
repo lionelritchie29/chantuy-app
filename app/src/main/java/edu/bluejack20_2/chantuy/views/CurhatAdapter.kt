@@ -32,7 +32,7 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
 
         fun bind(curhat: Curhat) {
             content.text = curhat.content
-            postedDate.text = curhat.createdAt
+            postedDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
         }
     }
 }

@@ -1,14 +1,14 @@
 package edu.bluejack20_2.chantuy.utils
 
+import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CurhatViewUtil {
     companion object {
-        fun formatDate(date: Date) : String {
-            val calendar = Calendar.getInstance()
-            val sdf = SimpleDateFormat("EEEE, MMMM d, yyyy 'at' h:mm a")
-            return sdf.format(calendar.time)
+        fun formatDate(timestamp: Timestamp?) : String {
+            val sdf = SimpleDateFormat("dd-MM-yyyy 'at' HH:mm:ss")
+            return sdf.format(timestamp!!.toDate())
         }
     }
 }

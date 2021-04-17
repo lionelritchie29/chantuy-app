@@ -9,10 +9,12 @@ import edu.bluejack20_2.chantuy.models.CurhatTopic
 
 class CurhatTopicRepository {
     companion object {
-        fun getAll(getAllCallback: (List<CurhatTopic>) -> Unit) {
+        private const val COLLECTION_NAME = "topics"
+
+        fun getAll(callback: (List<CurhatTopic>) -> Unit) {
             val db = FirebaseFirestore.getInstance()
 
-            db.collection("topics").get()
+            db.collection(COLLECTION_NAME).get()
                 .addOnSuccessListener {topicDocs ->
                     val topics = mutableListOf<CurhatTopic>()
                     for (topicDoc in topicDocs) {
@@ -20,7 +22,26 @@ class CurhatTopicRepository {
                         topic.id = topicDoc.id
                         topics.add(topic)
                     }
-                    getAllCallback(topics)
+                    callback(topics)
+                }
+        }
+
+        fun get(topicId: String, callback: (CurhatTopic) -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(COLLECTION_NAME).document(topicId).get()
+                .addOnSuccessListener {topicDoc ->
+                    callback(topicDoc.toObject(CurhatTopic::class.java)!!)
+                }
+        }
+
+        fun addTopic(topicName: String ,callback: (String) -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            val newTopic = CurhatTopic("", topicName)
+            db.collection(COLLECTION_NAME).add(newTopic)
+                .addOnSuccessListener { newTopicRef ->
+                    callback(newTopicRef.id)
                 }
         }
     }
