@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.newest_curhat.NewestCurhatFragment">
+    tools:context=".views.newest_curhat.NewestCurhatFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/newest_curhat_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Newest Curhat" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        />
 
 </FrameLayout>
