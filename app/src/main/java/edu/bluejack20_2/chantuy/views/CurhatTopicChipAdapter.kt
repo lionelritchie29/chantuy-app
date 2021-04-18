@@ -25,6 +25,7 @@ class CurhatTopicChipAdapter : ListAdapter<CurhatTopic, CurhatTopicChipAdapter.V
     class ViewHolder (view: View): RecyclerView.ViewHolder(view) {
         val name : TextView = view.findViewById(R.id.filter_topic_chip_text)
 
+
         fun bind(topic: CurhatTopic) {
             name.text = topic.name
         }

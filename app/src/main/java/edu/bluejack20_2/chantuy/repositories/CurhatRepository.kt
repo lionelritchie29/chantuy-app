@@ -5,10 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.models.Curhat
@@ -40,25 +37,42 @@ class CurhatRepository {
                 }
         }
 
-        fun getHottestCurhat(callback: (List<Curhat>) -> Unit) {
+        fun getHottestCurhat(curhat: Curhat?, callback: (List<Curhat>) -> Unit) {
             val db = FirebaseFirestore.getInstance()
 
-            db.collection(COLLECTION_NAME).orderBy("viewCount", Query.Direction.DESCENDING).get()
-                .addOnSuccessListener { curhatDocs ->
-                    val curhats = mutableListOf<Curhat>()
-                    for (curhatDoc in curhatDocs) {
-                        val curhat = curhatDoc.toObject(Curhat::class.java)
-                        curhat.id = curhatDoc.id
-                        curhats.add(curhat)
+            if (curhat == null) {
+                db.collection(COLLECTION_NAME).orderBy("viewCount", Query.Direction.DESCENDING)
+                    .limit(5).get()
+                    .addOnSuccessListener { curhatDocs ->
+                        val curhats = mutableListOf<Curhat>()
+                        for (curhatDoc in curhatDocs) {
+                            val curhat = curhatDoc.toObject(Curhat::class.java)
+                            curhat.id = curhatDoc.id
+                            curhats.add(curhat)
+                        }
+                        callback(curhats)
                     }
-                    callback(curhats)
-                }
+            } else {
+                db.collection(COLLECTION_NAME).orderBy("viewCount", Query.Direction.DESCENDING)
+                    .startAt(curhat.viewCount).limit(5)
+                    .get()
+                    .addOnSuccessListener { curhatDocs ->
+                        val curhats = mutableListOf<Curhat>()
+                        for (curhatDoc in curhatDocs) {
+                            val curhat = curhatDoc.toObject(Curhat::class.java)
+                            curhat.id = curhatDoc.id
+                            curhats.add(curhat)
+                        }
+                        callback(curhats)
+                    }
+            }
         }
 
         fun addCurhat(content: String, topicId: String, callback: () -> Unit) {
             val db = FirebaseFirestore.getInstance()
 
-            val curhat = Curhat("", topicId, "user_id" ,content, 0, 0, 0, Timestamp.now(), Timestamp.now())
+            val curhat =
+                Curhat("", topicId, "user_id", content, 0, 0, 0, Timestamp.now(), Timestamp.now())
             db.collection(COLLECTION_NAME).add(curhat)
                 .addOnSuccessListener { callback() }
         }
@@ -71,6 +85,22 @@ class CurhatRepository {
                     val curhat = curhatDoc.toObject(Curhat::class.java)
                     callback(curhat!!)
                 }
+        }
+
+        fun getByTopic(topicId: String, callback: (List<Curhat>) -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(COLLECTION_NAME).whereEqualTo("topic", topicId).get()
+                .addOnSuccessListener { curhatDocs ->
+                    val curhats = mutableListOf<Curhat>()
+                    for (curhatDoc in curhatDocs) {
+                        val curhat = curhatDoc.toObject(Curhat::class.java)
+                        curhat.id = curhatDoc.id
+                        curhats.add(curhat)
+                    }
+                    callback(curhats)
+                }
+
         }
 
         fun incrementCount(curhatId: String) {
@@ -86,8 +116,8 @@ class CurhatRepository {
                 "likeCount" to Random.nextInt(5, 50),
                 "dislikeCount" to Random.nextInt(0, 50),
                 "viewCount" to Random.nextInt(5, 100),
-                "topic" to "topics/4dX2GpFcubGlAFNVTnRW",
-                "user" to "users/9xktLUHQWHXQ1wrWOTw0",
+                "topic" to "4dX2GpFcubGlAFNVTnRW",
+                "user" to "9xktLUHQWHXQ1wrWOTw0",
                 "createdAt" to FieldValue.serverTimestamp(),
                 "updatedAt" to FieldValue.serverTimestamp()
             )
@@ -98,8 +128,8 @@ class CurhatRepository {
                 "likeCount" to Random.nextInt(5, 50),
                 "dislikeCount" to Random.nextInt(0, 50),
                 "viewCount" to Random.nextInt(5, 100),
-                "topic" to "topics/4dX2GpFcubGlAFNVTnRW",
-                "user" to "users/9xktLUHQWHXQ1wrWOTw0",
+                "topic" to "4dX2GpFcubGlAFNVTnRW",
+                "user" to "9xktLUHQWHXQ1wrWOTw0",
                 "createdAt" to FieldValue.serverTimestamp(),
                 "updatedAt" to FieldValue.serverTimestamp()
             )
@@ -110,8 +140,8 @@ class CurhatRepository {
                 "likeCount" to Random.nextInt(5, 50),
                 "dislikeCount" to Random.nextInt(0, 50),
                 "viewCount" to Random.nextInt(5, 100),
-                "topic" to "topics/4dX2GpFcubGlAFNVTnRW",
-                "user" to "users/9xktLUHQWHXQ1wrWOTw0",
+                "topic" to "4dX2GpFcubGlAFNVTnRW",
+                "user" to "9xktLUHQWHXQ1wrWOTw0",
                 "createdAt" to FieldValue.serverTimestamp(),
                 "updatedAt" to FieldValue.serverTimestamp()
             )
@@ -221,8 +251,7 @@ class CurhatRepository {
 
         fun countUserPost(id: String): Task<QuerySnapshot> {
             val db = Firebase.firestore
-            val curhats = db.collection("curhats").whereEqualTo("user", "users/" + id)
-            Log.d("Testing", "users/" + id)
+            val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", id)
 
             return curhats.get()
         }
