@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.views.curhat_by_topic.CurhatByTopicFragment
 import edu.bluejack20_2.chantuy.views.hottest_curhat.HottestCurhatFragment
 import edu.bluejack20_2.chantuy.views.insert_curhat.InsertCurhatActivity
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         setViewPager()
         setBottomMenuItemListener()
         setAddCurhatListener()
+
     }
 
     private fun setAddCurhatListener() {

@@ -3,6 +3,8 @@ package edu.bluejack20_2.chantuy.views.user_profile
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatTopic
@@ -11,7 +13,7 @@ import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 
 class UserProfileViewModel {
-    val currUserQuery:Task<QuerySnapshot> = UserRepository.getUserByEmail("johanespeter.jp@gmail.com")
+    val currUserQuery:Task<DocumentSnapshot> = UserRepository.getUser(FirebaseAuth.getInstance().currentUser.uid)
     val initCurhats : List<Curhat> = listOf()
     val curhatCount : MutableLiveData<Int> by lazy{
         MutableLiveData<Int>()
@@ -31,16 +33,10 @@ class UserProfileViewModel {
     fun getUser(){
         currUserQuery.addOnSuccessListener {userDoc->
 
-            val users = userDoc.toObjects(User::class.java)
-                if(users.size==1){
-                    val user=users.get(0)
-                    for(userDoc in userDoc){
+            val user = userDoc.toObject(User::class.java)
+            user?.id=userDoc.id
+            currUser.value=user
 
-                        user.id=userDoc.id
-                    }
-                    currUser.value=user
-
-                }
 
 
             val currUserPostQuery:Task<QuerySnapshot> = CurhatRepository.countUserPost(""+currUser.value?.id)

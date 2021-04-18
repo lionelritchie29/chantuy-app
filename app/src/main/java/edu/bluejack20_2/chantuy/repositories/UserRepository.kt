@@ -38,6 +38,23 @@ class UserRepository {
                     }
         }
 
-    }
 
+        fun setUser(id: String, email: String, name:String) {
+            val db = FirebaseFirestore.getInstance()
+            val user=db.collection(UserRepository.COLLECTION_NAME).document(id)
+            user.set(
+                    hashMapOf(
+                            "email" to email,
+                            "name" to name
+                    )
+            )
+        }
+
+        fun getUser(id: String):Task<DocumentSnapshot> {
+            val db = FirebaseFirestore.getInstance()
+            val user=db.collection(UserRepository.COLLECTION_NAME).document(id)
+            return user.get()
+        }
+
+    }
 }
