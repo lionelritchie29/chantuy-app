@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary_blue_very_light"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/add_curhat_btn"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="@string/add_curhat"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,9 +31,9 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_gravity="start"
-        app:menu="@menu/menu_items"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_items" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

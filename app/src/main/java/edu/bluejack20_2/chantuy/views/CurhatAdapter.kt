@@ -1,15 +1,20 @@
 package edu.bluejack20_2.chantuy.views
 
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.Curhat
+import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
+import edu.bluejack20_2.chantuy.views.curhat_detail.CurhatDetailActivity
 
 class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiffCallback) {
 
@@ -25,14 +30,31 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
         holder.bind(curhat)
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val content : TextView = view.findViewById(R.id.curhat_card_content)
-        val username: TextView = view.findViewById(R.id.curhat_card_username)
-        val postedDate: TextView = view.findViewById(R.id.curhat_card_date)
+    class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
+        private val content : TextView = view.findViewById(R.id.curhat_card_content)
+        private val username: TextView = view.findViewById(R.id.curhat_card_username)
+        private val postedDate: TextView = view.findViewById(R.id.curhat_card_date)
+        private val viewMoreBtn: Button = view.findViewById(R.id.curhat_card_view_btn)
 
         fun bind(curhat: Curhat) {
             content.text = curhat.content
             postedDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
+            CurhatRepository.incrementCount(curhat.id)
+            setOnViewMoreListener(curhat.id)
+        }
+
+        private fun setOnViewMoreListener(id: String) {
+            viewMoreBtn.setOnClickListener {
+                moveToCurhatDetail(id)
+            }
+        }
+
+        private fun moveToCurhatDetail(id: String) {
+            val intent = Intent(view.context, CurhatDetailActivity::class.java)
+            val b = Bundle()
+            b.putString("id", id);
+            intent.putExtras(b)
+            view.context.startActivity(intent)
         }
     }
 }
