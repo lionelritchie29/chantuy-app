@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.CurhatComment
+import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.views.CurhatCommentAdapter
 
 class CurhatDetailActivity : AppCompatActivity() {
@@ -20,9 +21,13 @@ class CurhatDetailActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.curhat_comment_recycler)
         recyclerView.adapter = adapter
 
+        CurhatCommentRepository.getCommentsById (
+                "17Q37eLqP65tc2AP1jVp") {
+
+        }
+
         viewModel.comments.observe(this , Observer {
             adapter.addHeaderAndSubmitList(it)
-            Log.i("CurhatDetailActivity", it.toString())
         })
     }
 }
