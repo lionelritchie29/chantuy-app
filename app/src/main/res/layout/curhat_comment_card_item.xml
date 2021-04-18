@@ -53,7 +53,7 @@
                 android:id="@+id/curhat_comment_content"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="@string/curhat_content_placeholder"
                 android:textColor="@color/white"
@@ -62,7 +62,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/curhat_comment_user_name" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/curhat_comment_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

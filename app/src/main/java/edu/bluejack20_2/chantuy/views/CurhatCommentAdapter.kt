@@ -1,15 +1,20 @@
 package edu.bluejack20_2.chantuy.views
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
+import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatComment
+import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import io.grpc.okhttp.internal.framed.Header
+import org.w3c.dom.Text
 import kotlin.random.Random
 
 class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(CurhatCommentDiffCallback){
@@ -40,15 +45,15 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
             }
             is HeaderViewHolder -> {
                 val item = getItem(position) as DataItem.DetailHeader
-                holder.bind()
+                holder.bind(item.curhat, item.commentCount)
             }
         }
     }
 
-    fun addHeaderAndSubmitList(list: List<CurhatComment>) {
+    fun addHeaderAndSubmitList(curhat: Curhat, list: List<CurhatComment>) {
         val items = when (list) {
-            null -> listOf(DataItem.DetailHeader)
-            else -> listOf(DataItem.DetailHeader) + list.map { DataItem.CurhatCommentItem(it) }
+            null -> listOf(DataItem.DetailHeader(curhat, 0))
+            else -> listOf(DataItem.DetailHeader(curhat, list.size)) + list.map { DataItem.CurhatCommentItem(it) }
         }
         submitList(items)
     }
@@ -56,8 +61,14 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(comment: CurhatComment) {
+        val name: TextView = view.findViewById(R.id.curhat_comment_user_name)
+        val content: TextView = view.findViewById(R.id.curhat_comment_content)
+        val createdAt: TextView = view.findViewById(R.id.curhat_comment_date)
 
+        fun bind(comment: CurhatComment) {
+            name.text = "Anonymous"
+            content.text = comment.content
+            createdAt.text = CurhatViewUtil.formatDate(comment.createdAt)
         }
 
         companion object {
@@ -70,8 +81,16 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
     }
 
     class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind() {
+        val name : TextView = view.findViewById(R.id.curhat_detail_user_name)
+        val content: TextView = view.findViewById(R.id.curhat_detail_content)
+        val createdAt: TextView = view.findViewById(R.id.curhat_detail_date)
+        val commentCountText: TextView = view.findViewById(R.id.curhat_detail_comment_count)
 
+        fun bind(curhat: Curhat, commentCount: Int) {
+            name.text = "Anonymous"
+            content.text = curhat.content
+            createdAt.text = CurhatViewUtil.formatDate(curhat.createdAt)
+            commentCountText.text = commentCount.toString() + " comment(s)"
         }
 
         companion object {
@@ -101,9 +120,9 @@ sealed class DataItem {
             get() = comment.createdAt.toString()
     }
 
-    object DetailHeader: DataItem() {
+    data class DetailHeader(val curhat: Curhat, val commentCount: Int): DataItem() {
         override val id: String
-            get() = Random.nextInt().toString()
+            get() = curhat.id
     }
 
     abstract val id: String

@@ -23,10 +23,12 @@ import kotlin.random.Random
 
 class CurhatRepository {
     companion object {
+        private val COLLECTION_NAME = "curhats"
+
         fun getAll(getAllCallback: (List<Curhat>) -> Unit) {
             val db = FirebaseFirestore.getInstance()
 
-            db.collection("curhats").orderBy("createdAt", Query.Direction.DESCENDING).get()
+            db.collection(COLLECTION_NAME).orderBy("createdAt", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener { curhatDocs ->
                     val curhats = mutableListOf<Curhat>()
                     for (curhatDoc in curhatDocs) {
@@ -42,8 +44,18 @@ class CurhatRepository {
             val db = FirebaseFirestore.getInstance()
 
             val curhat = Curhat("", topicId, "user_id" ,content, 0, 0, 0, Timestamp.now(), Timestamp.now())
-            db.collection("curhats").add(curhat)
+            db.collection(COLLECTION_NAME).add(curhat)
                 .addOnSuccessListener { callback() }
+        }
+
+        fun getById(curhatId: String, callback: (Curhat) -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(COLLECTION_NAME).document(curhatId).get()
+                .addOnSuccessListener { curhatDoc ->
+                    val curhat = curhatDoc.toObject(Curhat::class.java)
+                    callback(curhat!!)
+                }
         }
 
         fun addDummy() {

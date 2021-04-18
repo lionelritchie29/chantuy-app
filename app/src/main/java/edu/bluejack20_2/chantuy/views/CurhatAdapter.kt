@@ -1,6 +1,7 @@
 package edu.bluejack20_2.chantuy.views
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,17 +38,20 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
         fun bind(curhat: Curhat) {
             content.text = curhat.content
             postedDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
-            setOnViewMoreListener()
+            setOnViewMoreListener(curhat.id)
         }
 
-        private fun setOnViewMoreListener() {
+        private fun setOnViewMoreListener(id: String) {
             viewMoreBtn.setOnClickListener {
-                moveToCurhatDetail()
+                moveToCurhatDetail(id)
             }
         }
 
-        private fun moveToCurhatDetail() {
+        private fun moveToCurhatDetail(id: String) {
             val intent = Intent(view.context, CurhatDetailActivity::class.java)
+            val b = Bundle()
+            b.putString("id", id);
+            intent.putExtras(b)
             view.context.startActivity(intent)
         }
     }
