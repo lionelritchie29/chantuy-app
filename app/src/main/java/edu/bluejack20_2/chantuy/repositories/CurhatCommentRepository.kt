@@ -3,6 +3,7 @@ package edu.bluejack20_2.chantuy.repositories
 import android.util.Log
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import edu.bluejack20_2.chantuy.models.CommentListDocument
 import edu.bluejack20_2.chantuy.models.CurhatComment
 

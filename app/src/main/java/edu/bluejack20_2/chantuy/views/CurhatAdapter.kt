@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.Curhat
+import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import edu.bluejack20_2.chantuy.views.curhat_detail.CurhatDetailActivity
 
@@ -38,6 +39,7 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
         fun bind(curhat: Curhat) {
             content.text = curhat.content
             postedDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
+            CurhatRepository.incrementCount(curhat.id)
             setOnViewMoreListener(curhat.id)
         }
 

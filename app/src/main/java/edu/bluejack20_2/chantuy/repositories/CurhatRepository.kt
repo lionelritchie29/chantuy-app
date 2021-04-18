@@ -58,6 +58,12 @@ class CurhatRepository {
                 }
         }
 
+        fun incrementCount(curhatId: String) {
+            val db = FirebaseFirestore.getInstance()
+            db.collection(COLLECTION_NAME).document(curhatId)
+                .update("viewCount", FieldValue.increment(1))
+        }
+
         fun addDummy() {
             val data1 = hashMapOf(
                 "content" to "Hari ini adalah hari yang menyenangkan, aku baru saja dapat pacar baru",
