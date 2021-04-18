@@ -3,6 +3,8 @@ package edu.bluejack20_2.chantuy.views.curhat_detail
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
@@ -21,9 +23,14 @@ class CurhatDetailActivity : AppCompatActivity() {
         val adapter = CurhatCommentAdapter()
         val recyclerView: RecyclerView = findViewById(R.id.curhat_comment_recycler)
         recyclerView.adapter = adapter
-        recyclerView.isEnabled = false
 
         viewModel.getCurhatDetail(intent)
+
+        val addBtn: Button = findViewById(R.id.add_comment_btn)
+        val addCommentTv: TextView = findViewById(R.id.add_comment_edit_text)
+        addBtn.setOnClickListener {
+            viewModel.addComment(addCommentTv)
+        }
 
         viewModel.comments.observe(this , Observer { comments ->
             adapter.addHeaderAndSubmitList(viewModel.curhat as Curhat, comments)

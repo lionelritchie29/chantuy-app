@@ -2,6 +2,7 @@ package edu.bluejack20_2.chantuy.views.curhat_detail
 
 import android.content.Intent
 import android.util.Log
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,12 +16,13 @@ class CurhatDetailViewModel: ViewModel() {
         value = listOf()
     }
     val comments: LiveData<List<CurhatComment>> get() = _comments
-
     var curhat: Curhat = Curhat()
+    private var id = ""
 
-    fun getCurhatDetail(intent: Intent) {
-        val id = getCurhatId(intent)
-
+    fun getCurhatDetail(intent: Intent?) {
+        if (intent != null) {
+            id = getCurhatId(intent)
+        }
 
         CurhatRepository.getById(id) {
             curhat = it
@@ -38,6 +40,13 @@ class CurhatDetailViewModel: ViewModel() {
         val bundle = intent.extras
         val id = bundle!!.getString("id")
         return id!!
+    }
+
+    fun addComment(content: TextView) {
+        CurhatCommentRepository.addComment(id, "", content.text.toString()) {
+            getCurhatDetail(null)
+            content.text = ""
+        }
     }
 
 

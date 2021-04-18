@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:paddingBottom="75dp"
+        android:paddingBottom="50dp"
         android:scrollbarStyle="outsideOverlay"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
