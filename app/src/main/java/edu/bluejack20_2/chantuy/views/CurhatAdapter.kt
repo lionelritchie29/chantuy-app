@@ -14,6 +14,7 @@ import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
+import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import edu.bluejack20_2.chantuy.views.curhat_detail.CurhatDetailActivity
 
@@ -36,11 +37,14 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
         private val commentCount: TextView = view.findViewById(R.id.curhat_card_comment_count)
 
         fun bind(curhat: Curhat) {
-            username.text = if (curhat.isAnonymous) "Anonymous" else "Name"
             content.text = curhat.content
             postedDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
             CurhatRepository.incrementViewCount(curhat.id)
             setOnViewMoreListener(curhat.id)
+
+            UserRepository.getUserById(curhat.user) {user ->
+                username.text = if (curhat.isAnonymous) "Anonymous" else user?.name
+            }
 
             CurhatCommentRepository.getCommentCount(curhat.id) { count ->
                 commentCount.text = count.toString()

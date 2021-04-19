@@ -10,6 +10,7 @@ import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatComment
 import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
+import edu.bluejack20_2.chantuy.repositories.UserRepository
 
 class CurhatDetailViewModel: ViewModel() {
     private var _comments: MutableLiveData<List<CurhatComment>> = MutableLiveData<List<CurhatComment>>().apply {
@@ -50,9 +51,10 @@ class CurhatDetailViewModel: ViewModel() {
     }
 
     fun addComment(content: TextView) {
-        CurhatCommentRepository.addComment(id, "", content.text.toString()) {
-            getCurhatDetail(null)
+        val currentUserId = UserRepository.getCurrentUserId()
+        CurhatCommentRepository.addComment(id, currentUserId, content.text.toString()) {
             content.text = ""
+            getCurhatDetail(null)
         }
     }
 

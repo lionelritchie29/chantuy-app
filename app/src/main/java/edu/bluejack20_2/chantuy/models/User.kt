@@ -1,9 +1,10 @@
 package edu.bluejack20_2.chantuy.models
 
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentId
 
 data class User (
-    var id: String="",
+    @DocumentId var id: String="",
     val name: String="Kosong",
     val age: Int?=1,
     val email:String?="",
