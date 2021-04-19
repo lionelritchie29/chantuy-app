@@ -3,14 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.newest_curhat.NewestCurhatFragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:context=".views.newest_curhat.NewestCurhatFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/newest_curhat_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
 
 </FrameLayout>

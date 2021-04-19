@@ -22,26 +22,13 @@ class CurhatRepository {
     companion object {
         private val COLLECTION_NAME = "curhats"
 
-        fun getNewestCurhat(getAllCallback: (List<Curhat>) -> Unit) {
-            val db = FirebaseFirestore.getInstance()
-
-            db.collection(COLLECTION_NAME).orderBy("createdAt", Query.Direction.DESCENDING).get()
-                .addOnSuccessListener { curhatDocs ->
-                    val curhats = mutableListOf<Curhat>()
-                    for (curhatDoc in curhatDocs) {
-                        val curhat = curhatDoc.toObject(Curhat::class.java)
-                        curhat.id = curhatDoc.id
-                        curhats.add(curhat)
-                    }
-                    getAllCallback(curhats)
-                }
-        }
-
-        fun getHottestCurhat(curhat: Curhat?, callback: (List<Curhat>) -> Unit) {
+        fun getNewestCurhat(curhat: Curhat?, callback: (List<Curhat>) -> Unit) {
             val db = FirebaseFirestore.getInstance()
 
             if (curhat == null) {
-                db.collection(COLLECTION_NAME).orderBy("viewCount", Query.Direction.DESCENDING)
+                db.collection(COLLECTION_NAME)
+                    .orderBy("createdAt", Query.Direction.DESCENDING)
+                    .orderBy("viewCount", Query.Direction.DESCENDING)
                     .limit(5).get()
                     .addOnSuccessListener { curhatDocs ->
                         val curhats = mutableListOf<Curhat>()
@@ -53,7 +40,43 @@ class CurhatRepository {
                         callback(curhats)
                     }
             } else {
-                db.collection(COLLECTION_NAME).orderBy("viewCount", Query.Direction.DESCENDING)
+                db.collection(COLLECTION_NAME)
+                    .orderBy("createdAt", Query.Direction.DESCENDING)
+                    .orderBy("viewCount", Query.Direction.DESCENDING)
+                    .startAt(curhat.createdAt, curhat.viewCount).limit(5).get()
+                    .addOnSuccessListener { curhatDocs ->
+                        val curhats = mutableListOf<Curhat>()
+                        for (curhatDoc in curhatDocs) {
+                            val curhat = curhatDoc.toObject(Curhat::class.java)
+                            curhat.id = curhatDoc.id
+                            curhats.add(curhat)
+                        }
+                        callback(curhats)
+                    }
+            }
+        }
+
+        fun getHottestCurhat(curhat: Curhat?, callback: (List<Curhat>) -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            if (curhat == null) {
+                db.collection(COLLECTION_NAME)
+                    .orderBy("viewCount", Query.Direction.DESCENDING)
+                    .orderBy("createdAt", Query.Direction.DESCENDING)
+                    .limit(5).get()
+                    .addOnSuccessListener { curhatDocs ->
+                        val curhats = mutableListOf<Curhat>()
+                        for (curhatDoc in curhatDocs) {
+                            val curhat = curhatDoc.toObject(Curhat::class.java)
+                            curhat.id = curhatDoc.id
+                            curhats.add(curhat)
+                        }
+                        callback(curhats)
+                    }
+            } else {
+                db.collection(COLLECTION_NAME)
+                    .orderBy("viewCount", Query.Direction.DESCENDING)
+                    .orderBy("createdAt", Query.Direction.DESCENDING)
                     .startAt(curhat.viewCount).limit(5)
                     .get()
                     .addOnSuccessListener { curhatDocs ->

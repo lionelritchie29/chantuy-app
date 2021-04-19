@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.views.CurhatAdapter
@@ -19,10 +20,19 @@ class NewestCurhatFragment : Fragment() {
         val viewModel = NewestCurhatViewModel()
         val curhatAdapter = CurhatAdapter()
         val recyclerView: RecyclerView = rootView.findViewById(R.id.newest_curhat_recycler)
+        val manager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+
         recyclerView.adapter = curhatAdapter
+        recyclerView.layoutManager = manager
+
+        viewModel.handleOnScrollListener(recyclerView, manager)
 
         viewModel.curhats.observe(viewLifecycleOwner, Observer {curhats ->
             curhatAdapter.submitList(curhats)
+
+            if (curhats.size > 0) {
+                viewModel.lastCurhat = curhats.get(curhats.size - 1)
+            }
         })
 
         return rootView
