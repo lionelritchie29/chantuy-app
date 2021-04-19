@@ -36,10 +36,16 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(FirebaseAuth.getInstance().currentUser==null){
+            themeAndLogo()
+            privacyAndTerms()
+            createSignInIntent()
+        }else{
+            val intent  = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
 
-        themeAndLogo()
-        privacyAndTerms()
-        createSignInIntent()
+        }
 
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -55,7 +61,6 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-                Log.i("Testing",FirebaseAuth.getInstance().currentUser.displayName)
                 UserRepository.setUser(FirebaseAuth.getInstance().currentUser.uid,FirebaseAuth.getInstance().currentUser.email, FirebaseAuth.getInstance().currentUser.displayName)
 
                 val intent  = Intent(this, MainActivity::class.java)

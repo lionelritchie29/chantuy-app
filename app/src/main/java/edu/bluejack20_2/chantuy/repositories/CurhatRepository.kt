@@ -221,11 +221,18 @@ class CurhatRepository {
 
         fun countUserPost(id: String): Task<QuerySnapshot> {
             val db = Firebase.firestore
-            val curhats = db.collection("curhats").whereEqualTo("user", "users/" + id)
-            Log.d("Testing", "users/" + id)
-
+            val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", id)
             return curhats.get()
         }
+
+
+        fun userProfilePost(id: String): Task<QuerySnapshot> {
+            val db = Firebase.firestore
+            val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", id).
+            orderBy("createdAt", Query.Direction.ASCENDING).limit(3)
+            return curhats.get()
+        }
+
 
     }
 
