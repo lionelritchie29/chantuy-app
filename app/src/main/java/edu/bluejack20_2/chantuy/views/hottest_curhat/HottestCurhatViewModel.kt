@@ -12,15 +12,27 @@ class HottestCurhatViewModel : ViewModel(){
         postValue(listOf())
     }
     val curhats: LiveData<List<Curhat>> get() = _curhats
+
+    private var _isFetchingData: MutableLiveData<Boolean> =
+        MutableLiveData<Boolean>().apply { value = true }
+    val isFetchingData: LiveData<Boolean> get() = _isFetchingData
+
     var isLoadingMore = false
     var lastCurhat: Curhat? = null
 
     init {
-//        CurhatRepository.addDummy()
+        loadData()
+    }
+
+    fun loadData() {
+        _curhats.value = listOf()
+        _isFetchingData.value = true
         CurhatRepository.getHottestCurhat (null) { curhats ->
             _curhats.value = curhats
+            _isFetchingData.value = false
         }
     }
+
 
     fun handleOnScrollListener(
         rv: RecyclerView,

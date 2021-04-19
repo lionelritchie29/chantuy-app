@@ -45,5 +45,19 @@ class CurhatCommentRepository {
                     callback(container?.comments)
                 }
         }
+
+        fun getCommentCount(curhatId: String, callback: (Int) -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(COLLECTION_NAME).document(curhatId).get()
+                .addOnSuccessListener { commentdocs ->
+                    val container = commentdocs.toObject(CommentListDocument::class.java)
+                    if (container != null) {
+                        callback(container.comments.size)
+                    } else {
+                        callback(0)
+                    }
+                }
+        }
     }
 }

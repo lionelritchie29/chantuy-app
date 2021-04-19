@@ -14,13 +14,24 @@ class NewestCurhatViewModel : ViewModel() {
         postValue(listOf())
     }
     val curhats: LiveData<List<Curhat>> get() = _curhats
+
+    private var _isFetchingData: MutableLiveData<Boolean> =
+        MutableLiveData<Boolean>().apply { value = true }
+    val isFetchingData: LiveData<Boolean> get() = _isFetchingData
+
     private var isLoadingMore = false
     var lastCurhat: Curhat? = null
 
     init {
+        loadData()
+    }
+
+    fun loadData() {
+        _curhats.value = listOf()
+        _isFetchingData.value = true
         CurhatRepository.getNewestCurhat(null) { curhats ->
             _curhats.value = curhats
-            Log.i("NewestCurhatViewModel", _curhats.value.toString())
+            _isFetchingData.value = false
         }
     }
 
@@ -51,11 +62,13 @@ class NewestCurhatViewModel : ViewModel() {
     ) {
         if ((visibleItemCount + pastVisibleItem) >= totalItemCount) {
             isLoadingMore = true
+            _isFetchingData.value = true
             Log.i("NewestCurhatViewModel", "Loading more data")
 
             CurhatRepository.getNewestCurhat(lastCurhat) {
                 _curhats.value = _curhats.value?.plus(it)
                 isLoadingMore = false
+                _isFetchingData.value = false
             }
 
         }

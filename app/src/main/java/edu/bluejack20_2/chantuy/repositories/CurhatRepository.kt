@@ -123,10 +123,9 @@ class CurhatRepository {
                     }
                     callback(curhats)
                 }
-
         }
 
-        fun incrementCount(curhatId: String) {
+        fun incrementViewCount(curhatId: String) {
             val db = FirebaseFirestore.getInstance()
             db.collection(COLLECTION_NAME).document(curhatId)
                 .update("viewCount", FieldValue.increment(1))

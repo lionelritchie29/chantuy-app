@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.Curhat
+import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import edu.bluejack20_2.chantuy.views.curhat_detail.CurhatDetailActivity
@@ -32,12 +33,17 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
         private val username: TextView = view.findViewById(R.id.curhat_card_username)
         private val postedDate: TextView = view.findViewById(R.id.curhat_card_date)
         private val viewMoreBtn: Button = view.findViewById(R.id.curhat_card_view_btn)
+        private val commentCount: TextView = view.findViewById(R.id.curhat_card_comment_count)
 
         fun bind(curhat: Curhat) {
             content.text = curhat.content
             postedDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
-            CurhatRepository.incrementCount(curhat.id)
+            CurhatRepository.incrementViewCount(curhat.id)
             setOnViewMoreListener(curhat.id)
+
+            CurhatCommentRepository.getCommentCount(curhat.id) { count ->
+                commentCount.text = count.toString()
+            }
         }
 
         private fun setOnViewMoreListener(id: String) {
