@@ -26,7 +26,7 @@ class NewestCurhatFragment : Fragment() {
         val curhatAdapter = CurhatAdapter()
         recyclerView = rootView.findViewById(R.id.newest_curhat_recycler)
         manager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        val progressIndicator: LinearProgressIndicator = rootView.findViewById(R.id.newestCurhatLoadIndicator)
+        val progressIndicator: LinearProgressIndicator = rootView.findViewById(R.id.detailCurhatLoadIndicator)
 
         recyclerView.adapter = curhatAdapter
         recyclerView.layoutManager = manager

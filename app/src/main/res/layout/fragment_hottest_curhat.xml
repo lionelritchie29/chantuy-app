@@ -8,7 +8,7 @@
     tools:context=".views.hottest_curhat.HottestCurhatFragment">
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/newestCurhatLoadIndicator"
+        android:id="@+id/detailCurhatLoadIndicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="true"
@@ -23,7 +23,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newestCurhatLoadIndicator"
+        app:layout_constraintTop_toBottomOf="@+id/detailCurhatLoadIndicator"
         android:clipToPadding="false"
         android:paddingBottom="40dp"
         android:scrollbarStyle="outsideOverlay"/>

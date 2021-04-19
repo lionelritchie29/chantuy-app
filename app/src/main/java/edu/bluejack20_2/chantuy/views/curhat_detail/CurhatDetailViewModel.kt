@@ -16,10 +16,16 @@ class CurhatDetailViewModel: ViewModel() {
         value = listOf()
     }
     val comments: LiveData<List<CurhatComment>> get() = _comments
+
+    private var _isFetchingData: MutableLiveData<Boolean> =
+        MutableLiveData<Boolean>().apply { value = true }
+    val isFetchingData: LiveData<Boolean> get() = _isFetchingData
+
     var curhat: Curhat = Curhat()
     private var id = ""
 
     fun getCurhatDetail(intent: Intent?) {
+        _isFetchingData.value = true
         if (intent != null) {
             id = getCurhatId(intent)
         }
@@ -32,6 +38,7 @@ class CurhatDetailViewModel: ViewModel() {
                 } else {
                     _comments.value = listOf()
                 }
+                _isFetchingData.value = false
             }
         }
     }

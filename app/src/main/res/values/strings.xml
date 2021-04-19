@@ -46,6 +46,8 @@
     <string name="is_anonymous">Anonymous</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>
+    <string name="update_curhat">Update Curhat</string>
+    <string name="curhat_id_label">Curhat ID</string>
 
 
 </resources>

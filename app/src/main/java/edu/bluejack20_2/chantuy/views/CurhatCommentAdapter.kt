@@ -3,29 +3,23 @@ package edu.bluejack20_2.chantuy.views
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Application
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import edu.bluejack20_2.chantuy.MainActivity
 import edu.bluejack20_2.chantuy.R
+import edu.bluejack20_2.chantuy.views.update_curhat.UpdateCurhatActivity
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatComment
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
-import io.grpc.okhttp.internal.framed.Header
-import org.w3c.dom.Text
-import kotlin.random.Random
 
 class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(CurhatCommentDiffCallback){
 
@@ -98,7 +92,7 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
         val actionBtn: ImageButton = view.findViewById(R.id.curhat_detail_action_btn)
 
         fun bind(curhat: Curhat, commentCount: Int) {
-            name.text = "Anonymous"
+            name.text = if (curhat.isAnonymous) "Anonymous" else "Name"
             content.text = curhat.content
             createdAt.text = CurhatViewUtil.formatDate(curhat.createdAt)
             commentCountText.text = commentCount.toString() + " comment(s)"
@@ -119,14 +113,21 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
         private fun setMenuOnClickListener(popupMenu: PopupMenu, curhat: Curhat) {
             popupMenu.setOnMenuItemClickListener {menuItem ->
                 when (menuItem.itemId) {
-                    R.id.update_curhat_menu_item -> onUpdate()
+                    R.id.update_curhat_menu_item -> moveToUpdateActivity(curhat)
                     R.id.delete_curhat_menu_item -> onDelete(curhat)
                     else -> false
                 }
             }
         }
 
-        private fun onUpdate(): Boolean {
+        private fun moveToUpdateActivity(curhat: Curhat): Boolean {
+            val intent = Intent(view.context, UpdateCurhatActivity::class.java)
+            val b = Bundle()
+            b.putString("curhatId", curhat.id)
+            intent.putExtras(b)
+
+            val activity = view.context as Activity
+            activity.startActivity(intent)
             return true
         }
 

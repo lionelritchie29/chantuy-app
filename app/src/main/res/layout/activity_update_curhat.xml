@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_blue_very_light"
-    tools:context=".views.insert_curhat.InsertCurhatActivity">
+    android:backgroundTint="@color/primary_blue_very_light"
+    tools:context=".views.update_curhat.UpdateCurhatActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -31,6 +32,46 @@
             android:layout_marginBottom="0dp"
             android:background="@color/primary_blue">
 
+            <TextView
+                android:id="@+id/update_current_curhat_topic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/action_sign_in"
+                android:textColor="@color/primary_blue_very_light"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/update_topic_auto_complete" />
+
+            <TextView
+                android:id="@+id/curhat_id_labels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/curhat_id_label"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/insert_curhat_header" />
+
+            <EditText
+                android:id="@+id/update_curhat_id_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edit_text_background_disabled"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="textPersonName"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/curhat_id_labels" />
+
             <EditText
                 android:id="@+id/edit_text_update_curhat_content"
                 android:layout_width="0dp"
@@ -53,18 +94,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/insert_curhat_content"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/insert_curhat_header" />
+                app:layout_constraintTop_toBottomOf="@+id/update_curhat_id_edit" />
 
             <TextView
                 android:id="@+id/insert_curhat_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/new_curhat"
+                android:text="@string/update_curhat"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -110,7 +151,7 @@
                 android:textColorHighlight="@color/white"
                 android:textColorLink="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/update_topic_auto_complete" />
+                app:layout_constraintTop_toBottomOf="@+id/update_current_curhat_topic" />
 
             <Button
                 android:id="@+id/update_update__curhat_btn"
@@ -119,7 +160,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/primary_blue_dark"
-                android:text="@string/add_curhat"
+                android:text="@string/update"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -127,5 +168,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
