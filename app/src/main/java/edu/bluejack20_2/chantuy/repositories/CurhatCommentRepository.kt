@@ -10,6 +10,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.models.CommentListDocument
 import edu.bluejack20_2.chantuy.models.CurhatComment
+import java.lang.StringBuilder
 
 class CurhatCommentRepository {
     companion object {
@@ -56,8 +57,29 @@ class CurhatCommentRepository {
         }
         fun userProfilePost(id: String): Task<QuerySnapshot> {
             val db = Firebase.firestore
-            val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", id).orderBy("createdAt", Query.Direction.ASCENDING).limit(3)
+            val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", id)
+                .orderBy("createdAt", Query.Direction.ASCENDING).limit(3)
             return curhats.get()
+        }
+        fun getCommentCount(curhatId: String, callback: (Int) -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(COLLECTION_NAME).document(curhatId).get()
+                .addOnSuccessListener { commentdocs ->
+                    val container = commentdocs.toObject(CommentListDocument::class.java)
+                    if (container != null) {
+                        callback(container.comments.size)
+                    } else {
+                        callback(0)
+                    }
+                }
+        }
+
+        fun deleteAllById(curhatId: String, callback: () -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(COLLECTION_NAME).document(curhatId).delete()
+                .addOnSuccessListener { callback() }
         }
     }
 }

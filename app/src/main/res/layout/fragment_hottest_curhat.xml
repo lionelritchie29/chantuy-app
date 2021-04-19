@@ -7,14 +7,25 @@
     android:layout_height="match_parent"
     tools:context=".views.hottest_curhat.HottestCurhatFragment">
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/detailCurhatLoadIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/curhat_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/detailCurhatLoadIndicator"
+        android:clipToPadding="false"
+        android:paddingBottom="40dp"
+        android:scrollbarStyle="outsideOverlay"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

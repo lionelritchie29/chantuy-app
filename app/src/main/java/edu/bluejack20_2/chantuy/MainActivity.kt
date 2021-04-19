@@ -1,5 +1,6 @@
 package edu.bluejack20_2.chantuy
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,13 +9,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
-import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.views.curhat_by_topic.CurhatByTopicFragment
 import edu.bluejack20_2.chantuy.views.hottest_curhat.HottestCurhatFragment
 import edu.bluejack20_2.chantuy.views.insert_curhat.InsertCurhatActivity
@@ -43,26 +43,25 @@ class MainActivity : AppCompatActivity() {
 
         setViewPager()
         setBottomMenuItemListener()
-        setAddCurhatListener()
-
     }
 
-    private fun setAddCurhatListener() {
-        val addBtn: Button = findViewById(R.id.add_curhat_btn)
-        addBtn.setOnClickListener {
-            val intent = Intent(this, InsertCurhatActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
+    @SuppressLint("RestrictedApi")
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.action_bar_items, menu)
+
+        if (menu is MenuBuilder) {
+            menu.setOptionalIconsVisible(true)
+        }
+
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.add_curhat_menu_item -> {
+                moveToAddCurhatActivity()
+            }
             R.id.settings_menu_item -> {
                 Log.i("MainActivity", "Settings clicked!")
             }
@@ -71,6 +70,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun moveToAddCurhatActivity() {
+        val intent = Intent(this, InsertCurhatActivity::class.java)
+        startActivity(intent)
     }
 
     private fun disableNightMode() {
