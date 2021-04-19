@@ -1,17 +1,27 @@
 package edu.bluejack20_2.chantuy.views
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.AlertDialog
+import android.app.Application
+import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import edu.bluejack20_2.chantuy.MainActivity
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatComment
+import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import io.grpc.okhttp.internal.framed.Header
 import org.w3c.dom.Text
@@ -80,17 +90,66 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
         }
     }
 
-    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class HeaderViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val name : TextView = view.findViewById(R.id.curhat_detail_user_name)
         val content: TextView = view.findViewById(R.id.curhat_detail_content)
         val createdAt: TextView = view.findViewById(R.id.curhat_detail_date)
         val commentCountText: TextView = view.findViewById(R.id.curhat_detail_comment_count)
+        val actionBtn: ImageButton = view.findViewById(R.id.curhat_detail_action_btn)
 
         fun bind(curhat: Curhat, commentCount: Int) {
             name.text = "Anonymous"
             content.text = curhat.content
             createdAt.text = CurhatViewUtil.formatDate(curhat.createdAt)
             commentCountText.text = commentCount.toString() + " comment(s)"
+
+            setActionMenu(curhat)
+        }
+
+        private fun setActionMenu(curhat: Curhat) {
+            actionBtn.setOnClickListener {
+                val popupMenu = PopupMenu(view.context, it)
+                popupMenu.menuInflater.inflate(R.menu.curhat_detail_action_items, popupMenu.menu)
+                popupMenu.show()
+
+                setMenuOnClickListener(popupMenu, curhat)
+            }
+        }
+
+        private fun setMenuOnClickListener(popupMenu: PopupMenu, curhat: Curhat) {
+            popupMenu.setOnMenuItemClickListener {menuItem ->
+                when (menuItem.itemId) {
+                    R.id.update_curhat_menu_item -> onUpdate()
+                    R.id.delete_curhat_menu_item -> onDelete(curhat)
+                    else -> false
+                }
+            }
+        }
+
+        private fun onUpdate(): Boolean {
+            return true
+        }
+
+        private fun onDelete(curhat: Curhat): Boolean {
+            val builder = AlertDialog.Builder(view.context)
+            builder.setMessage("Are you sure ?")
+                .setCancelable(false)
+                .setPositiveButton("Yes") { dialog, id ->
+                    deleteCurhatAndComments(curhat)
+                }
+                .setNegativeButton("No") { dialog, id ->
+                    dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show()
+            return true
+        }
+
+        private fun deleteCurhatAndComments(curhat: Curhat) {
+            CurhatRepository.deleteById(curhat.id) {
+                val currentActivity = view.context as Activity
+                currentActivity.finish()
+            }
         }
 
         companion object {

@@ -45,21 +45,20 @@ class InsertCurhatActivity : AppCompatActivity() {
     private fun onAddCurhat() {
         val addBtn: Button = findViewById(R.id.insert_add_curhat_btn)
         val content: TextView = findViewById(R.id.edit_text_curhat_content)
+        val anonymousCheckbox: CheckBox = findViewById(R.id.set_anonymous_checkbox)
 
         addBtn.setOnClickListener {
             val topicIndex = topicsString.indexOf(topicAutoCompleteView.text.toString())
+            val isAnonymous = anonymousCheckbox.isChecked
             if (topicIndex == -1) {
                 val newTopic = topicAutoCompleteView.text.toString()
                 CurhatTopicRepository.addTopic(newTopic, callback = {newTopicId ->
-                    CurhatRepository.addCurhat(content.text.toString(), newTopicId) {
-                        Toast.makeText(this, "Insert Success", Toast.LENGTH_SHORT)
+                    CurhatRepository.addCurhat(content.text.toString(), isAnonymous, newTopicId) {
                         moveToMainActivity()
-
                     }
                 })
             } else {
-                CurhatRepository.addCurhat(content.text.toString(), topics.get(topicIndex).id) {
-                    Toast.makeText(this, "Insert Success", Toast.LENGTH_SHORT)
+                CurhatRepository.addCurhat(content.text.toString(), isAnonymous, topics.get(topicIndex).id) {
                     moveToMainActivity()
                 }
             }

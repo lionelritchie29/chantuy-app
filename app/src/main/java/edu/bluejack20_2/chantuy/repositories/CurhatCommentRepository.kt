@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import edu.bluejack20_2.chantuy.models.CommentListDocument
 import edu.bluejack20_2.chantuy.models.CurhatComment
+import java.lang.StringBuilder
 
 class CurhatCommentRepository {
     companion object {
@@ -58,6 +59,13 @@ class CurhatCommentRepository {
                         callback(0)
                     }
                 }
+        }
+
+        fun deleteAllById(curhatId: String, callback: () -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(COLLECTION_NAME).document(curhatId).delete()
+                .addOnSuccessListener { callback() }
         }
     }
 }

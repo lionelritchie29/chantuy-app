@@ -91,11 +91,11 @@ class CurhatRepository {
             }
         }
 
-        fun addCurhat(content: String, topicId: String, callback: () -> Unit) {
+        fun addCurhat(content: String, isAnon: Boolean, topicId: String, callback: () -> Unit) {
             val db = FirebaseFirestore.getInstance()
 
             val curhat =
-                Curhat("", topicId, "user_id", content, 0, 0, 0, Timestamp.now(), Timestamp.now())
+                Curhat("", topicId, "user_id", content, 0, 0, 0, isAnon, Timestamp.now(), Timestamp.now())
             db.collection(COLLECTION_NAME).add(curhat)
                 .addOnSuccessListener { callback() }
         }
@@ -125,6 +125,17 @@ class CurhatRepository {
                 }
         }
 
+        fun deleteById(curhatId: String, callback: () -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(COLLECTION_NAME).document(curhatId).delete()
+                .addOnSuccessListener {
+                    CurhatCommentRepository.deleteAllById(curhatId) {
+                        callback()
+                    }
+                }
+        }
+
         fun incrementViewCount(curhatId: String) {
             val db = FirebaseFirestore.getInstance()
             db.collection(COLLECTION_NAME).document(curhatId)
@@ -140,6 +151,7 @@ class CurhatRepository {
                 "viewCount" to Random.nextInt(5, 100),
                 "topic" to "4dX2GpFcubGlAFNVTnRW",
                 "user" to "9xktLUHQWHXQ1wrWOTw0",
+                "isAnonymous" to true,
                 "createdAt" to FieldValue.serverTimestamp(),
                 "updatedAt" to FieldValue.serverTimestamp()
             )
@@ -152,6 +164,7 @@ class CurhatRepository {
                 "viewCount" to Random.nextInt(5, 100),
                 "topic" to "4dX2GpFcubGlAFNVTnRW",
                 "user" to "9xktLUHQWHXQ1wrWOTw0",
+                "isAnonymous" to false,
                 "createdAt" to FieldValue.serverTimestamp(),
                 "updatedAt" to FieldValue.serverTimestamp()
             )
@@ -164,11 +177,11 @@ class CurhatRepository {
                 "viewCount" to Random.nextInt(5, 100),
                 "topic" to "4dX2GpFcubGlAFNVTnRW",
                 "user" to "9xktLUHQWHXQ1wrWOTw0",
+                "isAnonymous" to true,
                 "createdAt" to FieldValue.serverTimestamp(),
                 "updatedAt" to FieldValue.serverTimestamp()
             )
 
-            val mapper = jacksonObjectMapper()
             val db = FirebaseFirestore.getInstance()
             db.collection("curhats").add(data1).addOnSuccessListener { curhat ->
                 val comments: List<CurhatComment> = listOf(

@@ -43,6 +43,9 @@
     <string name="add">Add</string>
     <string name="filte_by_topic">Filter Topic</string>
     <string name="find_more_topic">Find more topics</string>
+    <string name="is_anonymous">Anonymous</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
 
 
 </resources>

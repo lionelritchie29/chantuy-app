@@ -36,6 +36,7 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
         private val commentCount: TextView = view.findViewById(R.id.curhat_card_comment_count)
 
         fun bind(curhat: Curhat) {
+            username.text = if (curhat.isAnonymous) "Anonymous" else "Name"
             content.text = curhat.content
             postedDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
             CurhatRepository.incrementViewCount(curhat.id)
