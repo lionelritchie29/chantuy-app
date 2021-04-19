@@ -48,4 +48,6 @@
     <string name="delete">Delete</string>
     <string name="update_curhat">Update Curhat</string>
     <string name="curhat_id_label">Curhat ID</string>
+    <string name="recent_curhat_text">Recent Curhat(s)</string>
+    <string name="recent_reply_text">Recent Reply(s)</string>
 </resources>

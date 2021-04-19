@@ -75,7 +75,7 @@ class UserProfileFragment : Fragment() {
 
 
         viewModel.curhatCount.observe(this,totalPostObserver)
-        viewModel.curhatCount.observe(this,totalReplyObserver)
+        viewModel.replyCount.observe(this,totalReplyObserver)
         val logOutButton: Button = rootView.findViewById(R.id.log_out_button)
         logOutButton.setOnClickListener {
             AuthUI.getInstance()
@@ -89,8 +89,8 @@ class UserProfileFragment : Fragment() {
 
         viewModel.recentCurhats.observe(viewLifecycleOwner, Observer {curhats ->
 
-            if(curhats.isEmpty()){
-
+            if(!curhats.isEmpty()){
+                curhatAdapter.clearAllText()
             }
             for (curhat in curhats){
                 curhatAdapter.addText(Text(curhat.content))
@@ -100,12 +100,11 @@ class UserProfileFragment : Fragment() {
 
         viewModel.recentReplies.observe(viewLifecycleOwner, Observer {replies ->
 
-            if(replies.isEmpty()){
-                Log.i("testing","aduh gaada gan")
+            if(!replies.isEmpty()){
+                replyAdapter.clearAllText()
             }
             for (reply in replies){
-                curhatAdapter.addText(Text(reply.content))
-                Log.i("testing",reply.content)
+                replyAdapter.addText(Text(reply.content))
             }
 
         })

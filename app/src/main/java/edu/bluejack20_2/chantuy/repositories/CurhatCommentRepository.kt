@@ -50,20 +50,19 @@ class CurhatCommentRepository {
                     callback(container?.comments)
                 }
         }
-        fun countUserComment(id: String): Task<QuerySnapshot> {
+        fun countUserComment(id: String): Query {
             val db = Firebase.firestore
             val curhatReplies = db.collection(COLLECTION_NAME).whereEqualTo("user",  id)
-            return curhatReplies.get()
+            return curhatReplies
         }
-        fun userProfilePost(id: String): Task<QuerySnapshot> {
+        fun userProfilePost(id: String): Query {
             val db = Firebase.firestore
             val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", id)
                 .orderBy("createdAt", Query.Direction.ASCENDING).limit(3)
-            return curhats.get()
+            return curhats
         }
         fun getCommentCount(curhatId: String, callback: (Int) -> Unit) {
             val db = FirebaseFirestore.getInstance()
-
             db.collection(COLLECTION_NAME).document(curhatId).get()
                 .addOnSuccessListener { commentdocs ->
                     val container = commentdocs.toObject(CommentListDocument::class.java)
@@ -77,7 +76,6 @@ class CurhatCommentRepository {
 
         fun deleteAllById(curhatId: String, callback: () -> Unit) {
             val db = FirebaseFirestore.getInstance()
-
             db.collection(COLLECTION_NAME).document(curhatId).delete()
                 .addOnSuccessListener { callback() }
         }
