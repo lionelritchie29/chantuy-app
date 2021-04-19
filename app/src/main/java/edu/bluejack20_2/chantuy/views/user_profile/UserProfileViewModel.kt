@@ -41,34 +41,45 @@ class UserProfileViewModel {
 
     constructor(){
         val currUserId=FirebaseAuth.getInstance().currentUser.uid
-        CurhatRepository.countUserPost(currUserId).addOnCompleteListener{resultDoc->
-            if(resultDoc.result!=null){
-                curhatCount.value=resultDoc.result?.size()
+        CurhatRepository.countUserPost(currUserId).addSnapshotListener{value,e ->
+            if(e!=null){
+                curhatCount.value=0
+                return@addSnapshotListener
+            }
+            if(value!=null){
+                curhatCount.value=value?.size()
             }
             else{
                 curhatCount.value=0
             }
         }
 
-        CurhatCommentRepository.countUserComment(currUserId) .addOnCompleteListener{resultDoc->
-            if(resultDoc.result!=null){
-                replyCount.value=resultDoc.result?.size()
+        CurhatCommentRepository.countUserComment(currUserId).addSnapshotListener{value,e ->
+            if(e!=null){
+                replyCount.value=0
+                return@addSnapshotListener
+            }
+            if(value!=null){
+                replyCount.value=value?.size()
             }
             else{
                 replyCount.value=0
             }
         }
-        CurhatRepository.userProfilePost(currUserId).addOnCompleteListener { profilePost ->
-            recentCurhats.value=profilePost.result?.toObjects(Curhat::class.java)
+        CurhatRepository.userProfilePost(currUserId).addSnapshotListener{value,e ->
+            if(e!=null){
+                return@addSnapshotListener
+            }
+            recentCurhats.value=value?.toObjects(Curhat::class.java)
         }
 
-        CurhatCommentRepository.userProfilePost(currUserId).addOnCompleteListener { profilePost ->
-            recentReplies.value=profilePost.result?.toObjects(CurhatComment::class.java)
+        CurhatCommentRepository.userProfilePost(currUserId).addSnapshotListener{value, e ->
+            if(e!=null){
+                return@addSnapshotListener
+            }
+            recentReplies.value=value?.toObjects(CurhatComment::class.java)
+
         }
-
-
-
-
 
 
     }

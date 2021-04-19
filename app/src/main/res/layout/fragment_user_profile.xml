@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                    app:layout_constraintTop_toBottomOf="@+id/recent_curhat_tv" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recent_reply_rview"
@@ -108,33 +108,24 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/insert_curhat_header" />
+                    app:layout_constraintTop_toBottomOf="@+id/recent_reply_tv" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/recent_curhat_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="44dp"
-                    android:text="TextView"
+                    android:layout_marginTop="60dp"
+                    android:text="@string/recent_curhat_text"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.503"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/total_reply" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/recent_reply_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="TextView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-                <TextView
-                    android:id="@+id/insert_curhat_header"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text="@string/recent_reply_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recent_post_rview" />

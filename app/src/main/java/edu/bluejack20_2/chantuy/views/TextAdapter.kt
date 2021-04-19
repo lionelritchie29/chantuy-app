@@ -1,6 +1,7 @@
 package com.example.todolist
 
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,9 @@ class TextAdapter(private var texts:MutableList<Text>): RecyclerView.Adapter<Tex
     override fun getItemCount(): Int {
         return texts.size
     }
-
+    fun clearAllText(){
+        texts.clear()
+    }
 
 
     fun addText(text: Text){
