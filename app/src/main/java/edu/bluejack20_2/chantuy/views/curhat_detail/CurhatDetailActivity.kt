@@ -17,11 +17,13 @@ import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.views.CurhatCommentAdapter
 
 class CurhatDetailActivity : AppCompatActivity() {
+    private lateinit var viewModel: CurhatDetailViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_curhat_detail)
 
-        val viewModel = CurhatDetailViewModel()
+        viewModel = CurhatDetailViewModel()
         val adapter = CurhatCommentAdapter()
 
         val progressIndicator: LinearProgressIndicator = findViewById(R.id.detailCurhatLoadIndicator)
@@ -47,5 +49,10 @@ class CurhatDetailActivity : AppCompatActivity() {
                 progressIndicator.visibility = View.VISIBLE
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCurhatDetail(intent)
     }
 }

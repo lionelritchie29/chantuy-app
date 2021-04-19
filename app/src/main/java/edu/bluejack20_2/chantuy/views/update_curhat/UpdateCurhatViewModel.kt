@@ -2,6 +2,7 @@ package edu.bluejack20_2.chantuy.views.update_curhat
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.lifecycle.LiveData
@@ -56,5 +57,35 @@ class UpdateCurhatViewModel : ViewModel() {
                 = ArrayAdapter(topicTv.context, android.R.layout.select_dialog_item, topicsString)
         topicTv.threshold = 1
         topicTv.setAdapter(adapter)
+    }
+
+    fun onUpdate(content: String, topicName: String, isAnon: Boolean, callback: () -> Unit) {
+        getTopicId(topicName) { newTopicId ->
+            Log.i("UpdateCurhatViewModel", "topic id: " + newTopicId)
+            val curhat = hashMapOf(
+                "topic" to newTopicId,
+                "content" to content,
+                "anonymous" to isAnon
+            )
+            CurhatRepository.update(curhatId, curhat) {
+                callback()
+            }
+        }
+    }
+
+    fun getTopicId(topicName: String, callback: (String) -> Unit) {
+        if (topicName.length <= 0) {
+            val index = topicsString.indexOf(currentTopicName)
+            callback(topics.get(index).id)
+        } else {
+            val index = topicsString.indexOf(topicName)
+            if (index == -1) {
+                CurhatTopicRepository.addTopic(topicName) {topicId ->
+                    callback(topicId)
+                }
+            } else {
+                callback(topics.get(index).id)
+            }
+        }
     }
 }

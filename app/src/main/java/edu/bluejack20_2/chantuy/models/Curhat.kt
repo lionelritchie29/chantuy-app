@@ -11,9 +11,9 @@ data class Curhat (
         var topic: String = "",
         var user: String = "",
         var content: String = "",
-        var likeCount: Int = 0,
-        var dislikeCount: Int = 0,
-        var viewCount: Int = 0,
+        var likeCount: Int? = 0,
+        var dislikeCount: Int? = 0,
+        var viewCount: Int? = 0,
         var isAnonymous: Boolean = true,
         @ServerTimestamp var createdAt:  Timestamp? = null,
         @ServerTimestamp var updatedAt: Timestamp? = null

@@ -15,6 +15,7 @@ import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import org.w3c.dom.Comment
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.random.Random
 
 
@@ -95,7 +96,18 @@ class CurhatRepository {
             val db = FirebaseFirestore.getInstance()
 
             val curhat =
-                Curhat("", topicId, "user_id", content, 0, 0, 0, isAnon, Timestamp.now(), Timestamp.now())
+                Curhat(
+                    "",
+                    topicId,
+                    "user_id",
+                    content,
+                    0,
+                    0,
+                    0,
+                    isAnon,
+                    Timestamp.now(),
+                    Timestamp.now()
+                )
             db.collection(COLLECTION_NAME).add(curhat)
                 .addOnSuccessListener { callback() }
         }
@@ -122,6 +134,23 @@ class CurhatRepository {
                         curhats.add(curhat)
                     }
                     callback(curhats)
+                }
+        }
+
+        fun update(curhatId: String, curhat: HashMap<String, Any>, callback: () -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(COLLECTION_NAME).document(curhatId)
+                .update(
+                    "content",
+                    curhat.get("content"),
+                    "topic",
+                    curhat.get("topic"),
+                    "anonymous",
+                    curhat.get("anonymous")
+                )
+                .addOnSuccessListener {
+                    callback()
                 }
         }
 

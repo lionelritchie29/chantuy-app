@@ -25,8 +25,19 @@ class UpdateCurhatActivity : AppCompatActivity() {
         viewModel.curhat.observe(this, Observer {
             curhatIdTv.text = it.id
             contentTv.text = it.content
-            currentTopicTv.text = "current: ${viewModel.currentTopicName} (leave the field blank to use current topic)"
+            currentTopicTv.text =
+                "current: ${viewModel.currentTopicName} (leave the field blank to use current topic)"
             anonymousCb.isChecked = it.isAnonymous
         })
+
+        updateBtn.setOnClickListener {
+            viewModel.onUpdate(
+                contentTv.text.toString(),
+                topicTv.text.toString(),
+                anonymousCb.isChecked
+            ) {
+                finish()
+            }
+        }
     }
 }
