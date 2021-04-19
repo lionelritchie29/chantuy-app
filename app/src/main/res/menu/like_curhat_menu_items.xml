@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/like_curhat_thumb_up"
+        android:title="Great!" />
+    <item
+        android:id="@+id/like_curhat_cool"
+        android:title="Cool!" />
+    <item
+        android:id="@+id/like_curhat_love"
+        android:title="Love It!" />
+</menu>
