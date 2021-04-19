@@ -9,17 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Chantuy">
+
         <activity android:name=".views.update_curhat.UpdateCurhatActivity"></activity>
-        <activity android:name=".views.login.LoginActivity" />
-        <activity android:name=".views.insert_curhat.InsertCurhatActivity" />
-        <activity android:name=".views.curhat_detail.CurhatDetailActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".views.login.LoginActivity" android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".views.insert_curhat.InsertCurhatActivity" />
+        <activity android:name=".views.curhat_detail.CurhatDetailActivity" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

@@ -1,9 +1,13 @@
 package edu.bluejack20_2.chantuy.repositories
 
 import android.util.Log
+import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.models.CommentListDocument
 import edu.bluejack20_2.chantuy.models.CurhatComment
 import java.lang.StringBuilder
@@ -46,7 +50,17 @@ class CurhatCommentRepository {
                     callback(container?.comments)
                 }
         }
-
+        fun countUserComment(id: String): Task<QuerySnapshot> {
+            val db = Firebase.firestore
+            val curhatReplies = db.collection(COLLECTION_NAME).whereEqualTo("user",  id)
+            return curhatReplies.get()
+        }
+        fun userProfilePost(id: String): Task<QuerySnapshot> {
+            val db = Firebase.firestore
+            val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", id)
+                .orderBy("createdAt", Query.Direction.ASCENDING).limit(3)
+            return curhats.get()
+        }
         fun getCommentCount(curhatId: String, callback: (Int) -> Unit) {
             val db = FirebaseFirestore.getInstance()
 

@@ -41,6 +41,8 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="add_comment">Add a comment...</string>
     <string name="add">Add</string>
+<<<<<<< HEAD
+=======
     <string name="filte_by_topic">Filter Topic</string>
     <string name="find_more_topic">Find more topics</string>
     <string name="is_anonymous">Anonymous</string>
@@ -48,6 +50,7 @@
     <string name="delete">Delete</string>
     <string name="update_curhat">Update Curhat</string>
     <string name="curhat_id_label">Curhat ID</string>
+>>>>>>> 731cbebe58afdf434206813914bb44f8d99bcddc
 
 
 </resources>

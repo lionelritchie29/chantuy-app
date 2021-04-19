@@ -1,5 +1,6 @@
 package edu.bluejack20_2.chantuy.views.user_profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,15 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todolist.Text
+import com.example.todolist.TextAdapter
 import com.firebase.ui.auth.AuthUI
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import edu.bluejack20_2.chantuy.R
-import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.views.CurhatAdapter
+import edu.bluejack20_2.chantuy.views.login.LoginActivity
 
 
 class UserProfileFragment : Fragment() {
@@ -28,46 +29,86 @@ class UserProfileFragment : Fragment() {
 
         val viewModel = UserProfileViewModel()
 
-        viewModel.getUser()
-//        val recyclerView: RecyclerView = rootView.findViewById(R.id.curhat_recycler_view)
+//        val recyclerView: RecyclerView = rootView.findViewById(R.id.curhat_recycler_view)kasi
 
 
-        val curhatAdapter = CurhatAdapter()
+        val curhatAdapter = TextAdapter(mutableListOf())
         val curhatRecyclerView: RecyclerView = rootView.findViewById(R.id.recent_post_rview)
         curhatRecyclerView.adapter = curhatAdapter
+        curhatRecyclerView.layoutManager=LinearLayoutManager(this.activity)
+        val replyAdapter = TextAdapter(mutableListOf())
+        val replyRecyclerView: RecyclerView = rootView.findViewById(R.id.recent_reply_rview)
+        replyRecyclerView.adapter = replyAdapter
+        replyRecyclerView.layoutManager=LinearLayoutManager(this.activity)
+
 
 
         val nameView : TextView = rootView.findViewById(R.id.user_profile_name)
-        val currUserObserver = Observer<User>{newUser->
-            nameView.setText(newUser.name)
-        }
-        viewModel.currUser.observe(this,currUserObserver)
+        val emailView : TextView = rootView.findViewById(R.id.user_profile_email)
 
+        nameView.setText(viewModel.userName)
+        emailView.setText(viewModel.userEmail)
+
+
+//        Log.i("Testing Info", )
 
         val curhatCountView : TextView = rootView.findViewById(R.id.total_post)
-
         val totalPostObserver = Observer<Int>{totalPostCount->
-            curhatCountView.setText(""+ totalPostCount + " curhat(s) posted")
+
+            if(totalPostCount==1){
+                curhatCountView.setText(""+ totalPostCount + " curhat posted")
+            }else{
+                curhatCountView.setText(""+ totalPostCount + " curhats posted")
+            }
+
+        }
+
+        val replyCountView : TextView = rootView.findViewById(R.id.total_reply)
+
+        val totalReplyObserver = Observer<Int>{totalReplyCount->
+            if(totalReplyCount==1){
+                replyCountView.setText(""+ totalReplyCount + " reply posted")
+            }else{
+                replyCountView.setText(""+ totalReplyCount + " replies posted")
+            }
         }
 
 
         viewModel.curhatCount.observe(this,totalPostObserver)
+        viewModel.curhatCount.observe(this,totalReplyObserver)
         val logOutButton: Button = rootView.findViewById(R.id.log_out_button)
         logOutButton.setOnClickListener {
             AuthUI.getInstance()
                     .signOut(this.requireActivity())
                     .addOnCompleteListener {
-
+                        val intent  = Intent(this.activity, LoginActivity::class.java)
+                        startActivity(intent)
+                        this.activity?.finish()
                     }
-
         }
 
-//
-//
-//        viewModel.recentCurhats.observe(viewLifecycleOwner, Observer {curhats ->
-//            curhatAdapter.submitList(curhats)
-//        })
+        viewModel.recentCurhats.observe(viewLifecycleOwner, Observer {curhats ->
 
+            if(curhats.isEmpty()){
+
+            }
+            for (curhat in curhats){
+                curhatAdapter.addText(Text(curhat.content))
+            }
+
+        })
+
+        viewModel.recentReplies.observe(viewLifecycleOwner, Observer {replies ->
+
+            if(replies.isEmpty()){
+                Log.i("testing","aduh gaada gan")
+            }
+            for (reply in replies){
+                curhatAdapter.addText(Text(reply.content))
+                Log.i("testing",reply.content)
+            }
+
+        })
 
 
         return rootView

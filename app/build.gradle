@@ -55,6 +55,10 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
     implementation platform('com.google.firebase:firebase-bom:27.0.0')
     implementation 'com.google.firebase:firebase-auth-ktx'
+<<<<<<< HEAD
+
+=======
+>>>>>>> 731cbebe58afdf434206813914bb44f8d99bcddc
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.1'
 
 }
