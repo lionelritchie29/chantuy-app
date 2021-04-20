@@ -8,9 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.PopupMenu
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -69,12 +67,19 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.curhat_comment_user_name)
         val content: TextView = view.findViewById(R.id.curhat_comment_content)
-        val createdAt: TextView = view.findViewById(R.id.curhat_comment_date)
+        val createdAt: TextView = view.findViewById(R.id.curhat_comment_date_first)
         val actionBtn: ImageButton = view.findViewById(R.id.curhat_comment_action_btn)
+
+        val updateBtn: Button = view.findViewById(R.id.curhat_comment_update_btn)
+        val cancelBtn: Button = view.findViewById(R.id.curhat_comment_cancel_btn)
+        val editContent: EditText = view.findViewById(R.id.curhat_comment_edit_text)
+
+        var isUpdating = false
 
         fun bind(comment: CurhatComment) {
             content.text = comment.content
             createdAt.text = CurhatViewUtil.formatDate(comment.createdAt)
+            editContent.setText(comment.content)
 
             if (comment.user.length > 0) {
                 UserRepository.getUserById(comment.user) {user ->
@@ -82,11 +87,32 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
                 }
             }
 
-            setActionBtnVisibility(actionBtn, comment.user)
+            setActionBtnVisibility(comment.user)
             setActionBtnListener(comment)
+            setUpdateEventListener(comment)
+            setCancelEventListener(comment)
         }
 
-        private fun setActionBtnVisibility(actionBtn: ImageButton, userId: String ) {
+        private fun setUpdateEventListener(comment: CurhatComment) {
+            updateBtn.setOnClickListener {
+                CurhatCommentRepository.updateComment(
+                    comment.commentId, editContent.text.toString()
+                ) {
+                    content.text = it
+                    isUpdating = !isUpdating
+                    toggleUpdateForm(comment, isUpdating)
+                }
+            }
+        }
+
+        private fun setCancelEventListener(comment: CurhatComment) {
+            cancelBtn.setOnClickListener {
+                isUpdating = !isUpdating
+                toggleUpdateForm(comment, isUpdating)
+            }
+        }
+
+        private fun setActionBtnVisibility(userId: String ) {
             if (UserRepository.getCurrentUserId() == userId) {
                 actionBtn.visibility = View.VISIBLE
             } else {
@@ -101,7 +127,10 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
 
                 popupMenu.setOnMenuItemClickListener {
                     when (it.itemId) {
-//                        R.id.update_curhat_menu_item -> moveToUpdateActivity(curhat)
+                        R.id.update_curhat_menu_item -> {
+                            isUpdating = !isUpdating
+                            toggleUpdateForm(comment, isUpdating)
+                        }
                         R.id.delete_curhat_menu_item -> deleteComment(comment)
                         else -> false
                     }
@@ -109,6 +138,24 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
 
                 popupMenu.show()
             }
+        }
+
+        fun toggleUpdateForm(comment: CurhatComment, isUpdating: Boolean): Boolean {
+
+            if (isUpdating) {
+                content.visibility = View.GONE
+                createdAt.visibility = View.GONE
+                editContent.visibility = View.VISIBLE
+                updateBtn.visibility = View.VISIBLE
+                cancelBtn.visibility = View.VISIBLE
+            } else {
+                content.visibility = View.VISIBLE
+                createdAt.visibility = View.VISIBLE
+                editContent.visibility = View.GONE
+                updateBtn.visibility = View.GONE
+                cancelBtn.visibility = View.GONE
+            }
+            return true
         }
 
         private fun deleteComment(comment: CurhatComment): Boolean {

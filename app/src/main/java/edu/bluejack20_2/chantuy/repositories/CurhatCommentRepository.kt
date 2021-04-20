@@ -27,11 +27,21 @@ class CurhatCommentRepository {
                 }
         }
 
+        fun updateComment(commentId: String, content: String, callback: (String) -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(COLLECTION_NAME).document(commentId)
+                .update("content", content)
+                .addOnSuccessListener {
+                    callback(content)
+                }
+        }
+
         fun getCommentsByCurhatId(curhatId: String, callback: (List<CurhatComment>?) -> Unit) {
             val db = FirebaseFirestore.getInstance()
 
             db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId)
-                .orderBy("createdAt", Query.Direction.DESCENDING).get()
+                .orderBy("createdAt").get()
                 .addOnSuccessListener { it ->
                     val comments = mutableListOf<CurhatComment>()
                     for (doc in it.documents) {
