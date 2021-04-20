@@ -8,10 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import edu.bluejack20_2.chantuy.models.Curhat
-import edu.bluejack20_2.chantuy.models.CurhatComment
-import edu.bluejack20_2.chantuy.models.CurhatTopic
-import edu.bluejack20_2.chantuy.models.User
+import edu.bluejack20_2.chantuy.models.*
 import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
@@ -22,6 +19,8 @@ class UserProfileViewModel {
 
     val userName: String = FirebaseAuth.getInstance().currentUser.displayName
     val userEmail: String = FirebaseAuth.getInstance().currentUser.email
+    var userPictureUrl: String = ""
+
 
     val curhatCount : MutableLiveData<Int> by lazy{
         MutableLiveData<Int>()
@@ -38,10 +37,10 @@ class UserProfileViewModel {
         postValue(initCurhats)
     }
 
+    val currUser=FirebaseAuth.getInstance().currentUser
 
     constructor(){
-        val currUserId=FirebaseAuth.getInstance().currentUser.uid
-        CurhatRepository.countUserPost(currUserId).addSnapshotListener{value,e ->
+        CurhatRepository.countUserPost(currUser.uid).addSnapshotListener{value,e ->
             if(e!=null){
                 curhatCount.value=0
                 return@addSnapshotListener
@@ -54,31 +53,31 @@ class UserProfileViewModel {
             }
         }
 
-        CurhatCommentRepository.countUserComment(currUserId).addSnapshotListener{value,e ->
+        CurhatCommentRepository.countUserComment(currUser.uid).addSnapshotListener{value,e ->
             if(e!=null){
                 replyCount.value=0
+
                 return@addSnapshotListener
             }
             if(value!=null){
-                replyCount.value=value?.size()
+                replyCount.value=value.size()
             }
             else{
                 replyCount.value=0
             }
         }
-        CurhatRepository.userProfilePost(currUserId).addSnapshotListener{value,e ->
+        CurhatRepository.userProfilePost(currUser.uid).addSnapshotListener{value,e ->
             if(e!=null){
                 return@addSnapshotListener
             }
             recentCurhats.value=value?.toObjects(Curhat::class.java)
         }
 
-        CurhatCommentRepository.userProfilePost(currUserId).addSnapshotListener{value, e ->
+        CurhatCommentRepository.userProfilePost(currUser.uid).addSnapshotListener{value, e ->
             if(e!=null){
                 return@addSnapshotListener
             }
             recentReplies.value=value?.toObjects(CurhatComment::class.java)
-
         }
 
 
@@ -88,5 +87,7 @@ class UserProfileViewModel {
 
     }
 
+    fun uploadImage(){
 
+    }
 }

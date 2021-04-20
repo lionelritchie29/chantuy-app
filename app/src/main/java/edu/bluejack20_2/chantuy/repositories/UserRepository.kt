@@ -1,19 +1,20 @@
 package edu.bluejack20_2.chantuy.repositories
 
+import android.net.Uri
 import android.util.Log
+import com.bumptech.glide.annotation.GlideModule
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.views.user_profile.UserProfileViewModel
+import java.net.URL
 
 class UserRepository {
     companion object{
@@ -61,6 +62,7 @@ class UserRepository {
             return FirebaseAuth.getInstance().currentUser.uid
         }
 
+
         fun getCurrentUser(callback: (User?) -> Unit) {
             val db = FirebaseFirestore.getInstance()
 
@@ -72,6 +74,11 @@ class UserRepository {
                 }
         }
 
+        fun getUserById(id: String):DocumentReference {
+            val db = FirebaseFirestore.getInstance()
+            val user=db.collection(UserRepository.COLLECTION_NAME).document(id)
+            return user
+        }
         fun getUserById(userId: String, callback: (User?) -> Unit) {
             val db = FirebaseFirestore.getInstance()
 
@@ -83,6 +90,14 @@ class UserRepository {
                     Log.i("UserRepository", it.toString())
                     callback(user)
                 }
+        }
+        fun updateProfileImage(url: String){
+            val currUser= FirebaseAuth.getInstance().currentUser
+
+            currUser.updateProfile(userProfileChangeRequest {
+                photoUri= Uri.parse(url)
+            })
+            getUserById(currUser.uid).set(hashMapOf("profileImageId" to url), SetOptions.merge())
         }
 
     }
