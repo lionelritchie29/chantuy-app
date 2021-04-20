@@ -1,7 +1,6 @@
 package edu.bluejack20_2.chantuy.views.curhat_detail
 
 import android.content.Intent
-import android.util.Log
 import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -33,7 +32,7 @@ class CurhatDetailViewModel: ViewModel() {
 
         CurhatRepository.getById(id) {
             curhat = it
-            CurhatCommentRepository.getCommentsById(id) { comments ->
+            CurhatCommentRepository.getCommentsByCurhatId(id) { comments ->
                 if (comments != null) {
                     _comments.value = comments
                 } else {

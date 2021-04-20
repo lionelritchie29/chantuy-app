@@ -18,6 +18,7 @@ import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.views.update_curhat.UpdateCurhatActivity
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatComment
+import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
@@ -65,10 +66,11 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
 
 
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.curhat_comment_user_name)
         val content: TextView = view.findViewById(R.id.curhat_comment_content)
         val createdAt: TextView = view.findViewById(R.id.curhat_comment_date)
+        val actionBtn: ImageButton = view.findViewById(R.id.curhat_comment_action_btn)
 
         fun bind(comment: CurhatComment) {
             content.text = comment.content
@@ -79,6 +81,59 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
                     name.text = user?.name
                 }
             }
+
+            setActionBtnVisibility(actionBtn, comment.user)
+            setActionBtnListener(comment)
+        }
+
+        private fun setActionBtnVisibility(actionBtn: ImageButton, userId: String ) {
+            if (UserRepository.getCurrentUserId() == userId) {
+                actionBtn.visibility = View.VISIBLE
+            } else {
+                actionBtn.visibility = View.INVISIBLE
+            }
+        }
+
+        private fun setActionBtnListener(comment: CurhatComment) {
+            actionBtn.setOnClickListener {
+                val popupMenu = PopupMenu(view.context, it)
+                popupMenu.menuInflater.inflate(R.menu.curhat_detail_action_items, popupMenu.menu)
+
+                popupMenu.setOnMenuItemClickListener {
+                    when (it.itemId) {
+//                        R.id.update_curhat_menu_item -> moveToUpdateActivity(curhat)
+                        R.id.delete_curhat_menu_item -> deleteComment(comment)
+                        else -> false
+                    }
+                }
+
+                popupMenu.show()
+            }
+        }
+
+        private fun deleteComment(comment: CurhatComment): Boolean {
+            val builder = AlertDialog.Builder(view.context)
+            builder.setMessage("Are you sure ?")
+                .setCancelable(false)
+                .setPositiveButton("Yes") { dialog, id ->
+                    CurhatCommentRepository.deleteById(comment.commentId) {
+                        reloadActivity()
+                    }
+                }
+                .setNegativeButton("No") { dialog, id ->
+                    dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show()
+            return true
+        }
+
+        private fun reloadActivity() {
+            val activity = view.context as Activity
+            activity.finish()
+            activity.overridePendingTransition(0 ,0)
+            activity.startActivity(activity.intent)
+            activity.overridePendingTransition(0 ,0)
         }
 
         companion object {
