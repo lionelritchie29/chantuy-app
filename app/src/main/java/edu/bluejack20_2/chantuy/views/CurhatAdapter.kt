@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -37,7 +38,7 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
     }
 
     class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
-        private val content : TextView = view.findViewById(R.id.curhat_card_content)
+        private val content: TextView = view.findViewById(R.id.curhat_card_content)
         private val username: TextView = view.findViewById(R.id.curhat_card_username)
         private val postedDate: TextView = view.findViewById(R.id.curhat_card_date)
         private val viewMoreBtn: Button = view.findViewById(R.id.curhat_card_view_btn)
@@ -51,7 +52,7 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
             CurhatRepository.incrementViewCount(curhat.id)
             setOnViewMoreListener(curhat.id)
 
-            UserRepository.getUserById(curhat.user) {user ->
+            UserRepository.getUserById(curhat.user) { user ->
                 username.text = if (curhat.isAnonymous) "Anonymous" else user?.name
             }
 
@@ -59,8 +60,37 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
                 commentCount.text = count.toString()
             }
 
+
+            setReactionBtnColor(curhat)
             setLikePopupMenu(curhat.id)
             setDislikePopupMenu(curhat.id)
+        }
+
+        private fun setReactionBtnColor(curhat: Curhat) {
+            if (curhat == null) return
+            val userId = UserRepository.getCurrentUserId()
+            Log.i("CurhatAdapter", curhat.toString())
+
+            if (
+                curhat.usersGiveThumbUp?.contains(userId)!! ||
+                curhat.usersGiveCool?.contains(userId)!! ||
+                curhat.usersGiveLove?.contains(userId)!!
+            ) {
+                likeBtn.setColorFilter(
+                    ContextCompat.getColor(view.context, R.color.green),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                )
+            }
+
+            if (
+                curhat.usersGiveThumbDowns?.contains(userId)!! ||
+                curhat.usersGiveAngry?.contains(userId)!!
+            ) {
+                dislikeBtn.setColorFilter(
+                    ContextCompat.getColor(view.context, R.color.dark_red),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+                )
+            }
         }
 
         @SuppressLint("RestrictedApi")
@@ -73,13 +103,17 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
                     when (it.itemId) {
                         R.id.dislike_curhat_thumb_down -> {
                             CurhatRepository.addDislikeReaction(id, CurhatReaction.THUMB_DOWN) {
-                                Log.i("CurhatAdapter", "Success")
+                                CurhatViewUtil.changeReactionBtnColor(
+                                    dislikeBtn, R.color.dark_red, view
+                                )
                             }
                             true
                         }
                         R.id.dislike_curhat_angry -> {
                             CurhatRepository.addDislikeReaction(id, CurhatReaction.ANGRY) {
-                                Log.i("CurhatAdapter", "Success")
+                                CurhatViewUtil.changeReactionBtnColor(
+                                    dislikeBtn, R.color.dark_red, view
+                                )
                             }
                             true
                         }
@@ -103,19 +137,25 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
                     when (it.itemId) {
                         R.id.like_curhat_thumb_up -> {
                             CurhatRepository.addLikeReaction(id, CurhatReaction.THUMB_UP) {
-                                Log.i("CurhatAdapter", "Success")
+                                CurhatViewUtil.changeReactionBtnColor(
+                                    likeBtn, R.color.green, view
+                                )
                             }
                             true
                         }
                         R.id.like_curhat_cool -> {
                             CurhatRepository.addLikeReaction(id, CurhatReaction.COOL) {
-                                Log.i("CurhatAdapter", "Success")
+                                CurhatViewUtil.changeReactionBtnColor(
+                                    likeBtn, R.color.green, view
+                                )
                             }
                             true
                         }
                         R.id.like_curhat_love -> {
                             CurhatRepository.addLikeReaction(id, CurhatReaction.LOVE) {
-                                Log.i("CurhatAdapter", "Success")
+                                CurhatViewUtil.changeReactionBtnColor(
+                                    likeBtn, R.color.green, view
+                                )
                             }
                             true
                         }
@@ -145,7 +185,8 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
         }
 
         companion object {
-            fun from(parent: ViewGroup) : ViewHolder {
+            fun from(parent: ViewGroup): ViewHolder {
+
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.curhat_card_item, parent, false)
 
