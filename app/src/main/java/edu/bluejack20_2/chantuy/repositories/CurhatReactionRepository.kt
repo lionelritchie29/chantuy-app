@@ -18,6 +18,7 @@ class CurhatReactionRepository {
             }.addOnSuccessListener {
                 curhatRef.get().addOnSuccessListener {
                     it.reference.update("likeCount", getLikeCount(it))
+                    it.reference.update("dislikeCount", getDislikeCount(it))
                     callback()
                 }
             }
@@ -33,6 +34,7 @@ class CurhatReactionRepository {
                 addUserToDislikeList(transaction, curhatRef, userId, type)
             }.addOnSuccessListener {
                 curhatRef.get().addOnSuccessListener {
+                    it.reference.update("likeCount", getLikeCount(it))
                     it.reference.update("dislikeCount", getDislikeCount(it))
                     callback()
                 }
