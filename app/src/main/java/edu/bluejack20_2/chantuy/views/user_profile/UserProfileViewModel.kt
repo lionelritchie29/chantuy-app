@@ -19,6 +19,8 @@ class UserProfileViewModel {
 
     val userName: String = FirebaseAuth.getInstance().currentUser.displayName
     val userEmail: String = FirebaseAuth.getInstance().currentUser.email
+    var userPictureUrl: String = ""
+
 
     val curhatCount : MutableLiveData<Int> by lazy{
         MutableLiveData<Int>()
@@ -35,10 +37,10 @@ class UserProfileViewModel {
         postValue(initCurhats)
     }
 
+    val currUser=FirebaseAuth.getInstance().currentUser
 
     constructor(){
-        val currUserId=FirebaseAuth.getInstance().currentUser.uid
-        CurhatRepository.countUserPost(currUserId).addSnapshotListener{value,e ->
+        CurhatRepository.countUserPost(currUser.uid).addSnapshotListener{value,e ->
             if(e!=null){
                 curhatCount.value=0
                 return@addSnapshotListener
@@ -51,7 +53,7 @@ class UserProfileViewModel {
             }
         }
 
-        CurhatCommentRepository.countUserComment(currUserId).addSnapshotListener{value,e ->
+        CurhatCommentRepository.countUserComment(currUser.uid).addSnapshotListener{value,e ->
             if(e!=null){
                 replyCount.value=0
 
@@ -64,19 +66,18 @@ class UserProfileViewModel {
                 replyCount.value=0
             }
         }
-        CurhatRepository.userProfilePost(currUserId).addSnapshotListener{value,e ->
+        CurhatRepository.userProfilePost(currUser.uid).addSnapshotListener{value,e ->
             if(e!=null){
                 return@addSnapshotListener
             }
             recentCurhats.value=value?.toObjects(Curhat::class.java)
         }
 
-        CurhatCommentRepository.userProfilePost(currUserId).addSnapshotListener{value, e ->
+        CurhatCommentRepository.userProfilePost(currUser.uid).addSnapshotListener{value, e ->
             if(e!=null){
                 return@addSnapshotListener
             }
             recentReplies.value=value?.toObjects(CurhatComment::class.java)
-
         }
 
 
@@ -86,5 +87,7 @@ class UserProfileViewModel {
 
     }
 
+    fun uploadImage(){
 
+    }
 }

@@ -14,6 +14,7 @@ import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import org.w3c.dom.Comment
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 import kotlin.random.Random
@@ -137,9 +138,33 @@ class CurhatRepository {
                 }
         }
 
+        fun getCurhatBySearch(searchString: String,mostLike: Boolean): Query {
+            val db = FirebaseFirestore.getInstance()
+            if(mostLike)return db.collection(COLLECTION_NAME).orderBy("likeCount",Query.Direction.DESCENDING)
+            return db.collection(COLLECTION_NAME).orderBy("dislikeCount",Query.Direction.DESCENDING)
+        }
+        fun getCurhatBySearch(searchString: String, timeType: Int): Query {
+            val db = FirebaseFirestore.getInstance()
+            var dateReducer: Date
+            if(timeType==0){
+                dateReducer=Date("0000-00-01")
+            }
+            else if(timeType==1){
+                dateReducer=Date("0000-00-07")
+            }
+            else if(timeType==2){
+                dateReducer=Date("0000-01-00")
+            }else{
+                dateReducer=Date("0001-00-09")
+            }
+            var date= Date().time - dateReducer.time
+            return db.collection(COLLECTION_NAME).whereGreaterThan("createdAt",date)
+//            whereEqualTo("content",searchString)
+
+        }
+
         fun update(curhatId: String, curhat: HashMap<String, Any>, callback: () -> Unit) {
             val db = FirebaseFirestore.getInstance()
-
             db.collection(COLLECTION_NAME).document(curhatId)
                 .update(
                     "content",
