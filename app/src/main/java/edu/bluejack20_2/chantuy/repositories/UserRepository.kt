@@ -3,6 +3,7 @@ package edu.bluejack20_2.chantuy.repositories
 import android.util.Log
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,7 +17,7 @@ import edu.bluejack20_2.chantuy.views.user_profile.UserProfileViewModel
 
 class UserRepository {
     companion object{
-        val COLLECTION_NAME="users"
+        val COLLECTION_NAME = "users"
 
         fun getUserByEmail(email:String):Task<QuerySnapshot>{
             val db= Firebase.firestore
@@ -54,6 +55,34 @@ class UserRepository {
             val db = FirebaseFirestore.getInstance()
             val user=db.collection(UserRepository.COLLECTION_NAME).document(id)
             return user.get()
+        }
+
+        fun getCurrentUserId(): String {
+            return FirebaseAuth.getInstance().currentUser.uid
+        }
+
+        fun getCurrentUser(callback: (User?) -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            val currentUserId = getCurrentUserId()
+            db.collection(COLLECTION_NAME).document(currentUserId).get()
+                .addOnSuccessListener {
+                    val user = it.toObject(User::class.java)
+                    callback(user)
+                }
+        }
+
+        fun getUserById(userId: String, callback: (User?) -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(COLLECTION_NAME).document(userId).get()
+                .addOnSuccessListener {
+                    val user = it.toObject(User::class.java)
+                    Log.i("UserRepository", userId)
+                    Log.i("UserRepository", user.toString())
+                    Log.i("UserRepository", it.toString())
+                    callback(user)
+                }
         }
 
     }

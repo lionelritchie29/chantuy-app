@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,6 +16,7 @@ import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
+import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import edu.bluejack20_2.chantuy.views.curhat_detail.CurhatDetailActivity
 
@@ -34,16 +37,40 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
         private val postedDate: TextView = view.findViewById(R.id.curhat_card_date)
         private val viewMoreBtn: Button = view.findViewById(R.id.curhat_card_view_btn)
         private val commentCount: TextView = view.findViewById(R.id.curhat_card_comment_count)
+        private val likeBtn: ImageButton = view.findViewById(R.id.curhat_card_thumb_up_btn)
+        private val dislikeBtn: ImageButton = view.findViewById(R.id.curhat_card_thumb_down_btn)
 
         fun bind(curhat: Curhat) {
-            username.text = if (curhat.isAnonymous) "Anonymous" else "Name"
             content.text = curhat.content
             postedDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
             CurhatRepository.incrementViewCount(curhat.id)
             setOnViewMoreListener(curhat.id)
 
+            UserRepository.getUserById(curhat.user) {user ->
+                username.text = if (curhat.isAnonymous) "Anonymous" else user?.name
+            }
+
             CurhatCommentRepository.getCommentCount(curhat.id) { count ->
                 commentCount.text = count.toString()
+            }
+
+            setLikePopupMenu()
+            setDislikePopupMenu()
+        }
+
+        private fun setDislikePopupMenu() {
+            dislikeBtn.setOnClickListener {
+                val popupMenu = PopupMenu(view.context, it)
+                popupMenu.menuInflater.inflate(R.menu.dislike_curhat_menu_items, popupMenu.menu)
+                popupMenu.show()
+            }
+        }
+
+        private fun setLikePopupMenu() {
+            likeBtn.setOnClickListener {
+                val popupMenu = PopupMenu(view.context, it)
+                popupMenu.menuInflater.inflate(R.menu.like_curhat_menu_items, popupMenu.menu)
+                popupMenu.show()
             }
         }
 

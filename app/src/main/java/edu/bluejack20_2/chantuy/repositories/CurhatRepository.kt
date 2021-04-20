@@ -99,7 +99,7 @@ class CurhatRepository {
                 Curhat(
                     "",
                     topicId,
-                    "user_id",
+                    UserRepository.getCurrentUserId(),
                     content,
                     0,
                     0,

@@ -19,6 +19,7 @@ import edu.bluejack20_2.chantuy.views.update_curhat.UpdateCurhatActivity
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatComment
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
+import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 
 class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(CurhatCommentDiffCallback){
@@ -70,9 +71,14 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
         val createdAt: TextView = view.findViewById(R.id.curhat_comment_date)
 
         fun bind(comment: CurhatComment) {
-            name.text = "Anonymous"
             content.text = comment.content
             createdAt.text = CurhatViewUtil.formatDate(comment.createdAt)
+
+            if (comment.user.length > 0) {
+                UserRepository.getUserById(comment.user) {user ->
+                    name.text = user?.name
+                }
+            }
         }
 
         companion object {
@@ -92,12 +98,27 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
         val actionBtn: ImageButton = view.findViewById(R.id.curhat_detail_action_btn)
 
         fun bind(curhat: Curhat, commentCount: Int) {
-            name.text = if (curhat.isAnonymous) "Anonymous" else "Name"
             content.text = curhat.content
             createdAt.text = CurhatViewUtil.formatDate(curhat.createdAt)
             commentCountText.text = commentCount.toString() + " comment(s)"
 
+            setActionBtnVisibility(curhat.user)
+
+            if (curhat.user.length > 0) {
+                UserRepository.getUserById(curhat.user) {user ->
+                    name.text = if (curhat.isAnonymous) "Anonymous" else user?.name
+                }
+            }
+
             setActionMenu(curhat)
+        }
+
+        private fun setActionBtnVisibility(userId: String) {
+            if (UserRepository.getCurrentUserId() == userId) {
+                actionBtn.visibility = View.VISIBLE
+            } else {
+                actionBtn.visibility = View.INVISIBLE
+            }
         }
 
         private fun setActionMenu(curhat: Curhat) {
