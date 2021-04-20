@@ -157,64 +157,6 @@ class CurhatRepository {
                 .update("viewCount", FieldValue.increment(1))
         }
 
-        fun addLikeReaction(curhatId: String, type: CurhatReaction, callback: () -> Unit) {
-            val db = FirebaseFirestore.getInstance()
-            val curhatRef = db.collection(COLLECTION_NAME).document(curhatId)
-
-            db.runTransaction { transaction ->
-                val userId = UserRepository.getCurrentUserId()
-
-                transaction.update(curhatRef,"usersGiveThumbUp", FieldValue.arrayRemove(userId))
-                transaction.update(curhatRef,"usersGiveLove", FieldValue.arrayRemove(userId))
-                transaction.update(curhatRef,"usersGiveCool", FieldValue.arrayRemove(userId))
-                if (type == CurhatReaction.THUMB_UP) {
-                    transaction.update(curhatRef,"usersGiveThumbUp", FieldValue.arrayUnion(userId))
-                } else if (type == CurhatReaction.COOL) {
-                    transaction.update(curhatRef,"usersGiveCool", FieldValue.arrayUnion(userId))
-                } else  {
-                    transaction.update(curhatRef,"usersGiveLove", FieldValue.arrayUnion(userId))
-                }
-
-
-            }.addOnSuccessListener {
-                curhatRef.get()
-                    .addOnSuccessListener {
-                        val thumbCount = (it.get("usersGiveThumbUp") as List<String>).size
-                        val coolCount = (it.get("usersGiveCool") as List<String>).size
-                        val loveCount = (it.get("usersGiveLove") as List<String>).size
-                        it.reference.update("likeCount", thumbCount + coolCount + loveCount)
-                        callback()
-                    }
-            }
-        }
-
-        fun addDislikeReaction(curhatId: String, type: CurhatReaction, callback: () -> Unit) {
-            val db = FirebaseFirestore.getInstance()
-            val curhatRef = db.collection(COLLECTION_NAME).document(curhatId)
-
-            db.runTransaction { transaction ->
-                val userId = UserRepository.getCurrentUserId()
-
-                transaction.update(curhatRef,"usersGiveThumbDowns", FieldValue.arrayRemove(userId))
-                transaction.update(curhatRef,"usersGiveAngry", FieldValue.arrayRemove(userId))
-                if (type == CurhatReaction.THUMB_DOWN) {
-                    transaction.update(curhatRef,"usersGiveThumbDowns", FieldValue.arrayUnion(userId))
-                } else  {
-                    transaction.update(curhatRef,"usersGiveAngry", FieldValue.arrayUnion(userId))
-                }
-
-
-            }.addOnSuccessListener {
-                curhatRef.get()
-                    .addOnSuccessListener {
-                        val thumbCount = (it.get("usersGiveThumbDowns") as List<String>).size
-                        val angryCount = (it.get("usersGiveAngry") as List<String>).size
-                        it.reference.update("dislikeCount", thumbCount + angryCount)
-                        callback()
-                    }
-            }
-        }
-
         fun countUserPost(id: String): Query {
             val db = Firebase.firestore
             val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", id)

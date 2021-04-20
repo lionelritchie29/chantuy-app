@@ -14,7 +14,9 @@ import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.databinding.CurhatCardItemBinding
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatReaction
+import edu.bluejack20_2.chantuy.repositories.CurhatReactionRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
+import edu.bluejack20_2.chantuy.repositories.CurhatTopicRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import java.text.SimpleDateFormat
 import java.util.*
@@ -47,7 +49,7 @@ class CurhatViewUtil {
                 popupMenu.setOnMenuItemClickListener {
                     when (it.itemId) {
                         R.id.dislike_curhat_thumb_down -> {
-                            CurhatRepository.addDislikeReaction(id, CurhatReaction.THUMB_DOWN) {
+                            CurhatReactionRepository.addDislikeReaction(id, CurhatReaction.THUMB_DOWN) {
                                 changeReactionBtnColor(
                                     dislikeBtn, R.color.dark_red, view
                                 )
@@ -55,7 +57,7 @@ class CurhatViewUtil {
                             true
                         }
                         R.id.dislike_curhat_angry -> {
-                            CurhatRepository.addDislikeReaction(id, CurhatReaction.ANGRY) {
+                            CurhatReactionRepository.addDislikeReaction(id, CurhatReaction.ANGRY) {
                                 changeReactionBtnColor(
                                     dislikeBtn, R.color.dark_red, view
                                 )
@@ -81,7 +83,7 @@ class CurhatViewUtil {
                 popupMenu.setOnMenuItemClickListener {
                     when (it.itemId) {
                         R.id.like_curhat_thumb_up -> {
-                            CurhatRepository.addLikeReaction(id, CurhatReaction.THUMB_UP) {
+                            CurhatReactionRepository.addLikeReaction(id, CurhatReaction.THUMB_UP) {
                                 changeReactionBtnColor(
                                     likeBtn, R.color.green, view
                                 )
@@ -89,7 +91,7 @@ class CurhatViewUtil {
                             true
                         }
                         R.id.like_curhat_cool -> {
-                            CurhatRepository.addLikeReaction(id, CurhatReaction.COOL) {
+                            CurhatReactionRepository.addLikeReaction(id, CurhatReaction.COOL) {
                                 changeReactionBtnColor(
                                     likeBtn, R.color.green, view
                                 )
@@ -97,7 +99,7 @@ class CurhatViewUtil {
                             true
                         }
                         R.id.like_curhat_love -> {
-                            CurhatRepository.addLikeReaction(id, CurhatReaction.LOVE) {
+                            CurhatReactionRepository.addLikeReaction(id, CurhatReaction.LOVE) {
                                 changeReactionBtnColor(
                                     likeBtn, R.color.green, view
                                 )
