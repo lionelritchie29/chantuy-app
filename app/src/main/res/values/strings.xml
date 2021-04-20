@@ -52,4 +52,10 @@
     <string name="recent_reply_text">Recent Reply(s)</string>
     <string name="search_topic">Search Topic</string>
     <string name="search_hint">Search Curhat</string>
+    <string name="cancel">Cancel</string>
+    <string name="great">Great</string>
+    <string name="cool">Cool</string>
+    <string name="love_it">Love It</string>
+    <string name="bad">Bad</string>
+    <string name="mad">Mad</string>
 </resources>
