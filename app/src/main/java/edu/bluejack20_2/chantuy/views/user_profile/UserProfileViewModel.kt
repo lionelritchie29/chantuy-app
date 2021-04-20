@@ -8,10 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import edu.bluejack20_2.chantuy.models.Curhat
-import edu.bluejack20_2.chantuy.models.CurhatComment
-import edu.bluejack20_2.chantuy.models.CurhatTopic
-import edu.bluejack20_2.chantuy.models.User
+import edu.bluejack20_2.chantuy.models.*
 import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
@@ -57,10 +54,11 @@ class UserProfileViewModel {
         CurhatCommentRepository.countUserComment(currUserId).addSnapshotListener{value,e ->
             if(e!=null){
                 replyCount.value=0
+
                 return@addSnapshotListener
             }
             if(value!=null){
-                replyCount.value=value?.size()
+                replyCount.value=value.size()
             }
             else{
                 replyCount.value=0

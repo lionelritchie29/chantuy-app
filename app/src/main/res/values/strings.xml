@@ -50,4 +50,6 @@
     <string name="curhat_id_label">Curhat ID</string>
     <string name="recent_curhat_text">Recent Curhat(s)</string>
     <string name="recent_reply_text">Recent Reply(s)</string>
+    <string name="search_topic">Search Topic</string>
+    <string name="search_hint">Search Curhat</string>
 </resources>

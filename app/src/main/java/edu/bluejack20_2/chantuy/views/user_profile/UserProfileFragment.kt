@@ -76,6 +76,10 @@ class UserProfileFragment : Fragment() {
 
         viewModel.curhatCount.observe(this,totalPostObserver)
         viewModel.replyCount.observe(this,totalReplyObserver)
+
+
+
+
         val logOutButton: Button = rootView.findViewById(R.id.log_out_button)
         logOutButton.setOnClickListener {
             AuthUI.getInstance()
