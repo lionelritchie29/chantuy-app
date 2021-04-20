@@ -3,8 +3,10 @@
 
     <item
         android:id="@+id/dislike_curhat_thumb_down"
-        android:title="Bad!" />
+        android:icon="@drawable/ic_thumb_down_icon"
+        android:title="@string/bad" />
     <item
         android:id="@+id/dislike_curhat_angry"
-        android:title="Mad!" />
+        android:icon="@drawable/ic_angry_icon"
+        android:title="@string/mad" />
 </menu>

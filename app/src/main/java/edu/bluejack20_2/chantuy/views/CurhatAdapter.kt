@@ -1,5 +1,6 @@
 package edu.bluejack20_2.chantuy.views
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.view.menu.MenuPopupHelper
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -58,19 +61,27 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
             setDislikePopupMenu()
         }
 
+        @SuppressLint("RestrictedApi")
         private fun setDislikePopupMenu() {
             dislikeBtn.setOnClickListener {
                 val popupMenu = PopupMenu(view.context, it)
-                popupMenu.menuInflater.inflate(R.menu.dislike_curhat_menu_items, popupMenu.menu)
-                popupMenu.show()
+                popupMenu.inflate(R.menu.dislike_curhat_menu_items)
+
+                val popupHelper = MenuPopupHelper(view.context, popupMenu.menu as MenuBuilder, it)
+                popupHelper.setForceShowIcon(true)
+                popupHelper.show()
             }
         }
 
+        @SuppressLint("RestrictedApi")
         private fun setLikePopupMenu() {
             likeBtn.setOnClickListener {
                 val popupMenu = PopupMenu(view.context, it)
-                popupMenu.menuInflater.inflate(R.menu.like_curhat_menu_items, popupMenu.menu)
-                popupMenu.show()
+                popupMenu.inflate(R.menu.like_curhat_menu_items)
+
+                val popupHelper = MenuPopupHelper(view.context, popupMenu.menu as MenuBuilder, it)
+                popupHelper.setForceShowIcon(true)
+                popupHelper.show()
             }
         }
 

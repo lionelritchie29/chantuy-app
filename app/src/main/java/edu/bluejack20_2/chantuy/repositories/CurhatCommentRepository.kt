@@ -1,16 +1,11 @@
 package edu.bluejack20_2.chantuy.repositories
 
-import android.util.Log
-import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import edu.bluejack20_2.chantuy.models.CommentListDocument
 import edu.bluejack20_2.chantuy.models.CurhatComment
-import java.lang.StringBuilder
 
 class CurhatCommentRepository {
     companion object {

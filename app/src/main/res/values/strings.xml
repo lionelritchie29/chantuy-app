@@ -51,4 +51,9 @@
     <string name="recent_curhat_text">Recent Curhat(s)</string>
     <string name="recent_reply_text">Recent Reply(s)</string>
     <string name="cancel">Cancel</string>
+    <string name="great">Great</string>
+    <string name="cool">Cool</string>
+    <string name="love_it">Love It</string>
+    <string name="bad">Bad</string>
+    <string name="mad">Mad</string>
 </resources>
