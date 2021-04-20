@@ -1,9 +1,7 @@
 package edu.bluejack20_2.chantuy.utils
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
@@ -11,15 +9,11 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import com.google.firebase.Timestamp
 import edu.bluejack20_2.chantuy.R
-import edu.bluejack20_2.chantuy.databinding.CurhatCardItemBinding
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatReaction
 import edu.bluejack20_2.chantuy.repositories.CurhatReactionRepository
-import edu.bluejack20_2.chantuy.repositories.CurhatRepository
-import edu.bluejack20_2.chantuy.repositories.CurhatTopicRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import java.text.SimpleDateFormat
-import java.util.*
 
 class CurhatViewUtil {
     companion object {
@@ -33,15 +27,9 @@ class CurhatViewUtil {
             return formatted
         }
 
-        fun changeReactionBtnColor(btn: ImageButton, colorId: Int, view: View) {
-            btn.setColorFilter(
-                ContextCompat.getColor(view.context, colorId),
-                android.graphics.PorterDuff.Mode.MULTIPLY
-            )
-        }
-
         @SuppressLint("RestrictedApi")
-        fun setDislikePopupMenu(dislikeBtn: ImageButton, id: String, view: View) {
+        fun setDislikePopupMenu(likeBtn: ImageButton, dislikeBtn: ImageButton, curhat: Curhat, view: View) {
+            val userId = UserRepository.getCurrentUserId()
             dislikeBtn.setOnClickListener {
                 val popupMenu = PopupMenu(view.context, it)
                 popupMenu.inflate(R.menu.dislike_curhat_menu_items)
@@ -49,18 +37,18 @@ class CurhatViewUtil {
                 popupMenu.setOnMenuItemClickListener {
                     when (it.itemId) {
                         R.id.dislike_curhat_thumb_down -> {
-                            CurhatReactionRepository.addDislikeReaction(id, CurhatReaction.THUMB_DOWN) {
-                                changeReactionBtnColor(
-                                    dislikeBtn, R.color.dark_red, view
-                                )
+                            CurhatReactionRepository.addDislikeReaction(curhat.id, CurhatReaction.THUMB_DOWN) {
+                                val resetedCurhat = resetReactionList(curhat)
+                                resetedCurhat.usersGiveThumbDowns = addUserIdToReactionList(resetedCurhat.usersGiveThumbDowns!!, userId)
+                                setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
                             }
                             true
                         }
                         R.id.dislike_curhat_angry -> {
-                            CurhatReactionRepository.addDislikeReaction(id, CurhatReaction.ANGRY) {
-                                changeReactionBtnColor(
-                                    dislikeBtn, R.color.dark_red, view
-                                )
+                            CurhatReactionRepository.addDislikeReaction(curhat.id, CurhatReaction.ANGRY) {
+                                val resetedCurhat = resetReactionList(curhat)
+                                resetedCurhat.usersGiveAngry = addUserIdToReactionList(resetedCurhat.usersGiveAngry!!, userId)
+                                setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
                             }
                             true
                         }
@@ -75,7 +63,8 @@ class CurhatViewUtil {
         }
 
         @SuppressLint("RestrictedApi")
-        fun setLikePopupMenu(likeBtn: ImageButton, id: String, view: View) {
+        fun setLikePopupMenu(likeBtn: ImageButton, dislikeBtn: ImageButton, curhat: Curhat, view: View) {
+            val userId = UserRepository.getCurrentUserId()
             likeBtn.setOnClickListener {
                 val popupMenu = PopupMenu(view.context, it)
                 popupMenu.inflate(R.menu.like_curhat_menu_items)
@@ -83,26 +72,26 @@ class CurhatViewUtil {
                 popupMenu.setOnMenuItemClickListener {
                     when (it.itemId) {
                         R.id.like_curhat_thumb_up -> {
-                            CurhatReactionRepository.addLikeReaction(id, CurhatReaction.THUMB_UP) {
-                                changeReactionBtnColor(
-                                    likeBtn, R.color.green, view
-                                )
+                            CurhatReactionRepository.addLikeReaction(curhat.id, CurhatReaction.THUMB_UP) {
+                                val resetedCurhat = resetReactionList(curhat)
+                                resetedCurhat.usersGiveThumbUp = addUserIdToReactionList(resetedCurhat.usersGiveThumbUp!!, userId)
+                                setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
                             }
                             true
                         }
                         R.id.like_curhat_cool -> {
-                            CurhatReactionRepository.addLikeReaction(id, CurhatReaction.COOL) {
-                                changeReactionBtnColor(
-                                    likeBtn, R.color.green, view
-                                )
+                            val resetedCurhat = resetReactionList(curhat)
+                            resetedCurhat.usersGiveCool = addUserIdToReactionList(resetedCurhat.usersGiveCool!!, userId)
+                            CurhatReactionRepository.addLikeReaction(curhat.id, CurhatReaction.COOL) {
+                                setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
                             }
                             true
                         }
                         R.id.like_curhat_love -> {
-                            CurhatReactionRepository.addLikeReaction(id, CurhatReaction.LOVE) {
-                                changeReactionBtnColor(
-                                    likeBtn, R.color.green, view
-                                )
+                            val resetedCurhat = resetReactionList(curhat)
+                            resetedCurhat.usersGiveLove = addUserIdToReactionList(resetedCurhat.usersGiveLove!!, userId)
+                            CurhatReactionRepository.addLikeReaction(curhat.id, CurhatReaction.LOVE) {
+                                setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
                             }
                             true
                         }
@@ -121,6 +110,8 @@ class CurhatViewUtil {
             if (curhat == null) return
             val userId = UserRepository.getCurrentUserId()
 
+            resetReactionBtnColor(likeBtn, dislikeBtn)
+
             if (
                 curhat.usersGiveThumbUp?.contains(userId)!! ||
                 curhat.usersGiveCool?.contains(userId)!! ||
@@ -130,9 +121,7 @@ class CurhatViewUtil {
                     ContextCompat.getColor(view.context, R.color.green),
                     android.graphics.PorterDuff.Mode.MULTIPLY
                 )
-            }
-
-            if (
+            } else if (
                 curhat.usersGiveThumbDowns?.contains(userId)!! ||
                 curhat.usersGiveAngry?.contains(userId)!!
             ) {
@@ -141,6 +130,26 @@ class CurhatViewUtil {
                     android.graphics.PorterDuff.Mode.MULTIPLY
                 )
             }
+        }
+
+        private fun resetReactionBtnColor(likeBtn: ImageButton, dislikeBtn: ImageButton) {
+            likeBtn.clearColorFilter()
+            dislikeBtn.clearColorFilter()
+        }
+
+        private fun addUserIdToReactionList(reactionList: List<String>, userId: String): List<String> {
+            val mutableList = reactionList.toMutableList()
+            mutableList.add(userId)
+            return mutableList.toList()
+        }
+
+        private fun resetReactionList(curhat: Curhat): Curhat {
+            curhat.usersGiveThumbDowns = listOf()
+            curhat.usersGiveAngry = listOf()
+            curhat.usersGiveThumbUp = listOf()
+            curhat.usersGiveLove = listOf()
+            curhat.usersGiveCool = listOf()
+            return curhat
         }
     }
 

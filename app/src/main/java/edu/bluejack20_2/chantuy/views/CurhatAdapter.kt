@@ -57,8 +57,8 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
                 binding.curhatCardThumbUpBtn,
                 binding.curhatCardThumbDownBtn,
                 curhat, binding.root)
-            CurhatViewUtil.setLikePopupMenu(binding.curhatCardThumbUpBtn, curhat.id, binding.root)
-            CurhatViewUtil.setDislikePopupMenu(binding.curhatCardThumbDownBtn, curhat.id, binding.root)
+            CurhatViewUtil.setLikePopupMenu(binding.curhatCardThumbUpBtn, binding.curhatCardThumbDownBtn, curhat, binding.root)
+            CurhatViewUtil.setDislikePopupMenu(binding.curhatCardThumbUpBtn, binding.curhatCardThumbDownBtn, curhat, binding.root)
         }
 
 

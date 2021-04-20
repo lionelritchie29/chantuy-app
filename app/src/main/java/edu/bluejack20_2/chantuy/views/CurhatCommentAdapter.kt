@@ -214,8 +214,8 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
                 binding.curhatDetailThumbDownBtn,
                 curhat, binding.root
             )
-            CurhatViewUtil.setLikePopupMenu(binding.curhatDetailThumbUpBtn, curhat.id, binding.root)
-            CurhatViewUtil.setDislikePopupMenu(binding.curhatDetailThumbDownBtn, curhat.id, binding.root)
+            CurhatViewUtil.setLikePopupMenu(binding.curhatDetailThumbUpBtn, binding.curhatDetailThumbDownBtn, curhat, binding.root)
+            CurhatViewUtil.setDislikePopupMenu(binding.curhatDetailThumbUpBtn, binding.curhatDetailThumbDownBtn, curhat, binding.root)
         }
 
         private fun setActionBtnVisibility(userId: String) {

@@ -169,19 +169,6 @@ class CurhatRepository {
                 .orderBy("createdAt", Query.Direction.ASCENDING).limit(3)
             return curhats
         }
-
-        private fun removeUserLikesIfExist(
-            thumbUps: MutableList<String>,
-            loves: MutableList<String>,
-            cools: MutableList<String>
-        ) {
-            val userId = UserRepository.getCurrentUserId()
-
-            if (thumbUps.indexOf(userId) != -1) thumbUps.remove(userId)
-            if (loves.indexOf(userId) != -1) loves.remove(userId)
-            if (cools.indexOf(userId) != -1) cools.remove(userId)
-
-        }
     }
 
 }
