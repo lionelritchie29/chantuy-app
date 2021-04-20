@@ -13,7 +13,7 @@ class CurhatReactionRepository {
             val userId = UserRepository.getCurrentUserId()
 
             db.runTransaction { transaction ->
-                removeUserFromLikeDislikeIfExist(transaction, userId, curhatRef)
+                removeUserFromReactionList(transaction, userId, curhatRef)
                 addUserToLikeList(transaction, curhatRef, userId, type)
             }.addOnSuccessListener {
                 curhatRef.get().addOnSuccessListener {
@@ -30,7 +30,7 @@ class CurhatReactionRepository {
             val userId = UserRepository.getCurrentUserId()
 
             db.runTransaction { transaction ->
-                removeUserFromLikeDislikeIfExist(transaction, userId, curhatRef)
+                removeUserFromReactionList(transaction, userId, curhatRef)
                 addUserToDislikeList(transaction, curhatRef, userId, type)
             }.addOnSuccessListener {
                 curhatRef.get().addOnSuccessListener {
@@ -41,7 +41,7 @@ class CurhatReactionRepository {
             }
         }
 
-        fun addUserToLikeList(transaction: Transaction, curhatRef: DocumentReference, userId: String, type: CurhatReaction) {
+        private fun addUserToLikeList(transaction: Transaction, curhatRef: DocumentReference, userId: String, type: CurhatReaction) {
             if (type == CurhatReaction.THUMB_UP) {
                 transaction.update(curhatRef,"usersGiveThumbUp", FieldValue.arrayUnion(userId))
             } else if (type == CurhatReaction.COOL) {
@@ -59,7 +59,7 @@ class CurhatReactionRepository {
             }
         }
 
-        fun removeUserFromLikeDislikeIfExist(transaction: Transaction, userId: String, curhatRef: DocumentReference) {
+        private fun removeUserFromReactionList(transaction: Transaction, userId: String, curhatRef: DocumentReference) {
             transaction.update(curhatRef,"usersGiveThumbUp", FieldValue.arrayRemove(userId))
             transaction.update(curhatRef,"usersGiveLove", FieldValue.arrayRemove(userId))
             transaction.update(curhatRef,"usersGiveCool", FieldValue.arrayRemove(userId))
@@ -67,14 +67,14 @@ class CurhatReactionRepository {
             transaction.update(curhatRef,"usersGiveAngry", FieldValue.arrayRemove(userId))
         }
 
-        fun getLikeCount(snap: DocumentSnapshot): Int {
+        private fun getLikeCount(snap: DocumentSnapshot): Int {
             val thumbCount = (snap.get("usersGiveThumbUp") as List<String>).size
             val coolCount = (snap.get("usersGiveCool") as List<String>).size
             val loveCount = (snap.get("usersGiveLove") as List<String>).size
             return thumbCount + coolCount + loveCount
         }
 
-        fun getDislikeCount(snap: DocumentSnapshot): Int {
+        private fun getDislikeCount(snap: DocumentSnapshot): Int {
             val thumbDownCount = (snap.get("usersGiveThumbDowns") as List<String>).size
             val angryCount = (snap.get("usersGiveAngry") as List<String>).size
             return thumbDownCount + angryCount
