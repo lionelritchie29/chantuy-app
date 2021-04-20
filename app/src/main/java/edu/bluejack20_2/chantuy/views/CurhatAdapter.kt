@@ -53,114 +53,14 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
                 binding.curhatCardCommentCount.text = count.toString()
             }
 
-
-            setReactionBtnColor(curhat)
-            setLikePopupMenu(curhat.id)
-            setDislikePopupMenu(curhat.id)
+            CurhatViewUtil.setReactionBtnColor(
+                binding.curhatCardThumbUpBtn,
+                binding.curhatCardThumbDownBtn,
+                curhat, binding.root)
+            CurhatViewUtil.setLikePopupMenu(binding.curhatCardThumbUpBtn, curhat.id, binding.root)
+            CurhatViewUtil.setDislikePopupMenu(binding.curhatCardThumbDownBtn, curhat.id, binding.root)
         }
 
-        private fun setReactionBtnColor(curhat: Curhat) {
-            if (curhat == null) return
-            val userId = UserRepository.getCurrentUserId()
-
-            if (
-                curhat.usersGiveThumbUp?.contains(userId)!! ||
-                curhat.usersGiveCool?.contains(userId)!! ||
-                curhat.usersGiveLove?.contains(userId)!!
-            ) {
-                binding.curhatCardThumbUpBtn.setColorFilter(
-                    ContextCompat.getColor(binding.root.context, R.color.green),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                )
-            }
-
-            if (
-                curhat.usersGiveThumbDowns?.contains(userId)!! ||
-                curhat.usersGiveAngry?.contains(userId)!!
-            ) {
-                binding.curhatCardThumbDownBtn.setColorFilter(
-                    ContextCompat.getColor(binding.root.context, R.color.dark_red),
-                    android.graphics.PorterDuff.Mode.MULTIPLY
-                )
-            }
-        }
-
-        @SuppressLint("RestrictedApi")
-        private fun setDislikePopupMenu(id: String) {
-            binding.curhatCardThumbDownBtn.setOnClickListener {
-                val popupMenu = PopupMenu(binding.root.context, it)
-                popupMenu.inflate(R.menu.dislike_curhat_menu_items)
-
-                popupMenu.setOnMenuItemClickListener {
-                    when (it.itemId) {
-                        R.id.dislike_curhat_thumb_down -> {
-                            CurhatRepository.addDislikeReaction(id, CurhatReaction.THUMB_DOWN) {
-                                CurhatViewUtil.changeReactionBtnColor(
-                                    binding.curhatCardThumbDownBtn, R.color.dark_red, binding.root
-                                )
-                            }
-                            true
-                        }
-                        R.id.dislike_curhat_angry -> {
-                            CurhatRepository.addDislikeReaction(id, CurhatReaction.ANGRY) {
-                                CurhatViewUtil.changeReactionBtnColor(
-                                    binding.curhatCardThumbDownBtn, R.color.dark_red, binding.root
-                                )
-                            }
-                            true
-                        }
-                        else -> false
-                    }
-                }
-
-                val popupHelper = MenuPopupHelper(binding.root.context, popupMenu.menu as MenuBuilder, it)
-                popupHelper.setForceShowIcon(true)
-                popupHelper.show()
-            }
-        }
-
-        @SuppressLint("RestrictedApi")
-        private fun setLikePopupMenu(id: String) {
-            binding.curhatCardThumbUpBtn.setOnClickListener {
-                val popupMenu = PopupMenu(binding.root.context, it)
-                popupMenu.inflate(R.menu.like_curhat_menu_items)
-
-                popupMenu.setOnMenuItemClickListener {
-                    when (it.itemId) {
-                        R.id.like_curhat_thumb_up -> {
-                            CurhatRepository.addLikeReaction(id, CurhatReaction.THUMB_UP) {
-                                CurhatViewUtil.changeReactionBtnColor(
-                                    binding.curhatCardThumbUpBtn, R.color.green, binding.root
-                                )
-                            }
-                            true
-                        }
-                        R.id.like_curhat_cool -> {
-                            CurhatRepository.addLikeReaction(id, CurhatReaction.COOL) {
-                                CurhatViewUtil.changeReactionBtnColor(
-                                    binding.curhatCardThumbUpBtn, R.color.green, binding.root
-                                )
-                            }
-                            true
-                        }
-                        R.id.like_curhat_love -> {
-                            CurhatRepository.addLikeReaction(id, CurhatReaction.LOVE) {
-                                CurhatViewUtil.changeReactionBtnColor(
-                                    binding.curhatCardThumbUpBtn, R.color.green, binding.root
-                                )
-                            }
-                            true
-                        }
-
-                        else -> false
-                    }
-                }
-
-                val popupHelper = MenuPopupHelper(binding.root.context, popupMenu.menu as MenuBuilder, it)
-                popupHelper.setForceShowIcon(true)
-                popupHelper.show()
-            }
-        }
 
         private fun setOnViewMoreListener(id: String) {
             binding.curhatCardViewBtn.setOnClickListener {

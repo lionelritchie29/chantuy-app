@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
+import edu.bluejack20_2.chantuy.databinding.CurhatDetailHeaderBinding
 import edu.bluejack20_2.chantuy.views.update_curhat.UpdateCurhatActivity
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatComment
@@ -192,40 +193,42 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
         }
     }
 
-    class HeaderViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val name : TextView = view.findViewById(R.id.curhat_detail_user_name)
-        val content: TextView = view.findViewById(R.id.curhat_detail_content)
-        val createdAt: TextView = view.findViewById(R.id.curhat_detail_date)
-        val commentCountText: TextView = view.findViewById(R.id.curhat_detail_comment_count)
-        val actionBtn: ImageButton = view.findViewById(R.id.curhat_detail_action_btn)
+    class HeaderViewHolder(val binding: CurhatDetailHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(curhat: Curhat, commentCount: Int) {
-            content.text = curhat.content
-            createdAt.text = CurhatViewUtil.formatDate(curhat.createdAt)
-            commentCountText.text = commentCount.toString() + " comment(s)"
+            binding.curhatDetailContent.text = curhat.content
+            binding.curhatDetailDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
+            binding.curhatDetailCommentCount.text = commentCount.toString() + " comment(s)"
 
             setActionBtnVisibility(curhat.user)
 
             if (curhat.user.length > 0) {
                 UserRepository.getUserById(curhat.user) {user ->
-                    name.text = if (curhat.isAnonymous) "Anonymous" else user?.name
+                    binding.curhatDetailUserName.text = if (curhat.isAnonymous) "Anonymous" else user?.name
                 }
             }
 
             setActionMenu(curhat)
+            CurhatViewUtil.setReactionBtnColor(
+                binding.curhatDetailThumbUpBtn,
+                binding.curhatDetailThumbDownBtn,
+                curhat, binding.root
+            )
+            CurhatViewUtil.setLikePopupMenu(binding.curhatDetailThumbUpBtn, curhat.id, binding.root)
+            CurhatViewUtil.setDislikePopupMenu(binding.curhatDetailThumbDownBtn, curhat.id, binding.root)
         }
 
         private fun setActionBtnVisibility(userId: String) {
             if (UserRepository.getCurrentUserId() == userId) {
-                actionBtn.visibility = View.VISIBLE
+                binding.curhatDetailActionBtn.visibility = View.VISIBLE
             } else {
-                actionBtn.visibility = View.INVISIBLE
+                binding.curhatDetailActionBtn.visibility = View.INVISIBLE
             }
         }
 
         private fun setActionMenu(curhat: Curhat) {
-            actionBtn.setOnClickListener {
-                val popupMenu = PopupMenu(view.context, it)
+            binding.curhatDetailActionBtn.setOnClickListener {
+                val popupMenu = PopupMenu(binding.root.context, it)
                 popupMenu.menuInflater.inflate(R.menu.curhat_detail_action_items, popupMenu.menu)
                 popupMenu.show()
 
@@ -244,18 +247,18 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
         }
 
         private fun moveToUpdateActivity(curhat: Curhat): Boolean {
-            val intent = Intent(view.context, UpdateCurhatActivity::class.java)
+            val intent = Intent(binding.root.context, UpdateCurhatActivity::class.java)
             val b = Bundle()
             b.putString("curhatId", curhat.id)
             intent.putExtras(b)
 
-            val activity = view.context as Activity
+            val activity = binding.root.context as Activity
             activity.startActivity(intent)
             return true
         }
 
         private fun onDelete(curhat: Curhat): Boolean {
-            val builder = AlertDialog.Builder(view.context)
+            val builder = AlertDialog.Builder(binding.root.context)
             builder.setMessage("Are you sure ?")
                 .setCancelable(false)
                 .setPositiveButton("Yes") { dialog, id ->
@@ -271,16 +274,16 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
 
         private fun deleteCurhatAndComments(curhat: Curhat) {
             CurhatRepository.deleteById(curhat.id) {
-                val currentActivity = view.context as Activity
+                val currentActivity = binding.root.context as Activity
                 currentActivity.finish()
             }
         }
 
         companion object {
             fun from(parent: ViewGroup) : HeaderViewHolder {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.curhat_detail_header, parent, false)
-                return HeaderViewHolder(view)
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = CurhatDetailHeaderBinding.inflate(layoutInflater, parent, false)
+                return HeaderViewHolder(binding)
             }
         }
     }
