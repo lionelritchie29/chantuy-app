@@ -3,6 +3,7 @@ package edu.bluejack20_2.chantuy.views
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.Curhat
+import edu.bluejack20_2.chantuy.models.CurhatReaction
 import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
@@ -57,15 +59,33 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
                 commentCount.text = count.toString()
             }
 
-            setLikePopupMenu()
-            setDislikePopupMenu()
+            setLikePopupMenu(curhat.id)
+            setDislikePopupMenu(curhat.id)
         }
 
         @SuppressLint("RestrictedApi")
-        private fun setDislikePopupMenu() {
+        private fun setDislikePopupMenu(id: String) {
             dislikeBtn.setOnClickListener {
                 val popupMenu = PopupMenu(view.context, it)
                 popupMenu.inflate(R.menu.dislike_curhat_menu_items)
+
+                popupMenu.setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.dislike_curhat_thumb_down -> {
+                            CurhatRepository.addDislikeReaction(id, CurhatReaction.THUMB_DOWN) {
+                                Log.i("CurhatAdapter", "Success")
+                            }
+                            true
+                        }
+                        R.id.dislike_curhat_angry -> {
+                            CurhatRepository.addDislikeReaction(id, CurhatReaction.ANGRY) {
+                                Log.i("CurhatAdapter", "Success")
+                            }
+                            true
+                        }
+                        else -> false
+                    }
+                }
 
                 val popupHelper = MenuPopupHelper(view.context, popupMenu.menu as MenuBuilder, it)
                 popupHelper.setForceShowIcon(true)
@@ -74,10 +94,35 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
         }
 
         @SuppressLint("RestrictedApi")
-        private fun setLikePopupMenu() {
+        private fun setLikePopupMenu(id: String) {
             likeBtn.setOnClickListener {
                 val popupMenu = PopupMenu(view.context, it)
                 popupMenu.inflate(R.menu.like_curhat_menu_items)
+
+                popupMenu.setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.like_curhat_thumb_up -> {
+                            CurhatRepository.addLikeReaction(id, CurhatReaction.THUMB_UP) {
+                                Log.i("CurhatAdapter", "Success")
+                            }
+                            true
+                        }
+                        R.id.like_curhat_cool -> {
+                            CurhatRepository.addLikeReaction(id, CurhatReaction.COOL) {
+                                Log.i("CurhatAdapter", "Success")
+                            }
+                            true
+                        }
+                        R.id.like_curhat_love -> {
+                            CurhatRepository.addLikeReaction(id, CurhatReaction.LOVE) {
+                                Log.i("CurhatAdapter", "Success")
+                            }
+                            true
+                        }
+
+                        else -> false
+                    }
+                }
 
                 val popupHelper = MenuPopupHelper(view.context, popupMenu.menu as MenuBuilder, it)
                 popupHelper.setForceShowIcon(true)

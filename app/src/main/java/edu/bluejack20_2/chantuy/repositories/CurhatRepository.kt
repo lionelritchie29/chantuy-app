@@ -1,22 +1,11 @@
 package edu.bluejack20_2.chantuy.repositories
 
-import android.util.Log
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import edu.bluejack20_2.chantuy.models.Curhat
-import edu.bluejack20_2.chantuy.models.CurhatComment
-import edu.bluejack20_2.chantuy.models.User
-import edu.bluejack20_2.chantuy.models.CurhatTopic
-import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
-import org.w3c.dom.Comment
-import java.util.*
+import edu.bluejack20_2.chantuy.models.*
 import kotlin.collections.HashMap
-import kotlin.random.Random
 
 
 class CurhatRepository {
@@ -101,12 +90,9 @@ class CurhatRepository {
                     topicId,
                     UserRepository.getCurrentUserId(),
                     content,
-                    0,
-                    0,
-                    0,
-                    isAnon,
-                    Timestamp.now(),
-                    Timestamp.now()
+                    isAnonymous = isAnon,
+                    createdAt = Timestamp.now(),
+                    updatedAt = Timestamp.now()
                 )
             db.collection(COLLECTION_NAME).add(curhat)
                 .addOnSuccessListener { callback() }
@@ -171,147 +157,63 @@ class CurhatRepository {
                 .update("viewCount", FieldValue.increment(1))
         }
 
-//        fun addDummy() {
-//            val data1 = hashMapOf(
-//                "content" to "Hari ini adalah hari yang menyenangkan, aku baru saja dapat pacar baru",
-//                "user" to "user_id",
-//                "likeCount" to Random.nextInt(5, 50),
-//                "dislikeCount" to Random.nextInt(0, 50),
-//                "viewCount" to Random.nextInt(5, 100),
-//                "topic" to "4dX2GpFcubGlAFNVTnRW",
-//                "user" to "9xktLUHQWHXQ1wrWOTw0",
-//                "isAnonymous" to true,
-//                "createdAt" to FieldValue.serverTimestamp(),
-//                "updatedAt" to FieldValue.serverTimestamp()
-//            )
-//
-//            val data2 = hashMapOf(
-//                "content" to "LL dan JP sedang mengerjakan TPA mobile tentang curhat curhat gitu deh keren bingitss",
-//                "user" to "user_id",
-//                "likeCount" to Random.nextInt(5, 50),
-//                "dislikeCount" to Random.nextInt(0, 50),
-//                "viewCount" to Random.nextInt(5, 100),
-//                "topic" to "4dX2GpFcubGlAFNVTnRW",
-//                "user" to "9xktLUHQWHXQ1wrWOTw0",
-//                "isAnonymous" to false,
-//                "createdAt" to FieldValue.serverTimestamp(),
-//                "updatedAt" to FieldValue.serverTimestamp()
-//            )
-//
-//            val data3 = hashMapOf(
-//                "content" to "Gaada apa yang mau jalan jalan sama gua dimasa pandemi ini gua stress bangettt guess sumpah :(",
-//                "user" to "user_id",
-//                "likeCount" to Random.nextInt(5, 50),
-//                "dislikeCount" to Random.nextInt(0, 50),
-//                "viewCount" to Random.nextInt(5, 100),
-//                "topic" to "4dX2GpFcubGlAFNVTnRW",
-//                "user" to "9xktLUHQWHXQ1wrWOTw0",
-//                "isAnonymous" to true,
-//                "createdAt" to FieldValue.serverTimestamp(),
-//                "updatedAt" to FieldValue.serverTimestamp()
-//            )
-//
-//            val db = FirebaseFirestore.getInstance()
-//            db.collection("curhats").add(data1).addOnSuccessListener { curhat ->
-//                val comments: List<CurhatComment> = listOf(
-//                    CurhatComment(
-//                        "user_id",
-//                        "Mana ada menyenangkan broder",
-//                        Timestamp.now(),
-//                        Timestamp.now()
-//                    ),
-//                    CurhatComment(
-//                        "user_id",
-//                        "Menyenangkan dong kawanku",
-//                        Timestamp.now(),
-//                        Timestamp.now()
-//                    ),
-//                    CurhatComment(
-//                        "user_id",
-//                        "Ga Menyenangkan dong kawanku",
-//                        Timestamp.now(),
-//                        Timestamp.now()
-//                    ),
-//                    CurhatComment(
-//                        "user_id",
-//                        "Brandon penyelamat hidup",
-//                        Timestamp.now(),
-//                        Timestamp.now()
-//                    ),
-//                    CurhatComment(
-//                        "user_id",
-//                        "Clar otw jadian sama fs",
-//                        Timestamp.now(),
-//                        Timestamp.now()
-//                    )
-//                )
-//
-//                db.collection("comments").document(curhat.id).set(
-//                    hashMapOf(
-//                        "comments" to comments
-//                    )
-//                )
-//            }
-//
-//            db.collection("curhats").add(data2).addOnSuccessListener { curhat ->
-//                val comments: List<CurhatComment> = listOf(
-//                    CurhatComment(
-//                        "user_id",
-//                        "TPA game adalah jalan hidupku",
-//                        Timestamp.now(),
-//                        Timestamp.now()
-//                    ),
-//                    CurhatComment("user_id", "TPA desktop skip", Timestamp.now(), Timestamp.now()),
-//                    CurhatComment(
-//                        "user_id",
-//                        "TPA web buset nguli imba",
-//                        Timestamp.now(),
-//                        Timestamp.now()
-//                    ),
-//                    CurhatComment(
-//                        "user_id",
-//                        "TPA mobile lg kerjain skrg",
-//                        Timestamp.now(),
-//                        Timestamp.now()
-//                    ),
-//                    CurhatComment(
-//                        "user_id",
-//                        "TPA jarkom gangerti",
-//                        Timestamp.now(),
-//                        Timestamp.now()
-//                    )
-//                )
-//
-//                db.collection("comments").document(curhat.id).set(
-//                    hashMapOf(
-//                        "comments" to comments
-//                    )
-//                )
-//            }
-//
-//            db.collection("curhats").add(data3).addOnSuccessListener { curhat ->
-//                val comments: List<CurhatComment> = listOf(
-//                    CurhatComment(
-//                        "user_id",
-//                        "Jalan - jalan mulu",
-//                        Timestamp.now(),
-//                        Timestamp.now()
-//                    ),
-//                    CurhatComment(
-//                        "user_id",
-//                        "yee suka2 TS nya dong",
-//                        Timestamp.now(),
-//                        Timestamp.now()
-//                    )
-//                )
-//
-//                db.collection("comments").document(curhat.id).set(
-//                    hashMapOf(
-//                        "comments" to comments
-//                    )
-//                )
-//            }
-//        }
+        fun addLikeReaction(curhatId: String, type: CurhatReaction, callback: () -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+            val curhatRef = db.collection(COLLECTION_NAME).document(curhatId)
+
+            db.runTransaction { transaction ->
+                val userId = UserRepository.getCurrentUserId()
+
+                transaction.update(curhatRef,"usersGiveThumbUp", FieldValue.arrayRemove(userId))
+                transaction.update(curhatRef,"usersGiveLove", FieldValue.arrayRemove(userId))
+                transaction.update(curhatRef,"usersGiveCool", FieldValue.arrayRemove(userId))
+                if (type == CurhatReaction.THUMB_UP) {
+                    transaction.update(curhatRef,"usersGiveThumbUp", FieldValue.arrayUnion(userId))
+                } else if (type == CurhatReaction.COOL) {
+                    transaction.update(curhatRef,"usersGiveCool", FieldValue.arrayUnion(userId))
+                } else  {
+                    transaction.update(curhatRef,"usersGiveLove", FieldValue.arrayUnion(userId))
+                }
+
+
+            }.addOnSuccessListener {
+                curhatRef.get()
+                    .addOnSuccessListener {
+                        val thumbCount = (it.get("usersGiveThumbUp") as List<String>).size
+                        val coolCount = (it.get("usersGiveCool") as List<String>).size
+                        val loveCount = (it.get("usersGiveLove") as List<String>).size
+                        it.reference.update("likeCount", thumbCount + coolCount + loveCount)
+                        callback()
+                    }
+            }
+        }
+
+        fun addDislikeReaction(curhatId: String, type: CurhatReaction, callback: () -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+            val curhatRef = db.collection(COLLECTION_NAME).document(curhatId)
+
+            db.runTransaction { transaction ->
+                val userId = UserRepository.getCurrentUserId()
+
+                transaction.update(curhatRef,"usersGiveThumbDowns", FieldValue.arrayRemove(userId))
+                transaction.update(curhatRef,"usersGiveAngry", FieldValue.arrayRemove(userId))
+                if (type == CurhatReaction.THUMB_DOWN) {
+                    transaction.update(curhatRef,"usersGiveThumbDowns", FieldValue.arrayUnion(userId))
+                } else  {
+                    transaction.update(curhatRef,"usersGiveAngry", FieldValue.arrayUnion(userId))
+                }
+
+
+            }.addOnSuccessListener {
+                curhatRef.get()
+                    .addOnSuccessListener {
+                        val thumbCount = (it.get("usersGiveThumbDowns") as List<String>).size
+                        val angryCount = (it.get("usersGiveAngry") as List<String>).size
+                        it.reference.update("dislikeCount", thumbCount + angryCount)
+                        callback()
+                    }
+            }
+        }
 
         fun countUserPost(id: String): Query {
             val db = Firebase.firestore
@@ -319,15 +221,25 @@ class CurhatRepository {
             return curhats
         }
 
-
-
         fun userProfilePost(id: String): Query {
             val db = Firebase.firestore
-            val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", id).orderBy("createdAt", Query.Direction.ASCENDING).limit(3)
+            val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", id)
+                .orderBy("createdAt", Query.Direction.ASCENDING).limit(3)
             return curhats
         }
 
+        private fun removeUserLikesIfExist(
+            thumbUps: MutableList<String>,
+            loves: MutableList<String>,
+            cools: MutableList<String>
+        ) {
+            val userId = UserRepository.getCurrentUserId()
 
+            if (thumbUps.indexOf(userId) != -1) thumbUps.remove(userId)
+            if (loves.indexOf(userId) != -1) loves.remove(userId)
+            if (cools.indexOf(userId) != -1) cools.remove(userId)
+
+        }
     }
 
 }
