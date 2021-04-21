@@ -64,13 +64,13 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
         }
     }
 
-    fun addHeaderAndSubmitList(curhat: Curhat, list: List<CurhatComment>) {
+    fun addHeaderAndSubmitList(curhat: Curhat, list: List<CurhatComment>, shouldShowMore: Boolean) {
         val items = when (list) {
             null -> listOf(DataItem.DetailHeader(curhat))
             else -> {
                 val newList = excludeLastItem(list)
                 listOf(DataItem.DetailHeader(curhat)) + newList.map { DataItem.CurhatCommentItem(it) } +
-                        if (list.size == 5 + 1) listOf(DataItem.ShowMoreItem())
+                        if (shouldShowMore) listOf(DataItem.ShowMoreItem())
                         else listOf()
             }
         }

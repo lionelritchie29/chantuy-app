@@ -34,43 +34,18 @@ class CurhatCommentRepository {
                 }
         }
 
-        fun getCommentsByCurhatId(latestCommentId: String?, curhatId: String, callback: (List<CurhatComment>?) -> Unit) {
+        fun getCommentsByCurhatId(curhatId: String, callback: (List<CurhatComment>?) -> Unit) {
             val db = FirebaseFirestore.getInstance()
 
-            if (latestCommentId == null) {
-                db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId)
-                    .orderBy("createdAt").limit(6).get()
-                    .addOnSuccessListener {
-                        val comments = mutableListOf<CurhatComment>()
-                        for (doc in it.documents) {
-                            val comment = doc.toObject(CurhatComment::class.java)
-                            comments.add(comment!!)
-                        }
-                        callback(comments)
-                    }
-            } else {
-                db.collection(COLLECTION_NAME).document(latestCommentId).get()
-                    .addOnSuccessListener {latestSnap ->
-                        db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId)
-                            .orderBy("createdAt").startAfter(latestSnap).limit(6).get()
-                            .addOnSuccessListener {
-                                val comments = mutableListOf<CurhatComment>()
-                                for (doc in it.documents) {
-                                    val comment = doc.toObject(CurhatComment::class.java)
-                                    comments.add(comment!!)
-                                }
-                                callback(comments)
-                            }
-                    }
-            }
-        }
-
-        fun getCommentsByCurhatIdCount(curhatId: String, callback: (Int) -> Unit) {
-            val db = FirebaseFirestore.getInstance()
-
-            db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId).get()
+            db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId)
+                .orderBy("createdAt").get()
                 .addOnSuccessListener {
-                    callback(it.documents.size)
+                    val comments = mutableListOf<CurhatComment>()
+                    for (doc in it.documents) {
+                        val comment = doc.toObject(CurhatComment::class.java)
+                        comments.add(comment!!)
+                    }
+                    callback(comments)
                 }
         }
 

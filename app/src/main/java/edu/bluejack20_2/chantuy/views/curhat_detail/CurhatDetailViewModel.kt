@@ -13,6 +13,7 @@ import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 
 class CurhatDetailViewModel: ViewModel() {
+    private var allCurhats: List<CurhatComment> = listOf()
     private var _comments: MutableLiveData<List<CurhatComment>> = MutableLiveData<List<CurhatComment>>().apply {
         value = listOf()
     }
@@ -25,6 +26,9 @@ class CurhatDetailViewModel: ViewModel() {
     var curhat: Curhat = Curhat()
     private var id = ""
 
+    private var fromIndex = 0
+    private var toIndex = 5
+
     fun getCurhatDetail(intent: Intent?) {
         _isFetchingData.value = true
         if (intent != null) {
@@ -33,9 +37,11 @@ class CurhatDetailViewModel: ViewModel() {
 
         CurhatRepository.getById(id) {
             curhat = it
-            CurhatCommentRepository.getCommentsByCurhatId(null, id) { comments ->
+            CurhatCommentRepository.getCommentsByCurhatId(id) { comments ->
                 if (comments != null) {
-                    _comments.value = comments
+                    allCurhats = comments
+                    val toBeSliced = comments
+                    _comments.value = toBeSliced.subList(fromIndex, toIndex)
                 } else {
                     _comments.value = listOf()
                 }
@@ -54,21 +60,29 @@ class CurhatDetailViewModel: ViewModel() {
         val currentUserId = UserRepository.getCurrentUserId()
         CurhatCommentRepository.addComment(id, currentUserId, content.text.toString()) {
             content.text = ""
+            if ((toIndex + 1) % 5 != 1) {
+                toIndex += 1
+            }
             getCurhatDetail(null)
         }
     }
 
     fun showMoreComments() {
-        val lastCommentIndex = _comments.value?.size?.minus(2)
+        fromIndex += 5
+        toIndex = getToIndex(toIndex)
 
-        lastCommentIndex.let {idx ->
-            val latestComment = _comments.value?.get(idx!!)
-            CurhatCommentRepository.getCommentsByCurhatId(latestComment!!.commentId, curhat.id) {
-                _comments.value = it
-            }
-        }
-
+        _comments.value = allCurhats.subList(fromIndex, toIndex)
     }
 
+    private fun getToIndex(idx: Int): Int {
+        if ((idx + 5) >= allCurhats.size) {
+            return allCurhats.size
+        }
+        return idx + 5
+    }
 
+    fun shouldShowMore(): Boolean {
+        return toIndex != allCurhats.size
+    }
 }
+
