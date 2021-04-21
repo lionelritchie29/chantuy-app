@@ -59,7 +59,7 @@ class CurhatDetailViewModel: ViewModel() {
     }
 
     fun showMoreComments() {
-        val lastCommentIndex = _comments.value?.size?.minus(1)
+        val lastCommentIndex = _comments.value?.size?.minus(2)
 
         lastCommentIndex.let {idx ->
             val latestComment = _comments.value?.get(idx!!)

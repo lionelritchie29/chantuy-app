@@ -39,7 +39,7 @@ class CurhatCommentRepository {
 
             if (latestCommentId == null) {
                 db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId)
-                    .orderBy("createdAt").limit(5).get()
+                    .orderBy("createdAt").limit(6).get()
                     .addOnSuccessListener {
                         val comments = mutableListOf<CurhatComment>()
                         for (doc in it.documents) {
@@ -52,7 +52,7 @@ class CurhatCommentRepository {
                 db.collection(COLLECTION_NAME).document(latestCommentId).get()
                     .addOnSuccessListener {latestSnap ->
                         db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId)
-                            .orderBy("createdAt").startAfter(latestSnap).limit(5).get()
+                            .orderBy("createdAt").startAfter(latestSnap).limit(6).get()
                             .addOnSuccessListener {
                                 val comments = mutableListOf<CurhatComment>()
                                 for (doc in it.documents) {

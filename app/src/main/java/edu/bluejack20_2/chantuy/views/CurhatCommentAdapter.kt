@@ -68,15 +68,23 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
         val items = when (list) {
             null -> listOf(DataItem.DetailHeader(curhat))
             else -> {
-                listOf(DataItem.DetailHeader(curhat)) + list.map { DataItem.CurhatCommentItem(it) } +
-                        if (list.size == 5) listOf(DataItem.ShowMoreItem())
+                val newList = excludeLastItem(list)
+                listOf(DataItem.DetailHeader(curhat)) + newList.map { DataItem.CurhatCommentItem(it) } +
+                        if (list.size == 5 + 1) listOf(DataItem.ShowMoreItem())
                         else listOf()
             }
         }
         submitList(items)
     }
 
-
+    private fun excludeLastItem(list: List<CurhatComment>): List<CurhatComment> {
+        if (list.isNotEmpty() && list.size == 6) {
+            val newList = list.toMutableList()
+            newList.remove(newList.last())
+            return newList.toList()
+        }
+        return list
+    }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.curhat_comment_user_name)
