@@ -1,6 +1,7 @@
 package edu.bluejack20_2.chantuy.repositories
 
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
@@ -18,6 +19,7 @@ class CurhatCommentRepository {
                 CurhatComment("", curhatId, userId, content, Timestamp.now(), Timestamp.now())
             db.collection(COLLECTION_NAME).add(comment)
                 .addOnSuccessListener {
+                    CurhatRepository.incrementCommentCount(curhatId)
                     callback()
                 }
         }
@@ -32,26 +34,52 @@ class CurhatCommentRepository {
                 }
         }
 
-        fun getCommentsByCurhatId(curhatId: String, callback: (List<CurhatComment>?) -> Unit) {
+        fun getCommentsByCurhatId(latestCommentId: String?, curhatId: String, callback: (List<CurhatComment>?) -> Unit) {
             val db = FirebaseFirestore.getInstance()
 
-            db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId)
-                .orderBy("createdAt").get()
-                .addOnSuccessListener { it ->
-                    val comments = mutableListOf<CurhatComment>()
-                    for (doc in it.documents) {
-                        val comment = doc.toObject(CurhatComment::class.java)
-                        comments.add(comment!!)
+            if (latestCommentId == null) {
+                db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId)
+                    .orderBy("createdAt").limit(5).get()
+                    .addOnSuccessListener {
+                        val comments = mutableListOf<CurhatComment>()
+                        for (doc in it.documents) {
+                            val comment = doc.toObject(CurhatComment::class.java)
+                            comments.add(comment!!)
+                        }
+                        callback(comments)
                     }
-                    callback(comments)
+            } else {
+                db.collection(COLLECTION_NAME).document(latestCommentId).get()
+                    .addOnSuccessListener {latestSnap ->
+                        db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId)
+                            .orderBy("createdAt").startAfter(latestSnap).limit(5).get()
+                            .addOnSuccessListener {
+                                val comments = mutableListOf<CurhatComment>()
+                                for (doc in it.documents) {
+                                    val comment = doc.toObject(CurhatComment::class.java)
+                                    comments.add(comment!!)
+                                }
+                                callback(comments)
+                            }
+                    }
+            }
+        }
+
+        fun getCommentsByCurhatIdCount(curhatId: String, callback: (Int) -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId).get()
+                .addOnSuccessListener {
+                    callback(it.documents.size)
                 }
         }
 
-        fun deleteById(commentId: String, callback: () -> Unit)  {
+        fun deleteById(curhatId: String, commentId: String, callback: () -> Unit)  {
             val db = FirebaseFirestore.getInstance()
 
             db.collection(COLLECTION_NAME).document(commentId).delete()
                 .addOnSuccessListener {
+                    CurhatRepository.decrementCommentCount(curhatId)
                     callback()
                 }
         }

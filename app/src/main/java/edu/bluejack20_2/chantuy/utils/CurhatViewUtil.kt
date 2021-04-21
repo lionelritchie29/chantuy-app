@@ -1,6 +1,7 @@
 package edu.bluejack20_2.chantuy.utils
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.view.menu.MenuBuilder
@@ -35,6 +36,7 @@ class CurhatViewUtil {
                 popupMenu.inflate(R.menu.dislike_curhat_menu_items)
 
                 popupMenu.setOnMenuItemClickListener {
+                    it.isChecked = true
                     when (it.itemId) {
                         R.id.dislike_curhat_thumb_down -> {
                             CurhatReactionRepository.addDislikeReaction(curhat.id, CurhatReaction.THUMB_DOWN) {
@@ -62,7 +64,7 @@ class CurhatViewUtil {
             }
         }
 
-        @SuppressLint("RestrictedApi")
+        @SuppressLint("RestrictedApi", "ResourceAsColor")
         fun setLikePopupMenu(likeBtn: ImageButton, dislikeBtn: ImageButton, curhat: Curhat, view: View) {
             val userId = UserRepository.getCurrentUserId()
             likeBtn.setOnClickListener {

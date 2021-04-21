@@ -43,14 +43,11 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
             binding.curhatCardContent.text = curhat.content
             binding.curhatCardDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
             CurhatRepository.incrementViewCount(curhat.id)
+            binding.curhatCardCommentCount.text = curhat.commentCount.toString()
             setOnViewMoreListener(curhat.id)
 
             UserRepository.getUserById(curhat.user) { user ->
                 binding.curhatCardUsername.text = if (curhat.isAnonymous) "Anonymous" else user?.name
-            }
-
-            CurhatCommentRepository.getCommentCount(curhat.id) { count ->
-                binding.curhatCardCommentCount.text = count.toString()
             }
 
             CurhatViewUtil.setReactionBtnColor(

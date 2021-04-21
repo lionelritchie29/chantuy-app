@@ -14,6 +14,7 @@ data class Curhat (
         var likeCount: Int? = 0,
         var dislikeCount: Int? = 0,
         var viewCount: Int? = 0,
+        var commentCount: Int? = 0,
         var isAnonymous: Boolean = true,
         var usersGiveThumbUp: List<String>? = listOf(),
         var usersGiveCool: List<String>? = listOf(),

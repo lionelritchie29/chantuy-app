@@ -37,7 +37,7 @@ class CurhatRepository {
                 db.collection(COLLECTION_NAME)
                     .orderBy("createdAt", Query.Direction.DESCENDING)
                     .orderBy("viewCount", Query.Direction.DESCENDING)
-                    .startAt(curhat.createdAt, curhat.viewCount).limit(5).get()
+                    .startAfter(curhat.createdAt, curhat.viewCount).limit(5).get()
                     .addOnSuccessListener { curhatDocs ->
                         val curhats = mutableListOf<Curhat>()
                         for (curhatDoc in curhatDocs) {
@@ -71,7 +71,7 @@ class CurhatRepository {
                 db.collection(COLLECTION_NAME)
                     .orderBy("viewCount", Query.Direction.DESCENDING)
                     .orderBy("createdAt", Query.Direction.DESCENDING)
-                    .startAt(curhat.viewCount).limit(5)
+                    .startAfter(curhat.viewCount).limit(5)
                     .get()
                     .addOnSuccessListener { curhatDocs ->
                         val curhats = mutableListOf<Curhat>()
@@ -178,6 +178,18 @@ class CurhatRepository {
                         callback()
                     }
                 }
+        }
+
+        fun incrementCommentCount(curhatId: String) {
+            val db = FirebaseFirestore.getInstance()
+            db.collection(COLLECTION_NAME).document(curhatId)
+                .update("commentCount", FieldValue.increment(1))
+        }
+
+        fun decrementCommentCount(curhatId: String) {
+            val db = FirebaseFirestore.getInstance()
+            db.collection(COLLECTION_NAME).document(curhatId)
+                .update("commentCount", FieldValue.increment(-1))
         }
 
         fun incrementViewCount(curhatId: String) {
