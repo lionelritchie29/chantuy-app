@@ -24,7 +24,9 @@ class CurhatDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_curhat_detail)
 
         viewModel = CurhatDetailViewModel()
-        val adapter = CurhatCommentAdapter()
+        val adapter = CurhatCommentAdapter {
+            viewModel.showMoreComments()
+        }
 
         val progressIndicator: LinearProgressIndicator = findViewById(R.id.detailCurhatLoadIndicator)
         val recyclerView: RecyclerView = findViewById(R.id.curhat_comment_recycler)
@@ -39,7 +41,7 @@ class CurhatDetailActivity : AppCompatActivity() {
         }
 
         viewModel.comments.observe(this , Observer { comments ->
-            adapter.addHeaderAndSubmitList(viewModel.curhat as Curhat, comments)
+            adapter.addHeaderAndSubmitList(viewModel.curhat as Curhat, comments, viewModel.shouldShowMore())
         })
 
         viewModel.isFetchingData.observe(this, Observer { isFetchingData ->

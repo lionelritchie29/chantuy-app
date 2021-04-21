@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.databinding.CurhatDetailHeaderBinding
+import edu.bluejack20_2.chantuy.databinding.ShowMoreCommentBinding
 import edu.bluejack20_2.chantuy.views.update_curhat.UpdateCurhatActivity
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatComment
@@ -21,16 +22,19 @@ import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
+import kotlin.random.Random
 
-class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(CurhatCommentDiffCallback){
+class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<DataItem, RecyclerView.ViewHolder>(CurhatCommentDiffCallback){
 
     private val ITEM_VIEW_TYPE_HEADER = 0
     private val ITEM_VIEW_TYPE_COMMENT = 1
+    private val ITEM_VIEW_TYPE_SHOW_MORE = 2
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ITEM_VIEW_TYPE_HEADER -> HeaderViewHolder.from(parent)
             ITEM_VIEW_TYPE_COMMENT -> ViewHolder.from(parent)
+            ITEM_VIEW_TYPE_SHOW_MORE -> ShowMoreViewHolder.from(parent, callback)
             else -> throw ClassCastException("Unknown viewType ${viewType}")
         }
     }
@@ -39,6 +43,7 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
         return when(getItem(position)) {
             is DataItem.DetailHeader -> ITEM_VIEW_TYPE_HEADER
             is DataItem.CurhatCommentItem -> ITEM_VIEW_TYPE_COMMENT
+            is DataItem.ShowMoreItem -> ITEM_VIEW_TYPE_SHOW_MORE
         }
     }
 
@@ -50,20 +55,36 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
             }
             is HeaderViewHolder -> {
                 val item = getItem(position) as DataItem.DetailHeader
-                holder.bind(item.curhat, item.commentCount)
+                holder.bind(item.curhat)
+            }
+            is ShowMoreViewHolder -> {
+                val item = getItem(position) as DataItem.ShowMoreItem
+                holder.bind(item)
             }
         }
     }
 
-    fun addHeaderAndSubmitList(curhat: Curhat, list: List<CurhatComment>) {
+    fun addHeaderAndSubmitList(curhat: Curhat, list: List<CurhatComment>, shouldShowMore: Boolean) {
         val items = when (list) {
-            null -> listOf(DataItem.DetailHeader(curhat, 0))
-            else -> listOf(DataItem.DetailHeader(curhat, list.size)) + list.map { DataItem.CurhatCommentItem(it) }
+            null -> listOf(DataItem.DetailHeader(curhat))
+            else -> {
+                val newList = excludeLastItem(list)
+                listOf(DataItem.DetailHeader(curhat)) + newList.map { DataItem.CurhatCommentItem(it) } +
+                        if (shouldShowMore) listOf(DataItem.ShowMoreItem())
+                        else listOf()
+            }
         }
         submitList(items)
     }
 
-
+    private fun excludeLastItem(list: List<CurhatComment>): List<CurhatComment> {
+        if (list.isNotEmpty() && list.size == 6) {
+            val newList = list.toMutableList()
+            newList.remove(newList.last())
+            return newList.toList()
+        }
+        return list
+    }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.curhat_comment_user_name)
@@ -164,7 +185,7 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
             builder.setMessage("Are you sure ?")
                 .setCancelable(false)
                 .setPositiveButton("Yes") { dialog, id ->
-                    CurhatCommentRepository.deleteById(comment.commentId) {
+                    CurhatCommentRepository.deleteById(comment.curhatId, comment.commentId) {
                         reloadActivity()
                     }
                 }
@@ -195,10 +216,10 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
 
     class HeaderViewHolder(val binding: CurhatDetailHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(curhat: Curhat, commentCount: Int) {
+        fun bind(curhat: Curhat) {
             binding.curhatDetailContent.text = curhat.content
             binding.curhatDetailDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
-            binding.curhatDetailCommentCount.text = commentCount.toString() + " comment(s)"
+            binding.curhatDetailCommentCount.text = curhat.commentCount.toString() + " comment(s)"
 
             setActionBtnVisibility(curhat.user)
 
@@ -287,6 +308,22 @@ class CurhatCommentAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(Curh
             }
         }
     }
+
+    class ShowMoreViewHolder(val binding: ShowMoreCommentBinding, val callback: () -> Unit): RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: DataItem.ShowMoreItem) {
+            binding.showMoreCommentBtn.setOnClickListener {
+                callback()
+            }
+        }
+
+        companion object {
+            fun from(parent: ViewGroup, callback: () -> Unit): ShowMoreViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ShowMoreCommentBinding.inflate(layoutInflater, parent, false)
+                return ShowMoreViewHolder(binding, callback)
+            }
+        }
+    }
 }
 
 object CurhatCommentDiffCallback : DiffUtil.ItemCallback<DataItem>() {
@@ -303,12 +340,17 @@ object CurhatCommentDiffCallback : DiffUtil.ItemCallback<DataItem>() {
 sealed class DataItem {
     data class CurhatCommentItem(val comment: CurhatComment): DataItem() {
         override val id: String
-            get() = comment.createdAt.toString()
+            get() = comment.commentId
     }
 
-    data class DetailHeader(val curhat: Curhat, val commentCount: Int): DataItem() {
+    data class DetailHeader(val curhat: Curhat): DataItem() {
         override val id: String
             get() = curhat.id
+    }
+
+    class ShowMoreItem(): DataItem() {
+        override val id: String
+            get() = Random.nextInt().toString()
     }
 
     abstract val id: String

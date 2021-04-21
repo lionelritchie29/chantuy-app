@@ -21,15 +21,16 @@ class HottestCurhatViewModel : ViewModel(){
     var lastCurhat: Curhat? = null
 
     init {
-        loadData()
+        loadData {}
     }
 
-    fun loadData() {
+    fun loadData(callback: () -> Unit) {
         _curhats.value = listOf()
         _isFetchingData.value = true
         CurhatRepository.getHottestCurhat (null) { curhats ->
             _curhats.value = curhats
             _isFetchingData.value = false
+            callback()
         }
     }
 

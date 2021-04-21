@@ -1,6 +1,5 @@
 package edu.bluejack20_2.chantuy.views.update_curhat
 
-import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -8,7 +7,6 @@ import android.widget.AutoCompleteTextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
