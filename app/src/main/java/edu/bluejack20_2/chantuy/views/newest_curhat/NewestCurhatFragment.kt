@@ -5,33 +5,33 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import edu.bluejack20_2.chantuy.R
+import edu.bluejack20_2.chantuy.databinding.FragmentNewestCurhatBinding
 import edu.bluejack20_2.chantuy.views.CurhatAdapter
 
 class NewestCurhatFragment : Fragment() {
-    private lateinit var viewModel: NewestCurhatViewModel
-    private lateinit var recyclerView: RecyclerView
     private lateinit var manager: LinearLayoutManager
+    private lateinit var binding: FragmentNewestCurhatBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_newest_curhat, container, false)
-        viewModel = NewestCurhatViewModel()
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_newest_curhat, container, false)
+        val viewModel = NewestCurhatViewModel()
         val curhatAdapter = CurhatAdapter()
-        recyclerView = rootView.findViewById(R.id.newest_curhat_recycler)
         manager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        val progressIndicator: LinearProgressIndicator = rootView.findViewById(R.id.detailCurhatLoadIndicator)
 
-        recyclerView.adapter = curhatAdapter
-        recyclerView.layoutManager = manager
+        binding.newestCurhatRecycler.adapter = curhatAdapter
+        binding.newestCurhatRecycler.layoutManager = manager
 
-        viewModel.handleOnScrollListener(recyclerView, manager)
+        viewModel.handleOnScrollListener(binding.newestCurhatRecycler, manager)
 
         viewModel.curhats.observe(viewLifecycleOwner, Observer {curhats ->
             curhatAdapter.submitList(curhats)
@@ -43,19 +43,20 @@ class NewestCurhatFragment : Fragment() {
 
         viewModel.isFetchingData.observe(viewLifecycleOwner, Observer { isFetchingData ->
             if (!isFetchingData) {
-                progressIndicator.visibility = View.GONE
+                binding.detailCurhatLoadIndicator.visibility = View.GONE
             } else {
-                progressIndicator.visibility = View.VISIBLE
+                binding.detailCurhatLoadIndicator.visibility = View.VISIBLE
             }
         })
 
-        return rootView
-    }
+        binding.swipeContainer.setOnRefreshListener(object: SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                viewModel.loadData { binding.swipeContainer.isRefreshing = false }
+            }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadData()
-    }
+        })
 
+        return binding.root
+    }
 
 }
