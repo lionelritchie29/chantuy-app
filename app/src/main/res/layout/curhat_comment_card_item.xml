@@ -33,10 +33,10 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:contentDescription="@string/curhat_content_placeholder"
-                android:tint="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/baseline_account_circle_24" />
+                app:srcCompat="@drawable/baseline_account_circle_24"
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/curhat_comment_user_name"
