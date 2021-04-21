@@ -45,14 +45,13 @@
                     app:layout_constraintStart_toEndOf="@+id/curhat_detail_user_image"
                     app:layout_constraintTop_toTopOf="@+id/curhat_detail_user_image" />
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/curhat_detail_user_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:contentDescription="@string/image_content_placeholder"
-                    android:src="@drawable/baseline_account_circle_24"
+                    android:src="@drawable/baseline_account_circle_18"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

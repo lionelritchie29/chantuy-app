@@ -21,6 +21,7 @@ class UserRepository {
     companion object{
         val COLLECTION_NAME = "users"
         val currUser=FirebaseAuth.getInstance().currentUser
+
         fun getUserByEmail(email:String):Task<QuerySnapshot>{
             val db= Firebase.firestore
             val user = db.collection(COLLECTION_NAME).whereEqualTo("email",email)
