@@ -66,10 +66,9 @@ class UserProfileFragment : Fragment() {
                 .into(imageView)
 
         }catch(e: Exception) {
-            Log.i("Testing","Shit error")
+
         }
 
-        Log.i("Testing","aaa"+viewModel.userPictureUrl)
 //        Glide.with(this).load(storageReference).into(imageView)
         val curhatAdapter = TextAdapter(mutableListOf())
         val curhatRecyclerView: RecyclerView = rootView.findViewById(R.id.recent_post_rview)

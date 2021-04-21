@@ -4,16 +4,23 @@ import android.annotation.SuppressLint
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
+import edu.bluejack20_2.chantuy.GlideApp
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatReaction
 import edu.bluejack20_2.chantuy.repositories.CurhatReactionRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
+import java.lang.Exception
 import java.text.SimpleDateFormat
 
 class CurhatViewUtil {
@@ -152,6 +159,23 @@ class CurhatViewUtil {
             curhat.usersGiveLove = listOf()
             curhat.usersGiveCool = listOf()
             return curhat
+        }
+
+
+
+        private fun setImage(imageView: ImageView, fragment: Fragment){
+            try {
+                val storageReference=FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseAuth.getInstance().currentUser.photoUrl.toString())
+
+                GlideApp.with(fragment)
+                    .load(storageReference)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(imageView)
+
+            }catch(e: Exception) {
+
+            }
         }
     }
 
