@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -21,6 +22,9 @@ class UserProfileViewModel {
     val userEmail: String = FirebaseAuth.getInstance().currentUser.email
     var userPictureUrl: String = ""
 
+    init {
+
+    }
 
     val curhatCount : MutableLiveData<Int> by lazy{
         MutableLiveData<Int>()
