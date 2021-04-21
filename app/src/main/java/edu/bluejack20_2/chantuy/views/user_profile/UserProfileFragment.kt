@@ -27,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.OnProgressListener
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import edu.bluejack20_2.chantuy.GlideApp
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.views.login.LoginActivity
@@ -52,14 +53,13 @@ class UserProfileFragment : Fragment() {
         imageView= rootView.findViewById(R.id.user_profile_image_view)
 
         //vv will be fixed
-//        try {
-//            val storageReference=FirebaseStorage.getInstance().getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/chantuy-app.appspot.com/o/imageUploads%2FYWlGIoLwwnhR1hUDtP2wilrMERu1?alt=media&token=186b600a-8b65-48da-8462-e6e48131a448")
-//
-//            Glide.with(this).load(storageReference).into(imageView)
-//
-//        }catch(e: Exception) {
-//            Log.i("Testing",viewModel.userPictureUrl)
-//        }
+        try {
+            val storageReference=FirebaseStorage.getInstance().getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/chantuy-app.appspot.com/o/imageUploads%2FYWlGIoLwwnhR1hUDtP2wilrMERu1?alt=media&token=186b600a-8b65-48da-8462-e6e48131a448")
+
+            GlideApp.with(this).load(storageReference).into(imageView)
+
+        }catch(e: Exception) {
+        }
 
         Log.i("Testing","aaa"+viewModel.userPictureUrl)
 //        Glide.with(this).load(storageReference).into(imageView)
