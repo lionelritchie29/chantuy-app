@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.todolist.Text
 import com.example.todolist.TextAdapter
 import com.firebase.ui.auth.AuthUI
@@ -54,11 +55,18 @@ class UserProfileFragment : Fragment() {
 
         //vv will be fixed
         try {
-            val storageReference=FirebaseStorage.getInstance().getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/chantuy-app.appspot.com/o/imageUploads%2FYWlGIoLwwnhR1hUDtP2wilrMERu1?alt=media&token=186b600a-8b65-48da-8462-e6e48131a448")
+            Log.i("Testing",viewModel.currUser.photoUrl.toString())
+            val storageReference=FirebaseStorage.getInstance().getReferenceFromUrl(viewModel
+                .currUser.photoUrl.toString())
 
-            GlideApp.with(this).load(storageReference).into(imageView)
+            GlideApp.with(this)
+                .load(storageReference)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(imageView)
 
         }catch(e: Exception) {
+            Log.i("Testing","Shit error")
         }
 
         Log.i("Testing","aaa"+viewModel.userPictureUrl)
@@ -119,8 +127,8 @@ class UserProfileFragment : Fragment() {
         }
 
 
-        viewModel.curhatCount.observe(this,totalPostObserver)
-        viewModel.replyCount.observe(this,totalReplyObserver)
+        viewModel.curhatCount.observe(viewLifecycleOwner,totalPostObserver)
+        viewModel.replyCount.observe(viewLifecycleOwner,totalReplyObserver)
 
 
 
@@ -178,7 +186,7 @@ class UserProfileFragment : Fragment() {
             }
             filePath = data.data
             try {
-                Log.i("Testing","Sampe sini")
+
                 val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, filePath)
                 imageView.setImageBitmap(bitmap)
             } catch (e: IOException) {
@@ -213,6 +221,11 @@ class UserProfileFragment : Fragment() {
 
             val temp=ref?.putFile(filePath!!)?.addOnSuccessListener { task->
                 progressDialog.dismiss()
+                task.storage.downloadUrl.addOnSuccessListener {uri->
+                    ref.downloadUrl.addOnSuccessListener {uri->
+                        UserRepository.updateProfileImage(uri)
+                    }
+                }
                 Toast
                     .makeText(
                         this.activity,
@@ -244,16 +257,6 @@ class UserProfileFragment : Fragment() {
 
                     }
                 })
-                temp?.continueWithTask { task ->
-                    if (!task.isSuccessful) {
-                        task.exception?.let {
-                            throw it
-                        }
-                    }
-                    Log.i("Testing",""+ref.downloadUrl)
-                    UserRepository.updateProfileImage(ref.downloadUrl.toString())
-                    ref.downloadUrl
-                }
             }
 
         }

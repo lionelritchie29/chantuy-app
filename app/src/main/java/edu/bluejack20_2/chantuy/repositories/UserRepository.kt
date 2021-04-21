@@ -6,6 +6,7 @@ import com.bumptech.glide.annotation.GlideModule
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
@@ -19,11 +20,15 @@ import java.net.URL
 class UserRepository {
     companion object{
         val COLLECTION_NAME = "users"
-
+        val currUser=FirebaseAuth.getInstance().currentUser
         fun getUserByEmail(email:String):Task<QuerySnapshot>{
             val db= Firebase.firestore
             val user = db.collection(COLLECTION_NAME).whereEqualTo("email",email)
             return user.get()
+        }
+
+        fun getUserProfileUrl():String{
+            return currUser.photoUrl.toString()
         }
 
         fun getUserByEmail(email: String,callback: (List<User>) -> Unit) {
@@ -91,13 +96,23 @@ class UserRepository {
                     callback(user)
                 }
         }
-        fun updateProfileImage(url: String){
+        fun updateProfileImage(url: Uri){
             val currUser= FirebaseAuth.getInstance().currentUser
-
-            currUser.updateProfile(userProfileChangeRequest {
-                photoUri= Uri.parse(url)
-            })
-            getUserById(currUser.uid).set(hashMapOf("profileImageId" to url), SetOptions.merge())
+//
+//            currUser.updateProfile(userProfileChangeRequest {
+//                photoUri= Uri.parse(""+url)
+//            })
+            FirebaseAuth.getInstance().currentUser?.let { user ->
+                user.updateProfile(
+                    UserProfileChangeRequest.Builder()
+                        .setPhotoUri(url)
+                        .build()
+                ).addOnSuccessListener {
+                    getUserById(currUser.uid)
+                        .update("profileImageId", url.toString())
+//                        .set(hashMapOf("profileImageId" to url), SetOptions.merge())
+                }
+            }
         }
 
     }
