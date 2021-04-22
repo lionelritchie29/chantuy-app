@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -91,6 +92,7 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
         val content: TextView = view.findViewById(R.id.curhat_comment_content)
         val createdAt: TextView = view.findViewById(R.id.curhat_comment_date_first)
         val actionBtn: ImageButton = view.findViewById(R.id.curhat_comment_action_btn)
+        val userImage: ImageView = view.findViewById(R.id.curhat_comment_user_image)
 
         val updateBtn: Button = view.findViewById(R.id.curhat_comment_update_btn)
         val cancelBtn: Button = view.findViewById(R.id.curhat_comment_cancel_btn)
@@ -106,6 +108,7 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
             if (comment.user.length > 0) {
                 UserRepository.getUserById(comment.user) {user ->
                     name.text = user?.name
+                    CurhatViewUtil.setCurhatUserImage(false, user!!, userImage, view)
                 }
             }
 
@@ -226,6 +229,7 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
             if (curhat.user.length > 0) {
                 UserRepository.getUserById(curhat.user) {user ->
                     binding.curhatDetailUserName.text = if (curhat.isAnonymous) "Anonymous" else user?.name
+                    CurhatViewUtil.setCurhatUserImage(curhat.isAnonymous, user!!, binding.curhatDetailUserImage, binding.root)
                 }
             }
 

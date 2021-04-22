@@ -21,6 +21,7 @@ class UserRepository {
     companion object{
         val COLLECTION_NAME = "users"
         val currUser=FirebaseAuth.getInstance().currentUser
+
         fun setUserData(){
             getUserById(currUser.uid).get().addOnSuccessListener {user->
                 val currUser = user.toObject(User::class.java)
@@ -29,9 +30,6 @@ class UserRepository {
                 }
             }
         }
-
-
-
 
         fun getUserByEmail(email:String):Task<QuerySnapshot>{
             val db= Firebase.firestore

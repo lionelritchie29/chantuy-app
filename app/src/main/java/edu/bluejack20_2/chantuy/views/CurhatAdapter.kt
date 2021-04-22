@@ -5,9 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
@@ -20,11 +22,13 @@ import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.databinding.CurhatCardItemBinding
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatReaction
+import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import edu.bluejack20_2.chantuy.views.curhat_detail.CurhatDetailActivity
+import kotlin.random.Random
 
 class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiffCallback) {
 
@@ -48,6 +52,7 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
 
             UserRepository.getUserById(curhat.user) { user ->
                 binding.curhatCardUsername.text = if (curhat.isAnonymous) "Anonymous" else user?.name
+                CurhatViewUtil.setCurhatUserImage(curhat.isAnonymous, user!!, binding.curhatCardUserimage, binding.root)
             }
 
             CurhatViewUtil.setReactionBtnColor(
