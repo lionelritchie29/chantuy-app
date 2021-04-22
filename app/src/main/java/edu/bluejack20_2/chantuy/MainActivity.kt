@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.views.curhat_by_topic.CurhatByTopicFragment
 import edu.bluejack20_2.chantuy.views.hottest_curhat.HottestCurhatFragment
 import edu.bluejack20_2.chantuy.views.insert_curhat.InsertCurhatActivity
@@ -40,6 +41,12 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+
+
+
+
 
         setViewPager()
         setBottomMenuItemListener()

@@ -82,7 +82,6 @@ class LoginActivity : AppCompatActivity() {
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().setRequireName(true).build(),
             AuthUI.IdpConfig.GoogleBuilder().build()
-
         )
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(),RC_SIGN_IN)
 
