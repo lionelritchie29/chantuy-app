@@ -38,7 +38,7 @@ class CurhatDetailViewModel: ViewModel() {
         CurhatRepository.getById(id) {
             curhat = it
             CurhatCommentRepository.getCommentsByCurhatId(id) { comments ->
-                if (comments != null) {
+                if (comments != null && comments.isNotEmpty()) {
                     allCurhats = comments
                     val toBeSliced = comments
                     _comments.value = toBeSliced.subList(fromIndex, toIndex)
@@ -82,7 +82,7 @@ class CurhatDetailViewModel: ViewModel() {
     }
 
     fun shouldShowMore(): Boolean {
-        return toIndex != allCurhats.size
+        return toIndex != allCurhats.size && _comments.value!!.isNotEmpty()
     }
 }
 
