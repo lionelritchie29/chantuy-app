@@ -2,6 +2,7 @@ package edu.bluejack20_2.chantuy.utils
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -18,10 +19,12 @@ import edu.bluejack20_2.chantuy.GlideApp
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatReaction
+import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.repositories.CurhatReactionRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import java.lang.Exception
 import java.text.SimpleDateFormat
+import kotlin.random.Random
 
 class CurhatViewUtil {
     companion object {
@@ -161,21 +164,32 @@ class CurhatViewUtil {
             return curhat
         }
 
+        fun setCurhatUserImage(isAnon: Boolean, user: User, imageView: ImageView, view: View) {
+            if (!isAnon) {
+                setUserImage(imageView, view, user.profileImageId!!)
+            } else {
+                val isMale = Random.nextBoolean()
+                setAnonymousImage(imageView, view, isMale)
+            }
+        }
 
-
-        private fun setImage(imageView: ImageView, fragment: Fragment){
+        fun setUserImage(imageView: ImageView, view: View, profileImageUrl: String){
             try {
-                val storageReference=FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseAuth.getInstance().currentUser.photoUrl.toString())
-
-                GlideApp.with(fragment)
+                val storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(profileImageUrl)
+                GlideApp.with(view)
                     .load(storageReference)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .into(imageView)
 
             }catch(e: Exception) {
-
+                Log.i("CurhatViewUtil", e.message.toString())
             }
+        }
+
+        fun setAnonymousImage(imageView: ImageView, view: View, isMale: Boolean) {
+            val image = if (isMale) R.drawable.ic_profile_male else R.drawable.ic_profile_female
+            GlideApp.with(view).load(image).into(imageView)
         }
     }
 

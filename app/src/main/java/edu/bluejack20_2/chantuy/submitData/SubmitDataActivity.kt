@@ -75,6 +75,7 @@ class SubmitDataActivity : AppCompatActivity() {
         submitButton.setOnClickListener{
             UserRepository.userSubmitData(viewModel.imageUrl,viewModel.genderString,viewModel.dob)
             finish()
+
         }
 
     }

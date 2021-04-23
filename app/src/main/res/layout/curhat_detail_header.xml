@@ -40,19 +40,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/app_name"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:textColor="@color/primary_blue"
                     app:layout_constraintBottom_toBottomOf="@+id/curhat_detail_user_image"
                     app:layout_constraintStart_toEndOf="@+id/curhat_detail_user_image"
                     app:layout_constraintTop_toTopOf="@+id/curhat_detail_user_image" />
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/curhat_detail_user_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:contentDescription="@string/image_content_placeholder"
-                    android:src="@drawable/baseline_account_circle_24"
+                    android:src="@drawable/baseline_account_circle_18"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,8 +62,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="4dp"
+                    android:textColor="#999"
                     android:text="@string/date_placeholder"
-                    android:textSize="12sp"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/curhat_detail_user_image" />
 
@@ -75,6 +76,8 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:text="@string/curhat_content_placeholder"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:textColor="?android:attr/textColorSecondary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/curhat_detail_date" />
@@ -127,6 +130,7 @@
             android:layout_marginStart="8dp"
             android:background="@drawable/comment_count_background"
             android:text="8 Comments"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/curhat_detail_comment_header_img2"
             app:layout_constraintStart_toEndOf="@+id/curhat_detail_comment_header_img2"

@@ -56,9 +56,11 @@
     <string name="great">Great</string>
     <string name="cool">Cool</string>
     <string name="love_it">Love It</string>
-    <string name="bad">Anjing</string>
-    <string name="mad">Fuck</string>
+    <string name="bad">Bad</string>
+    <string name="mad">Mad</string>
     <string name="show_more">Show More</string>
-    <string name="submit_data_text">Input Your Data</string>
+    <string name="enable_notif">Enable Notification</string>
+    <string name="change_font_size">Change font size</string>
     <string name="submit_button_text">Submit</string>
+    <string name="submit_data_text">Submit Data</string>
 </resources>

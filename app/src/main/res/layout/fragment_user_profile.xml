@@ -27,6 +27,7 @@
                     android:layout_marginStart="28dp"
                     android:layout_marginTop="24dp"
                     android:text="@string/profile_page_title"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:text="Name"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintStart_toEndOf="@+id/user_profile_image_view"
                     app:layout_constraintTop_toTopOf="@+id/user_profile_image_view" />
 
@@ -54,6 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="TextView"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintStart_toStartOf="@+id/user_profile_name"
                     app:layout_constraintTop_toBottomOf="@+id/user_profile_name" />
 
@@ -62,6 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total Post"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintStart_toStartOf="@+id/user_profile_email"
                     app:layout_constraintTop_toBottomOf="@+id/user_profile_email" />
 
@@ -80,6 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total Reply"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintStart_toStartOf="@+id/total_post"
                     app:layout_constraintTop_toBottomOf="@+id/total_post" />
 
@@ -89,6 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:text="LogOut"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -116,6 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="60dp"
                     android:text="@string/recent_curhat_text"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.503"
                     app:layout_constraintStart_toStartOf="parent"
@@ -126,6 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/recent_reply_text"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recent_post_rview" />

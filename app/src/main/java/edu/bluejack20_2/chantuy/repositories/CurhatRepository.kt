@@ -1,5 +1,8 @@
 package edu.bluejack20_2.chantuy.repositories
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
@@ -9,6 +12,8 @@ import org.w3c.dom.Comment
 import java.text.SimpleDateFormat
 import java.util.*
 import edu.bluejack20_2.chantuy.models.*
+import java.time.LocalDateTime
+import java.time.OffsetDateTime
 import kotlin.collections.HashMap
 
 
@@ -133,23 +138,50 @@ class CurhatRepository {
             return db.collection(COLLECTION_NAME).orderBy("dislikeCount",Query.Direction.DESCENDING)
         }
       
+        @RequiresApi(Build.VERSION_CODES.O)
         fun getCurhatBySearch(searchString: String, timeType: Int): Query {
             val db = FirebaseFirestore.getInstance()
-            var dateReducer: Date
+
+            val nowDate=Timestamp.now()
+            var date: Timestamp
+
             if(timeType==0){
-                dateReducer=Date("0000-00-01")
+
+                date = Timestamp(nowDate.seconds-86400,nowDate.nanoseconds)
+
             }
             else if(timeType==1){
-                dateReducer=Date("0000-00-07")
+                date = Timestamp(nowDate.seconds-604800,nowDate.nanoseconds)
             }
             else if(timeType==2){
-                dateReducer=Date("0000-01-00")
+
+                val now = Timestamp.now()
+                val nowInstant = now.toDate().toInstant()
+                val zoneId = TimeZone.getDefault().toZoneId()
+
+                val time = LocalDateTime.ofInstant(nowInstant, zoneId)
+                    .minusMonths(1)
+                    .toInstant(OffsetDateTime.ofInstant(nowInstant, zoneId).offset).let {
+                        Timestamp(Date.from(it))
+                    }
+
+                date = time
             }else{
-                dateReducer=Date("0001-00-09")
+                val now = Timestamp.now()
+                val nowInstant = now.toDate().toInstant()
+                val zoneId = TimeZone.getDefault().toZoneId()
+
+                val time = LocalDateTime.ofInstant(nowInstant, zoneId)
+                    .minusYears(1)
+                    .toInstant(OffsetDateTime.ofInstant(nowInstant, zoneId).offset).let {
+                        Timestamp(Date.from(it))
+                    }
+
+                date = time
+
             }
-            var date= Date().time - dateReducer.time
+
             return db.collection(COLLECTION_NAME).whereGreaterThan("createdAt",date)
-//            whereEqualTo("content",searchString)
 
         }
 

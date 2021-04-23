@@ -2,7 +2,6 @@ package edu.bluejack20_2.chantuy.repositories
 
 import android.net.Uri
 import android.util.Log
-import android.widget.DatePicker
 import com.bumptech.glide.annotation.GlideModule
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
@@ -17,12 +16,33 @@ import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.views.user_profile.UserProfileViewModel
+import java.net.URI
 import java.net.URL
 
 class UserRepository {
     companion object{
         val COLLECTION_NAME = "users"
         val currUser=FirebaseAuth.getInstance().currentUser
+
+        fun userSubmitData(url:String, gender: String, dob: Timestamp){
+            val currUser= FirebaseAuth.getInstance().currentUser
+            FirebaseAuth.getInstance().currentUser?.let { user ->
+                user.updateProfile(
+                    UserProfileChangeRequest.Builder()
+                        .setPhotoUri(Uri.parse(url))
+                        .build()
+                ).addOnSuccessListener {
+                    getUserById(currUser.uid).set(
+                        hashMapOf(
+                            "profileImageId" to url,
+                            "gender" to gender,
+                            "dateOfBirth" to dob
+
+                        ), SetOptions.merge())
+                }
+            }
+        }
+
         fun getUserByEmail(email:String):Task<QuerySnapshot>{
             val db= Firebase.firestore
             val user = db.collection(COLLECTION_NAME).whereEqualTo("email",email)
@@ -86,12 +106,16 @@ class UserRepository {
             val user=db.collection(UserRepository.COLLECTION_NAME).document(id)
             return user
         }
+
         fun getUserById(userId: String, callback: (User?) -> Unit) {
             val db = FirebaseFirestore.getInstance()
 
             db.collection(COLLECTION_NAME).document(userId).get()
                 .addOnSuccessListener {
                     val user = it.toObject(User::class.java)
+                    Log.i("UserRepository", userId)
+                    Log.i("UserRepository", user.toString())
+                    Log.i("UserRepository", it.toString())
                     callback(user)
                 }
         }
@@ -113,15 +137,6 @@ class UserRepository {
                 }
             }
         }
-        fun userSubmitData(url: String, gender: String, dob:Timestamp){
 
-            val db = FirebaseFirestore.getInstance()
-            val user=db.collection(UserRepository.COLLECTION_NAME).document(currUser.uid)
-            user.set(hashMapOf(
-                "profileImageId" to url,
-                "dateOfBirth" to dob,
-                "gender" to gender
-            ), SetOptions.merge())
-        }
     }
 }
