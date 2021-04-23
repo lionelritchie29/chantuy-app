@@ -76,7 +76,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/curhat_id_labels" />
 
             <EditText
-                android:id="@+id/edit_text_update_curhat_content"
+                android:id="@+id/update_curhat_content_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -88,7 +88,7 @@
                 android:inputType="textMultiLine"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/transparent_white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/new_curhat_content_label" />
@@ -128,7 +128,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_text_update_curhat_content" />
+                app:layout_constraintTop_toBottomOf="@+id/update_curhat_content_edit_text" />
 
             <AutoCompleteTextView
                 android:id="@+id/update_topic_auto_complete"
@@ -141,7 +141,7 @@
                 android:hint="@string/choose_topic"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/transparent_white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/new_curhat_topic_label"
@@ -162,7 +162,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/update_current_curhat_topic" />
 
             <Button
-                android:id="@+id/update_update__curhat_btn"
+                android:id="@+id/insert_feedback_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"

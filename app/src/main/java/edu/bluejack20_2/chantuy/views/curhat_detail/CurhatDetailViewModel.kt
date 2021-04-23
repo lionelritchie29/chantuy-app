@@ -3,6 +3,7 @@ package edu.bluejack20_2.chantuy.views.curhat_detail
 import android.content.Intent
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,10 +39,14 @@ class CurhatDetailViewModel: ViewModel() {
         CurhatRepository.getById(id) {
             curhat = it
             CurhatCommentRepository.getCommentsByCurhatId(id) { comments ->
-                if (comments != null && comments.isNotEmpty()) {
+                if (comments != null) {
                     allCurhats = comments
                     val toBeSliced = comments
-                    _comments.value = toBeSliced.subList(fromIndex, toIndex)
+                    if (comments.isNotEmpty() && comments.size >= 5) {
+                        _comments.value = toBeSliced.subList(fromIndex, toIndex)
+                    } else {
+                        _comments.value = comments
+                    }
                 } else {
                     _comments.value = listOf()
                 }
@@ -63,6 +68,7 @@ class CurhatDetailViewModel: ViewModel() {
             if ((toIndex + 1) % 5 != 1) {
                 toIndex += 1
             }
+            Toast.makeText(content.context, "Comment succesfully added!", Toast.LENGTH_SHORT).show()
             getCurhatDetail(null)
         }
     }
@@ -82,7 +88,7 @@ class CurhatDetailViewModel: ViewModel() {
     }
 
     fun shouldShowMore(): Boolean {
-        return toIndex != allCurhats.size && _comments.value!!.isNotEmpty()
+        return toIndex != allCurhats.size && _comments.value!!.isNotEmpty() && _comments.value!!.size >= 5
     }
 }
 

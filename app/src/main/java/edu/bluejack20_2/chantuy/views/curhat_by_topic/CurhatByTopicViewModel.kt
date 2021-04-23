@@ -29,7 +29,7 @@ class CurhatByTopicViewModel
 
     init {
         CurhatTopicRepository.getAll { topics ->
-            _shuffledTopics.value = topics.shuffled().take(7)
+            _shuffledTopics.value = topics.shuffled().take(3)
             _topics = topics
             for (topic in topics) {
                 topicsString.add(topic.name)
@@ -49,6 +49,10 @@ class CurhatByTopicViewModel
         if (index != -1) {
             CurhatRepository.getByTopic(_topics.get(index).id) { curhats ->
                 _filteredCurhats.value = curhats
+                for (curhat in _filteredCurhats.value!!) {
+                    Log.i("CurhatByTopicViewModel", curhat.content)
+                }
+                Log.i("CurhatByTopicViewModel", _filteredCurhats.value!!.size.toString())
             }
         }
     }

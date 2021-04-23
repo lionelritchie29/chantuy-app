@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
-import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatTopic
 
 class CurhatTopicChipAdapter : ListAdapter<CurhatTopic, CurhatTopicChipAdapter.ViewHolder>(TopicChipDiffCallback) {
@@ -23,7 +22,7 @@ class CurhatTopicChipAdapter : ListAdapter<CurhatTopic, CurhatTopicChipAdapter.V
     }
 
     class ViewHolder (view: View): RecyclerView.ViewHolder(view) {
-        val name : TextView = view.findViewById(R.id.filter_topic_chip_text)
+        val name : TextView = view.findViewById(R.id.feedback_status_chip_pending)
 
 
         fun bind(topic: CurhatTopic) {

@@ -2,6 +2,7 @@ package edu.bluejack20_2.chantuy.views.insert_curhat
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.*
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.CurhatTopic
@@ -40,26 +41,41 @@ class InsertCurhatActivity : AppCompatActivity() {
     }
 
     private fun onAddCurhat() {
-        val addBtn: Button = findViewById(R.id.update_update__curhat_btn)
-        val content: TextView = findViewById(R.id.edit_text_update_curhat_content)
+        val addBtn: Button = findViewById(R.id.insert_feedback_btn)
+        val content: TextView = findViewById(R.id.insert_feedback_content_edit_text)
         val anonymousCheckbox: CheckBox = findViewById(R.id.update_set_anonymous_checkbox)
 
         addBtn.setOnClickListener {
-            val topicIndex = topicsString.indexOf(topicAutoCompleteView.text.toString())
-            val isAnonymous = anonymousCheckbox.isChecked
-            if (topicIndex == -1) {
-                val newTopic = topicAutoCompleteView.text.toString()
-                CurhatTopicRepository.addTopic(newTopic, callback = {newTopicId ->
-                    CurhatRepository.addCurhat(content.text.toString(), isAnonymous, newTopicId) {
-                        moveToMainActivity()
-                    }
-                })
+            if (content.text.isEmpty()) {
+                content.error = "Curhat content must not be empty"
+            } else if (topicAutoCompleteView.text.isEmpty()) {
+                topicAutoCompleteView.error = "Topic must not be empty"
             } else {
-                CurhatRepository.addCurhat(content.text.toString(), isAnonymous, topics.get(topicIndex).id) {
-                    moveToMainActivity()
-                }
+                addCurhat(content, anonymousCheckbox, it)
             }
         }
+    }
+
+    private fun addCurhat(
+        content: TextView,
+        anonymousCheckbox: CheckBox,
+        it: View
+    ) {
+        val topicIndex = topicsString.indexOf(topicAutoCompleteView.text.toString())
+        val isAnonymous = anonymousCheckbox.isChecked
+        if (topicIndex == -1) {
+            val newTopic = topicAutoCompleteView.text.toString()
+            CurhatTopicRepository.addTopic(newTopic, callback = {newTopicId ->
+                CurhatRepository.addCurhat(content.text.toString(), isAnonymous, newTopicId) {
+                    moveToMainActivity()
+                }
+            })
+        } else {
+            CurhatRepository.addCurhat(content.text.toString(), isAnonymous, topics.get(topicIndex).id) {
+                moveToMainActivity()
+            }
+        }
+        Toast.makeText(it.context, "Succesfully added new curhat!", Toast.LENGTH_SHORT).show()
     }
 
     private fun moveToMainActivity() {
