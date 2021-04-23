@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/primary_blue_very_light"
@@ -46,7 +46,7 @@
                     android:inputType="textMultiLine"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/transparent_white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/new_curhat_content_label" />
@@ -83,7 +83,7 @@
                     android:layout_marginTop="32dp"
                     android:layout_marginBottom="16dp"
                     android:backgroundTint="@color/primary_blue_dark"
-                    android:text="@string/add_curhat"
+                    android:text="@string/send_feedback"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

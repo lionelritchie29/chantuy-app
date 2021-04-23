@@ -28,5 +28,19 @@ class FeedbackRepository {
                     callback(feedbacks.toList())
                 }
         }
+
+        fun deleteById(id: String, callback: () -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(COLLECTION_NAME).document(id).delete()
+                .addOnSuccessListener { callback() }
+        }
+
+        fun updateStatusSolved(id: String, callback: () -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection(COLLECTION_NAME).document(id).update("status", "SOLVED")
+                .addOnSuccessListener { callback() }
+        }
     }
 }

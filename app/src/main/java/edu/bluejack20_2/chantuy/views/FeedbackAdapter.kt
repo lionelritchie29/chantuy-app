@@ -1,13 +1,18 @@
 package edu.bluejack20_2.chantuy.views
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.databinding.FeedbackCardItemBinding
 import edu.bluejack20_2.chantuy.models.Feedback
+import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
+import edu.bluejack20_2.chantuy.repositories.FeedbackRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 
@@ -34,6 +39,54 @@ class FeedbackAdapter : ListAdapter<Feedback, FeedbackAdapter.ViewHolder>(Feedba
             }
 
             setStatusChip(feedback.status)
+            OnMarkSolvedBtnClicked(feedback)
+            OnDeleteButtonClicked(feedback)
+        }
+
+        private fun OnDeleteButtonClicked(feedback: Feedback) {
+            binding.deleteFeedbackBtn.setOnClickListener {
+                val builder = AlertDialog.Builder(binding.root.context)
+                builder.setMessage("Are you sure ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes") { dialog, id ->
+                        FeedbackRepository.deleteById(feedback.id) {
+                            reloadActivity()
+                            Toast.makeText(binding.root.context, "The feedback si succesfully deleted!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    .setNegativeButton("No") { dialog, id ->
+                        dialog.dismiss()
+                    }
+                val alert = builder.create()
+                alert.show()
+            }
+        }
+
+        private fun reloadActivity() {
+            val activity = binding.root.context as Activity
+            activity.finish()
+            activity.overridePendingTransition(0 ,0)
+            activity.startActivity(activity.intent)
+            activity.overridePendingTransition(0 ,0)
+        }
+
+        private fun OnMarkSolvedBtnClicked(feedback: Feedback) {
+            binding.feedbackMarkSolvedBtn.setOnClickListener {
+                val builder = AlertDialog.Builder(binding.root.context)
+                builder.setMessage("Mark this feedback as Solved ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes") { dialog, id ->
+                        FeedbackRepository.updateStatusSolved(feedback.id) {
+                            setStatusChip("SOLVED")
+                            Toast.makeText(binding.root.context, "Marked as Solved!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    .setNegativeButton("No") { dialog, id ->
+                        dialog.dismiss()
+                    }
+                val alert = builder.create()
+                alert.show()
+            }
         }
 
         fun setStatusChip(status: String?) {
