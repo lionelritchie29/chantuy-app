@@ -59,4 +59,6 @@
     <string name="bad">Bad</string>
     <string name="mad">Mad</string>
     <string name="show_more">Show More</string>
+    <string name="enable_notif">Enable Notification</string>
+    <string name="change_font_size">Change font size</string>
 </resources>
