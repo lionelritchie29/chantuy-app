@@ -65,4 +65,8 @@
     <string name="send_feedback_btn" />
     <string name="send_feedback">Send Feedback</string>
     <string name="how_could_we_improve">How could we improve?</string>
+    <string name="mark_feedback_solved">Mark as Solved</string>
+    <string name="pending">Pending</string>
+    <string name="view_feedback">View Feedbacks</string>
+    <string name="solved">Solved</string>
 </resources>

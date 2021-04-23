@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.chip.Chip
-        android:id="@+id/filter_topic_chip_text"
+        android:id="@+id/feedback_status_chip_pending"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
