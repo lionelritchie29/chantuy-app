@@ -33,6 +33,7 @@ import kotlin.random.Random
 class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        Log.wtf("hehe", "create bos")
         return ViewHolder.from(parent)
     }
 

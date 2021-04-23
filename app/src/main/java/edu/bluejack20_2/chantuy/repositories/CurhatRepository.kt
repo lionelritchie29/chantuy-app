@@ -124,7 +124,7 @@ class CurhatRepository {
                         curhat.id = curhatDoc.id
                         curhats.add(curhat)
                     }
-                    callback(curhats)
+                    callback(curhats.toList())
                 }
         }
 
