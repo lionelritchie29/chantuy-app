@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
@@ -72,6 +73,28 @@ class CurhatByTopicFragment : Fragment() {
             object : LinearLayoutManager(activity, VERTICAL, false) {
                 override fun canScrollVertically(): Boolean = true
             }
+
+        var isScrollingUp = false
+        binding.filterTopicCurhatRecycler.addOnScrollListener(object:
+            RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy < 0) { //scroll down
+                    if (!isScrollingUp) {
+                        binding.filterTopicCard.startAnimation(AnimationUtils.loadAnimation(
+                            binding.root.context, R.anim.trans_down
+                        ))
+                        isScrollingUp = true
+                    }
+                } else {
+                    if (isScrollingUp) {
+                        binding.filterTopicCard.startAnimation(AnimationUtils.loadAnimation(
+                            binding.root.context, R.anim.trans_up
+                        ))
+                        isScrollingUp = false
+                    }
+                }
+            }
+        })
 
         return adapter
     }
