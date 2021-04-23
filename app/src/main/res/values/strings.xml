@@ -61,6 +61,8 @@
     <string name="show_more">Show More</string>
     <string name="enable_notif">Enable Notification</string>
     <string name="change_font_size">Change font size</string>
+    <string name="submit_button_text">Submit</string>
+    <string name="submit_data_text">Submit Data</string>
     <string name="delete_account">Delete Account</string>
     <string name="send_feedback_btn" />
     <string name="send_feedback">Send Feedback</string>

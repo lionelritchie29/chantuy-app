@@ -5,6 +5,7 @@ import android.util.Log
 import com.bumptech.glide.annotation.GlideModule
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.userProfileChangeRequest
@@ -15,6 +16,7 @@ import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.views.user_profile.UserProfileViewModel
+import java.net.URI
 import java.net.URL
 
 class UserRepository {
@@ -22,11 +24,21 @@ class UserRepository {
         val COLLECTION_NAME = "users"
         val currUser=FirebaseAuth.getInstance().currentUser
 
-        fun setUserData(){
-            getUserById(currUser.uid).get().addOnSuccessListener {user->
-                val currUser = user.toObject(User::class.java)
-                if(currUser?.age==null){
+        fun userSubmitData(url:String, gender: String, dob: Timestamp){
+            val currUser= FirebaseAuth.getInstance().currentUser
+            FirebaseAuth.getInstance().currentUser?.let { user ->
+                user.updateProfile(
+                    UserProfileChangeRequest.Builder()
+                        .setPhotoUri(Uri.parse(url))
+                        .build()
+                ).addOnSuccessListener {
+                    getUserById(currUser.uid).set(
+                        hashMapOf(
+                            "profileImageId" to url,
+                            "gender" to gender,
+                            "dateOfBirth" to dob
 
+                        ), SetOptions.merge())
                 }
             }
         }
@@ -94,6 +106,7 @@ class UserRepository {
             val user=db.collection(UserRepository.COLLECTION_NAME).document(id)
             return user
         }
+
         fun getUserById(userId: String, callback: (User?) -> Unit) {
             val db = FirebaseFirestore.getInstance()
 
