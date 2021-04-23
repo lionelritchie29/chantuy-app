@@ -3,6 +3,7 @@ package edu.bluejack20_2.chantuy.views.curhat_detail
 import android.content.Intent
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -67,6 +68,7 @@ class CurhatDetailViewModel: ViewModel() {
             if ((toIndex + 1) % 5 != 1) {
                 toIndex += 1
             }
+            Toast.makeText(content.context, "Comment succesfully added!", Toast.LENGTH_SHORT).show()
             getCurhatDetail(null)
         }
     }

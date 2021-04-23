@@ -4,6 +4,8 @@ import android.content.Intent
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.EditText
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -57,12 +59,16 @@ class UpdateCurhatViewModel : ViewModel() {
         topicTv.setAdapter(adapter)
     }
 
-    fun onUpdate(content: String, topicName: String, isAnon: Boolean, callback: () -> Unit) {
-        getTopicId(topicName) { newTopicId ->
-            Log.i("UpdateCurhatViewModel", "topic id: " + newTopicId)
+    fun onUpdate(content: EditText, topic: String, isAnon: Boolean, callback: () -> Unit) {
+        if (content.text.isEmpty()) {
+            content.error = "Content must not be empty"
+            return
+        }
+
+        getTopicId(topic) { newTopicId ->
             val curhat = hashMapOf(
                 "topic" to newTopicId,
-                "content" to content,
+                "content" to content.text.toString(),
                 "anonymous" to isAnon
             )
             CurhatRepository.update(curhatId, curhat) {
