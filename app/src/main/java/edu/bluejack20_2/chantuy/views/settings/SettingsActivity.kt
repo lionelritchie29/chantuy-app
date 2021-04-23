@@ -1,5 +1,6 @@
 package edu.bluejack20_2.chantuy.views.settings
 
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
+import edu.bluejack20_2.chantuy.InsertFeedbackActivity
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.databinding.ActivitySettingsBinding
 
@@ -44,6 +46,14 @@ class SettingsActivity : AppCompatActivity() {
         setSwitchState()
         setFontSpinnerAdapter()
         setSwitchListener()
+        setSendFeedbackListener()
+    }
+
+    private fun setSendFeedbackListener() {
+        binding.sendFeedbackBtn.setOnClickListener {
+            val intent = Intent(this, InsertFeedbackActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setSwitchState() {

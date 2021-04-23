@@ -12,11 +12,11 @@ class UpdateCurhatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_update_curhat)
 
         val curhatIdTv: TextView = findViewById(R.id.update_curhat_id_edit)
-        val contentTv: TextView = findViewById(R.id.edit_text_update_curhat_content)
+        val contentTv: TextView = findViewById(R.id.insert_feedback_content_edit_text)
         val topicTv: AutoCompleteTextView = findViewById(R.id.update_topic_auto_complete)
         val anonymousCb: CheckBox = findViewById(R.id.update_set_anonymous_checkbox)
         val currentTopicTv: TextView = findViewById(R.id.update_current_curhat_topic)
-        val updateBtn: Button = findViewById(R.id.update_update__curhat_btn)
+        val updateBtn: Button = findViewById(R.id.insert_feedback_btn)
 
         val viewModel = UpdateCurhatViewModel()
         viewModel.setTopicAutocomplete(topicTv)

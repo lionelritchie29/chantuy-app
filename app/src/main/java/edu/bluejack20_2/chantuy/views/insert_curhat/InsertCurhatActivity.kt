@@ -40,8 +40,8 @@ class InsertCurhatActivity : AppCompatActivity() {
     }
 
     private fun onAddCurhat() {
-        val addBtn: Button = findViewById(R.id.update_update__curhat_btn)
-        val content: TextView = findViewById(R.id.edit_text_update_curhat_content)
+        val addBtn: Button = findViewById(R.id.insert_feedback_btn)
+        val content: TextView = findViewById(R.id.insert_feedback_content_edit_text)
         val anonymousCheckbox: CheckBox = findViewById(R.id.update_set_anonymous_checkbox)
 
         addBtn.setOnClickListener {

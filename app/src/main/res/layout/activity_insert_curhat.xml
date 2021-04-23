@@ -32,7 +32,7 @@
             android:background="@color/primary_blue">
 
             <EditText
-                android:id="@+id/edit_text_update_curhat_content"
+                android:id="@+id/insert_feedback_content_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -84,7 +84,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_text_update_curhat_content" />
+                app:layout_constraintTop_toBottomOf="@+id/insert_feedback_content_edit_text" />
 
             <AutoCompleteTextView
                 android:id="@+id/update_topic_auto_complete"
@@ -118,7 +118,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/update_topic_auto_complete" />
 
             <Button
-                android:id="@+id/update_update__curhat_btn"
+                android:id="@+id/insert_feedback_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
