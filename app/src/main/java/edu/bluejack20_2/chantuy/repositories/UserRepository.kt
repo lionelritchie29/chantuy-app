@@ -2,9 +2,11 @@ package edu.bluejack20_2.chantuy.repositories
 
 import android.net.Uri
 import android.util.Log
+import android.widget.DatePicker
 import com.bumptech.glide.annotation.GlideModule
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.userProfileChangeRequest
@@ -21,18 +23,6 @@ class UserRepository {
     companion object{
         val COLLECTION_NAME = "users"
         val currUser=FirebaseAuth.getInstance().currentUser
-        fun setUserData(){
-            getUserById(currUser.uid).get().addOnSuccessListener {user->
-                val currUser = user.toObject(User::class.java)
-                if(currUser?.age==null){
-
-                }
-            }
-        }
-
-
-
-
         fun getUserByEmail(email:String):Task<QuerySnapshot>{
             val db= Firebase.firestore
             val user = db.collection(COLLECTION_NAME).whereEqualTo("email",email)
@@ -102,9 +92,6 @@ class UserRepository {
             db.collection(COLLECTION_NAME).document(userId).get()
                 .addOnSuccessListener {
                     val user = it.toObject(User::class.java)
-                    Log.i("UserRepository", userId)
-                    Log.i("UserRepository", user.toString())
-                    Log.i("UserRepository", it.toString())
                     callback(user)
                 }
         }
@@ -126,6 +113,15 @@ class UserRepository {
                 }
             }
         }
+        fun userSubmitData(url: String, gender: String, dob:Timestamp){
 
+            val db = FirebaseFirestore.getInstance()
+            val user=db.collection(UserRepository.COLLECTION_NAME).document(currUser.uid)
+            user.set(hashMapOf(
+                "profileImageId" to url,
+                "dateOfBirth" to dob,
+                "gender" to gender
+            ), SetOptions.merge())
+        }
     }
 }

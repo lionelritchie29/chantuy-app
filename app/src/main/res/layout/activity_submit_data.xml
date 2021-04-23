@@ -14,66 +14,56 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/user_profile_image_view2"
+        android:id="@+id/user_profile_image_view"
         android:layout_width="136dp"
         android:layout_height="119dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="144dp"
         android:src="@drawable/baseline_account_circle_18"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/login_password"
+        android:id="@+id/register_dob_submit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:hint="Password"
-        app:layout_constraintBottom_toTopOf="@+id/login_password2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/login_email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:hint="Email"
-        app:layout_constraintBottom_toTopOf="@+id/login_password"
+        android:hint="Date of Birth"
+        app:layout_constraintBottom_toTopOf="@+id/register_spinner_gender"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_profile_image_view2"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <EditText
-        android:id="@+id/login_password2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:hint="Password"
-        app:layout_constraintBottom_toTopOf="@+id/login_password3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/login_password3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
-        android:hint="Password"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/user_profile_image_view"
+        app:layout_constraintVertical_bias="0.88" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/register_submit_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="288dp"
-        android:text="Button"
+        android:layout_marginBottom="104dp"
+        android:text="@string/submit_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/register_spinner_gender"
+        android:layout_width="313dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="216dp"
+        app:layout_constraintBottom_toTopOf="@+id/register_submit_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/submitDataText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="@string/submit_data_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import edu.bluejack20_2.chantuy.repositories.UserRepository
+import edu.bluejack20_2.chantuy.submitData.SubmitDataActivity
 import edu.bluejack20_2.chantuy.views.curhat_by_topic.CurhatByTopicFragment
 import edu.bluejack20_2.chantuy.views.hottest_curhat.HottestCurhatFragment
 import edu.bluejack20_2.chantuy.views.insert_curhat.InsertCurhatActivity
@@ -45,11 +46,18 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
-
         setViewPager()
         setBottomMenuItemListener()
+        UserRepository.getUserById(UserRepository.currUser.uid).get().addOnSuccessListener {user->
+            if(user["gender"]==null){
+                val intent  = Intent(this, SubmitDataActivity::class.java)
+                startActivity(intent)
+
+            }
+
+        }
+
+
     }
 
     @SuppressLint("RestrictedApi")
