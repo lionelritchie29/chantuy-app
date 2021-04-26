@@ -186,6 +186,7 @@ class CurhatViewUtil {
                     .load(storageReference)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
+                    .placeholder(R.drawable.baseline_account_circle_24)
                     .into(imageView)
 
             }catch(e: Exception) {
