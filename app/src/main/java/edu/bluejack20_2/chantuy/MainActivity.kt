@@ -1,8 +1,11 @@
 package edu.bluejack20_2.chantuy
 
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -41,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         R.id.search_menu_item,
         R.id.profile_menu_item
     )
+    private val CHANNEL_ID = "ChantuyReminder"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         disableNightMode()
@@ -49,12 +53,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        createNotificationChannel()
         setViewPager()
         setBottomMenuItemListener()
         testPushNotification()
     }
 
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name: CharSequence = "ChantuyReminderChannel"
+            val description = "Channel for Chantuy Reminder"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance)
+            channel.description = description
 
+            val notificationManager = getSystemService(NotificationManager::class.java);
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
 
     private fun setFontSize() {
         appSettingPreferences = getSharedPreferences("AppSettingPreferences", 0)

@@ -3,7 +3,6 @@ package edu.bluejack20_2.chantuy.repositories
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import android.util.Log
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore

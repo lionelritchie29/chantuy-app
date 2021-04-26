@@ -25,6 +25,8 @@
         <activity android:name=".views.insert_curhat.InsertCurhatActivity" />
         <activity android:name=".views.curhat_detail.CurhatDetailActivity" />
         <activity android:name=".MainActivity" />
+
+        <receiver android:name=".services.NotificationService" />
     </application>
 
 </manifest>
