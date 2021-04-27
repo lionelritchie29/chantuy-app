@@ -41,10 +41,22 @@ class HottestCurhatFragment : Fragment() {
             }
         })
 
+        viewModel.isSizeZero.observe(viewLifecycleOwner, Observer {isZero ->
+            if (isZero) {
+                binding.hottestNoCurhatImg.visibility = View.VISIBLE
+            } else {
+                binding.hottestNoCurhatImg.visibility = View.GONE
+            }
+        })
+
         viewModel.isFetchingData.observe(viewLifecycleOwner, Observer { isFetchingData ->
             if (!isFetchingData) {
+                binding.hottestNoCurhatImg.visibility = View.GONE
+                binding.hottestGettingCurhatImg.visibility = View.GONE
                 binding.detailCurhatLoadIndicator.visibility = View.GONE
             } else {
+                binding.hottestNoCurhatImg.visibility = View.GONE
+                binding.hottestGettingCurhatImg.visibility = View.VISIBLE
                 binding.detailCurhatLoadIndicator.visibility = View.VISIBLE
             }
         })
