@@ -17,13 +17,12 @@ import androidx.databinding.DataBindingUtil
 import edu.bluejack20_2.chantuy.InsertFeedbackActivity
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.databinding.ActivitySettingsBinding
+import edu.bluejack20_2.chantuy.models.GLOBALS
 import edu.bluejack20_2.chantuy.services.NotificationService
 import edu.bluejack20_2.chantuy.views.feedback.FeedbackActivity
 
 class SettingsActivity : AppCompatActivity() {
 
-    private val LARGE_KEY = "large"
-    private val NOTIFICATION_KEY = "notification"
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var appSettingPreferences: SharedPreferences
     private lateinit var sharedPrefEdit: SharedPreferences.Editor
@@ -32,13 +31,10 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings)
-        appSettingPreferences = getSharedPreferences("AppSettingPreferences", 0)
+        appSettingPreferences = getSharedPreferences(GLOBALS.SETTINGS_PREFERENCES_NAME, 0)
         sharedPrefEdit = appSettingPreferences.edit()
-        isLarge = appSettingPreferences.getBoolean(LARGE_KEY, false)
-        isNotificationOn = appSettingPreferences.getBoolean(NOTIFICATION_KEY, false)
-
-        Log.wtf("hehe", isLarge.toString())
-        Log.wtf("hehe", isNotificationOn.toString())
+        isLarge = appSettingPreferences.getBoolean(GLOBALS.SETTINGS_LARGE_KEY, false)
+        isNotificationOn = appSettingPreferences.getBoolean(GLOBALS.SETTINGS_NOTIFICATION_KEY, false)
 
 //        when (isLarge) {
 //            true -> {
@@ -87,34 +83,26 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+
     private fun setSwitchListener() {
         binding.enableNotificationSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                setNotification()
-            } else {
-
-            }
-            sharedPrefEdit.putBoolean(NOTIFICATION_KEY, isChecked)
+            sharedPrefEdit.putBoolean(GLOBALS.SETTINGS_NOTIFICATION_KEY, isChecked)
             sharedPrefEdit.commit()
             recreate()
         }
 
         binding.enableFontsizeSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            sharedPrefEdit.putBoolean(LARGE_KEY, isChecked)
+            sharedPrefEdit.putBoolean(GLOBALS.SETTINGS_LARGE_KEY, isChecked)
             sharedPrefEdit.commit()
             recreate()
         }
     }
 
-    private fun setNotification() {
+    private fun cancelAlarm() {
         val intent = Intent(this, NotificationService::class.java)
         val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        val timeAtNotificationOn = System.currentTimeMillis()
-        val tenSecondsInMillis = 1000 * 10
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtNotificationOn + tenSecondsInMillis, pendingIntent)
-        Log.i("SettingsActivity", "Notification Set!")
+        alarmManager.cancel(pendingIntent)
     }
 }

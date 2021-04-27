@@ -1,13 +1,17 @@
 package edu.bluejack20_2.chantuy
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -19,6 +23,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
+import edu.bluejack20_2.chantuy.models.GLOBALS
+import edu.bluejack20_2.chantuy.services.NotificationService
 import edu.bluejack20_2.chantuy.views.curhat_by_topic.CurhatByTopicFragment
 import edu.bluejack20_2.chantuy.views.hottest_curhat.HottestCurhatFragment
 import edu.bluejack20_2.chantuy.views.insert_curhat.InsertCurhatActivity
@@ -30,21 +36,19 @@ import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
-    private val LARGE_KEY = "large"
     private lateinit var appSettingPreferences: SharedPreferences
     var isLarge: Boolean = false
 
     private lateinit var viewPager: ViewPager2
     private lateinit var bottomNavigation: BottomNavigationView
     private val PAGES_COUNT = 5
-    private val menuIdList : List<Int> = listOf(
+    private val menuIdList: List<Int> = listOf(
         R.id.hottest_menu_item,
         R.id.newest_menu_item,
         R.id.topic_menu_item,
         R.id.search_menu_item,
         R.id.profile_menu_item
     )
-    private val CHANNEL_ID = "ChantuyReminder"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         disableNightMode()
@@ -57,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         setViewPager()
         setBottomMenuItemListener()
         testPushNotification()
+        setNotification()
     }
 
     private fun createNotificationChannel() {
@@ -64,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             val name: CharSequence = "ChantuyReminderChannel"
             val description = "Channel for Chantuy Reminder"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID, name, importance)
+            val channel = NotificationChannel(GLOBALS.NOTIFICATION_CHANNEL_ID, name, importance)
             channel.description = description
 
             val notificationManager = getSystemService(NotificationManager::class.java);
@@ -72,9 +77,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setNotification() {
+        val intent = Intent(this, NotificationService::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val timeAtNotificationOn = System.currentTimeMillis()
+        val tenSecondsInMillis = 1000 * 10
+
+        alarmManager.setInexactRepeating(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            SystemClock.elapsedRealtime() + tenSecondsInMillis,
+            AlarmManager.INTERVAL_HALF_DAY,
+            pendingIntent
+        )
+        Log.i("SettingsActivity", "Notification Set!")
+    }
+
     private fun setFontSize() {
-        appSettingPreferences = getSharedPreferences("AppSettingPreferences", 0)
-        isLarge = appSettingPreferences.getBoolean(LARGE_KEY, false)
+        appSettingPreferences = getSharedPreferences(GLOBALS.SETTINGS_PREFERENCES_NAME, 0)
+        isLarge = appSettingPreferences.getBoolean(GLOBALS.SETTINGS_LARGE_KEY, false)
 
         when (isLarge) {
             true -> {
@@ -161,37 +183,39 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBottomMenuItemListener() {
-        val menuOnItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {item ->
-            when (item.itemId) {
-                R.id.hottest_menu_item -> {
-                    viewPager.currentItem = 0
-                    return@OnNavigationItemSelectedListener true
+        val menuOnItemSelectedListener =
+            BottomNavigationView.OnNavigationItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.hottest_menu_item -> {
+                        viewPager.currentItem = 0
+                        return@OnNavigationItemSelectedListener true
+                    }
+                    R.id.newest_menu_item -> {
+                        viewPager.currentItem = 1
+                        return@OnNavigationItemSelectedListener true
+                    }
+                    R.id.topic_menu_item -> {
+                        viewPager.currentItem = 2
+                        return@OnNavigationItemSelectedListener true
+                    }
+                    R.id.search_menu_item -> {
+                        viewPager.currentItem = 3
+                        return@OnNavigationItemSelectedListener true
+                    }
+                    R.id.profile_menu_item -> {
+                        viewPager.currentItem = 4
+                        return@OnNavigationItemSelectedListener true
+                    }
+                    else -> false
                 }
-                R.id.newest_menu_item -> {
-                    viewPager.currentItem = 1
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.topic_menu_item -> {
-                    viewPager.currentItem = 2
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.search_menu_item -> {
-                    viewPager.currentItem = 3
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.profile_menu_item -> {
-                    viewPager.currentItem = 4
-                    return@OnNavigationItemSelectedListener true
-                }
-                else -> false
             }
-        }
 
         bottomNavigation = findViewById(R.id.navigation)
         bottomNavigation.setOnNavigationItemSelectedListener(menuOnItemSelectedListener)
     }
 
-    private inner class CurhatViewSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+    private inner class CurhatViewSlidePagerAdapter(fa: FragmentActivity) :
+        FragmentStateAdapter(fa) {
 
         override fun getItemCount(): Int = PAGES_COUNT
 
@@ -206,7 +230,6 @@ class MainActivity : AppCompatActivity() {
             }
             return currentFragment
         }
-
 
 
     }
