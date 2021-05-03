@@ -9,18 +9,29 @@
         android:layout_height="match_parent"
         tools:context=".views.curhat_by_topic.CurhatByTopicFragment">
 
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/filter_topic_chip_recycler"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent">-->
+
+        <!--        </androidx.recyclerview.widget.RecyclerView>-->
+
         <androidx.cardview.widget.CardView
             android:id="@+id/filter_topic_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:backgroundTint="@color/primary_blue"
             app:cardCornerRadius="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -81,17 +92,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!--        <androidx.recyclerview.widget.RecyclerView-->
-        <!--            android:id="@+id/filter_topic_chip_recycler"-->
-        <!--            android:layout_width="0dp"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="8dp"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent">-->
-
-        <!--        </androidx.recyclerview.widget.RecyclerView>-->
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/filter_topic_curhat_recycler"
             android:layout_width="0dp"
@@ -102,6 +102,17 @@
             app:layout_constraintTop_toTopOf="parent">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <ImageView
+            android:id="@+id/curhatByTopicNoCurhat"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_empty_no_curhat" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

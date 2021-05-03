@@ -27,6 +27,9 @@ class CurhatByTopicViewModel
         MutableLiveData<List<Curhat>>().apply {  value = listOf() }
     val filteredCurhats: LiveData<List<Curhat>> get() = _filteredCurhats
 
+    private var _isSizeZero = MutableLiveData<Boolean>().apply { value = true }
+    val isSizeZero: LiveData<Boolean> get() = _isSizeZero
+
     init {
         CurhatTopicRepository.getAll { topics ->
             _shuffledTopics.value = topics.shuffled().take(3)
@@ -46,8 +49,10 @@ class CurhatByTopicViewModel
 
     fun OnFilter(topicName: String) {
         val index = topicsString.indexOf(topicName)
+        _isSizeZero.value = false
         if (index != -1) {
             CurhatRepository.getByTopic(_topics.get(index).id) { curhats ->
+                _isSizeZero.value = curhats.isEmpty()
                 _filteredCurhats.value = curhats
                 for (curhat in _filteredCurhats.value!!) {
                     Log.i("CurhatByTopicViewModel", curhat.content)

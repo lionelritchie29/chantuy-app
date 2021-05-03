@@ -50,6 +50,14 @@ class CurhatByTopicFragment : Fragment() {
             isScrollingUp = false
         }
 
+        viewModel.isSizeZero.observe(viewLifecycleOwner, Observer { isZero ->
+            if (isZero) {
+                binding.curhatByTopicNoCurhat.visibility = View.VISIBLE
+            } else {
+                binding.curhatByTopicNoCurhat.visibility = View.GONE
+            }
+        })
+
         viewModel.topics.observe(viewLifecycleOwner, Observer {
             binding.exampleTopicsLabel.text = it.map { topic -> topic.name }.toString()
         })
@@ -74,6 +82,7 @@ class CurhatByTopicFragment : Fragment() {
             RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 
+                Log.i("CurhatByTopicFragment", dy.toString())
                 if (dy < 0) { //scroll down
                     if (!isScrollingUp) {
                         binding.filterTopicCard.startAnimation(AnimationUtils.loadAnimation(
