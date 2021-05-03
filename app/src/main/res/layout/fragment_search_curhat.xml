@@ -5,33 +5,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.search_curhat.SearchCurhatFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <Button
             android:id="@+id/search_curhat_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="28dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
             android:text="@string/search"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
             app:layout_constraintBottom_toBottomOf="@+id/filter_topic_auto_complete"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/filter_topic_auto_complete" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/search_auto_complete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            android:layout_marginStart="60dp"
             android:hint="@string/search_hint"
-
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintBottom_toBottomOf="@+id/filter_button"
+            app:layout_constraintEnd_toStartOf="@+id/filter_button"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/filter_button"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/filter_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:src="@drawable/ic_baseline_filter_alt_24"
+            app:layout_constraintBottom_toBottomOf="@+id/search_curhat_btn"
+            app:layout_constraintEnd_toStartOf="@+id/search_curhat_btn"
+            app:layout_constraintTop_toTopOf="@+id/search_curhat_btn" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_curhat_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_auto_complete"
+            app:layout_constraintVertical_bias="1.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
