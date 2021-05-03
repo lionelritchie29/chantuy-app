@@ -1,7 +1,6 @@
 package edu.bluejack20_2.chantuy.repositories
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
@@ -146,9 +145,7 @@ class CurhatRepository {
             var date: Timestamp
 
             if(timeType==0){
-
                 date = Timestamp(nowDate.seconds-86400,nowDate.nanoseconds)
-
             }
             else if(timeType==1){
                 date = Timestamp(nowDate.seconds-604800,nowDate.nanoseconds)
