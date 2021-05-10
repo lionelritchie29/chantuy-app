@@ -40,7 +40,7 @@ class CurhatViewUtil {
         }
 
         @SuppressLint("RestrictedApi")
-        fun setDislikePopupMenu(likeBtn: ImageButton, dislikeBtn: ImageButton, curhat: Curhat, view: View) {
+        fun setDislikePopupMenu(likeBtn: ImageButton, dislikeBtn: ImageButton, curhat: Curhat, view: View, callback: () -> Unit) {
             val userId = UserRepository.getCurrentUserId()
             dislikeBtn.setOnClickListener {
                 val popupMenu = PopupMenu(view.context, it)
@@ -55,6 +55,7 @@ class CurhatViewUtil {
                                 resetedCurhat.usersGiveThumbDowns = addUserIdToReactionList(resetedCurhat.usersGiveThumbDowns!!, userId)
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
                                 Toast.makeText(view.context, "Curhat succesfully disliked!", Toast.LENGTH_SHORT).show()
+                                callback()
                             }
                             true
                         }
@@ -64,6 +65,7 @@ class CurhatViewUtil {
                                 resetedCurhat.usersGiveAngry = addUserIdToReactionList(resetedCurhat.usersGiveAngry!!, userId)
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
                                 Toast.makeText(view.context, "Curhat succesfully disliked!", Toast.LENGTH_SHORT).show()
+                                callback()
                             }
                             true
                         }
@@ -78,7 +80,7 @@ class CurhatViewUtil {
         }
 
         @SuppressLint("RestrictedApi", "ResourceAsColor")
-        fun setLikePopupMenu(likeBtn: ImageButton, dislikeBtn: ImageButton, curhat: Curhat, view: View) {
+        fun setLikePopupMenu(likeBtn: ImageButton, dislikeBtn: ImageButton, curhat: Curhat, view: View, callback: () -> Unit) {
             val userId = UserRepository.getCurrentUserId()
             likeBtn.setOnClickListener {
                 val popupMenu = PopupMenu(view.context, it)
@@ -92,6 +94,7 @@ class CurhatViewUtil {
                                 resetedCurhat.usersGiveThumbUp = addUserIdToReactionList(resetedCurhat.usersGiveThumbUp!!, userId)
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
                                 Toast.makeText(view.context, "Curhat succesfully liked!", Toast.LENGTH_SHORT).show()
+                                callback()
                             }
                             true
                         }
@@ -101,6 +104,7 @@ class CurhatViewUtil {
                             CurhatReactionRepository.addLikeReaction(curhat.id, CurhatReaction.COOL) {
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
                                 Toast.makeText(view.context, "Curhat succesfully liked!", Toast.LENGTH_SHORT).show()
+                                callback()
                             }
                             true
                         }
@@ -110,6 +114,7 @@ class CurhatViewUtil {
                             CurhatReactionRepository.addLikeReaction(curhat.id, CurhatReaction.LOVE) {
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
                                 Toast.makeText(view.context, "Curhat succesfully liked!", Toast.LENGTH_SHORT).show()
+                                callback()
                             }
                             true
                         }

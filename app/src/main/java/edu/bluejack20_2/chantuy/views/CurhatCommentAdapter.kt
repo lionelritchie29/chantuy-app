@@ -241,8 +241,12 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
                 binding.curhatDetailThumbDownBtn,
                 curhat, binding.root
             )
-            CurhatViewUtil.setLikePopupMenu(binding.curhatDetailThumbUpBtn, binding.curhatDetailThumbDownBtn, curhat, binding.root)
-            CurhatViewUtil.setDislikePopupMenu(binding.curhatDetailThumbUpBtn, binding.curhatDetailThumbDownBtn, curhat, binding.root)
+            CurhatViewUtil.setLikePopupMenu(binding.curhatDetailThumbUpBtn, binding.curhatDetailThumbDownBtn, curhat, binding.root) {
+
+            }
+            CurhatViewUtil.setDislikePopupMenu(binding.curhatDetailThumbUpBtn, binding.curhatDetailThumbDownBtn, curhat, binding.root) {
+
+            }
         }
 
         private fun setActionBtnVisibility(userId: String) {

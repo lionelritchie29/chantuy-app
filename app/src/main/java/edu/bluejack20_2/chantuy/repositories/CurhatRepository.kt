@@ -239,6 +239,15 @@ class CurhatRepository {
                 .orderBy("createdAt", Query.Direction.ASCENDING).limit(3)
             return curhats
         }
+
+        fun getLikeDislikeCount(id: String, callback: (Long, Long) -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+            db.collection(COLLECTION_NAME).document(id).get()
+                .addOnSuccessListener {
+                    val (likeCount, dislikeCount) = Pair(it.get("likeCount"), it.get("dislikeCount"))
+                    callback(likeCount as Long, dislikeCount as Long)
+                }
+        }
     }
 
 }

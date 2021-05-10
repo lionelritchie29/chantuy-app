@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         alarmManager.setInexactRepeating(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
             SystemClock.elapsedRealtime() + tenSecondsInMillis,
-            AlarmManager.INTERVAL_HALF_DAY,
+            AlarmManager.INTERVAL_HOUR,
             pendingIntent
         )
         Log.i("SettingsActivity", "Notification Set!")

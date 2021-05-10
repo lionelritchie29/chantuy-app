@@ -90,7 +90,5 @@ class CurhatCommentRepository {
                     callback()
                 }
         }
-
-
     }
 }

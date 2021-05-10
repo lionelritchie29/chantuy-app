@@ -49,6 +49,8 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
             binding.curhatCardDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
             CurhatRepository.incrementViewCount(curhat.id)
             binding.curhatCardCommentCount.text = curhat.commentCount.toString()
+            binding.curhatCardLikeCount.text = curhat.likeCount.toString()
+            binding.curhatCardDislikeCount.text = curhat.dislikeCount.toString()
             setOnViewMoreListener(curhat.id)
 
             UserRepository.getUserById(curhat.user) { user ->
@@ -60,9 +62,21 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
                 binding.curhatCardThumbUpBtn,
                 binding.curhatCardThumbDownBtn,
                 curhat, binding.root)
-            CurhatViewUtil.setLikePopupMenu(binding.curhatCardThumbUpBtn, binding.curhatCardThumbDownBtn, curhat, binding.root)
-            CurhatViewUtil.setDislikePopupMenu(binding.curhatCardThumbUpBtn, binding.curhatCardThumbDownBtn, curhat, binding.root)
+            CurhatViewUtil.setLikePopupMenu(binding.curhatCardThumbUpBtn, binding.curhatCardThumbDownBtn, curhat, binding.root) {
+                updateLikeDislikeCount(curhat)
+            }
+            CurhatViewUtil.setDislikePopupMenu(binding.curhatCardThumbUpBtn, binding.curhatCardThumbDownBtn, curhat, binding.root) {
+                updateLikeDislikeCount(curhat)
+            }
         }
+
+        private fun updateLikeDislikeCount(curhat: Curhat) {
+            CurhatRepository.getLikeDislikeCount(curhat.id) { likeCount: Long, dislikeCount: Long ->
+                binding.curhatCardLikeCount.text = likeCount.toString()
+                binding.curhatCardDislikeCount.text = dislikeCount.toString()
+            }
+        }
+
 
 
         private fun setOnViewMoreListener(id: String) {
