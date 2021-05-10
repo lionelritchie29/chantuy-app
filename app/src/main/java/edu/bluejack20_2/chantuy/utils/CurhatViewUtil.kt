@@ -203,6 +203,7 @@ class CurhatViewUtil {
             val image = if (isMale) R.drawable.ic_profile_male else R.drawable.ic_profile_female
             GlideApp.with(view).load(image).into(imageView)
         }
+
     }
 
 }

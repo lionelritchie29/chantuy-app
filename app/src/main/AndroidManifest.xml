@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Chantuy">
-        <activity android:name=".views.feedback.FeedbackActivity"></activity>
+        <activity android:name=".views.curhat_info_pop_up.CurhatInfoPopUpWindow"></activity>
+        <activity android:name=".views.feedback.FeedbackActivity" />
         <activity android:name=".InsertFeedbackActivity" />
         <activity android:name=".views.settings.SettingsActivity" />
         <activity android:name=".views.update_curhat.UpdateCurhatActivity" />
