@@ -72,4 +72,10 @@
     <string name="view_feedback">View Feedbacks</string>
     <string name="solved">Solved</string>
     <string name="example">"Example: "</string>
+    <string name="filter_like">Sort by most like</string>
+    <string name="filter_dislike">Sort by most dislike</string>
+    <string name="filter_day">Filter curhats posted last 24 hours</string>
+    <string name="filter_week">Filter curhats posted last 1 week</string>
+    <string name="filter_month">Filter curhats posted last 1 month</string>
+    <string name="filter_year">Filter curhats posted last 1 year</string>
 </resources>

@@ -34,15 +34,13 @@ class SearchCurhatViewModel {
             }
             curhats.value=tempResult.toList()
         }
-
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun chooseQuery(): Task<QuerySnapshot>{
         when(searchType){
             1-> return CurhatRepository.getCurhatBySearch(searchString,true).get()
             2-> return CurhatRepository.getCurhatBySearch(searchString,false).get()
-            else-> return CurhatRepository.getCurhatBySearch(searchString,searchType-2).get()
-
+            else-> return CurhatRepository.getCurhatBySearch(searchString,searchType-3).get()
         }
 
     }
