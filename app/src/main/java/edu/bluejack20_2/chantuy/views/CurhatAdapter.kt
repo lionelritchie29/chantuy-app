@@ -2,6 +2,7 @@ package edu.bluejack20_2.chantuy.views
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -22,7 +23,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.databinding.CurhatCardItemBinding
+import edu.bluejack20_2.chantuy.databinding.CurhatInfoPopupBinding
 import edu.bluejack20_2.chantuy.models.Curhat
+import edu.bluejack20_2.chantuy.models.CurhatComment
 import edu.bluejack20_2.chantuy.models.CurhatReaction
 import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
@@ -35,7 +38,6 @@ import kotlin.random.Random
 class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        Log.wtf("hehe", "create bos")
         return ViewHolder.from(parent)
     }
 
@@ -71,7 +73,7 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
             }
 
             binding.curhatCardInfoBtn.setOnClickListener {
-                showCurhatInfo()
+                CurhatViewUtil.showCurhatInfoModal(curhat.id, binding.root.context)
             }
         }
 
@@ -80,23 +82,6 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
                 binding.curhatCardLikeCount.text = likeCount.toString()
                 binding.curhatCardDislikeCount.text = dislikeCount.toString()
             }
-        }
-
-        private fun showCurhatInfo() {
-            val context = binding.root.context
-            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view = inflater.inflate(R.layout.curhat_info_popup, null)
-
-            val popup = PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            popup?.isOutsideTouchable = true
-            popup?.isFocusable = true
-            popup?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//            popup?.showAtLocation(binding.root, Gravity.CENTER, 0, 0)
-            popup?.showAsDropDown(binding.root)
-            Log.i("CurhatAdapter", popup.toString())
-            Log.i("CurhatAdapter", popup.isShowing.toString())
-            Log.i("CurhatAdapter", popup.width.toString())
-            Log.i("CurhatAdapter", popup.height.toString())
         }
 
         private fun setOnViewMoreListener(id: String) {

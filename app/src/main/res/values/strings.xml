@@ -78,5 +78,5 @@
     <string name="filter_week">Filter curhats posted last 1 week</string>
     <string name="filter_month">Filter curhats posted last 1 month</string>
     <string name="filter_year">Filter curhats posted last 1 year</string>
-    <string name="countNumber">7</string>
+    <string name="countNumber">0</string>
 </resources>

@@ -3,6 +3,7 @@ package edu.bluejack20_2.chantuy.views
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.media.Image
 import android.os.Bundle
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.databinding.CurhatDetailHeaderBinding
+import edu.bluejack20_2.chantuy.databinding.CurhatInfoPopupBinding
 import edu.bluejack20_2.chantuy.databinding.ShowMoreCommentBinding
 import edu.bluejack20_2.chantuy.views.update_curhat.UpdateCurhatActivity
 import edu.bluejack20_2.chantuy.models.Curhat
@@ -248,6 +250,10 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
             }
             CurhatViewUtil.setDislikePopupMenu(binding.curhatDetailThumbUpBtn, binding.curhatDetailThumbDownBtn, curhat, binding.root) {
                 updateLikeDislikeCount(curhat.id)
+            }
+
+            binding.curhatDetailHeaderInfoBtn.setOnClickListener {
+                CurhatViewUtil.showCurhatInfoModal(curhat.id, binding.root.context)
             }
         }
 
