@@ -2,6 +2,7 @@ package edu.bluejack20_2.chantuy.views.hottest_curhat
 
 import HottestCurhatViewModel
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -41,10 +42,22 @@ class HottestCurhatFragment : Fragment() {
             }
         })
 
+        viewModel.isSizeZero.observe(viewLifecycleOwner, Observer {isZero ->
+            Log.i("HottestCurhatFragment", isZero.toString())
+            if (isZero) {
+                Log.i("HottestCurhatFragment", "is true: " + isZero.toString())
+                binding.hottestNoCurhatImg.visibility = View.VISIBLE
+            } else {
+                binding.hottestNoCurhatImg.visibility = View.GONE
+            }
+        })
+
         viewModel.isFetchingData.observe(viewLifecycleOwner, Observer { isFetchingData ->
             if (!isFetchingData) {
+                binding.hottestGettingCurhatImg.visibility = View.GONE
                 binding.detailCurhatLoadIndicator.visibility = View.GONE
             } else {
+                binding.hottestGettingCurhatImg.visibility = View.VISIBLE
                 binding.detailCurhatLoadIndicator.visibility = View.VISIBLE
             }
         })

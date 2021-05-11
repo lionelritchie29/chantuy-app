@@ -88,12 +88,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
                     android:background="@color/transparent"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:src="@drawable/outline_thumb_up_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/curhat_detail_content" />
 
@@ -108,6 +106,26 @@
                     app:layout_constraintBottom_toBottomOf="@+id/curhat_detail_thumb_up_btn"
                     app:layout_constraintStart_toEndOf="@+id/curhat_detail_thumb_up_btn"
                     app:layout_constraintTop_toTopOf="@+id/curhat_detail_thumb_up_btn" />
+
+                <TextView
+                    android:id="@+id/curhat_detail_like_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/countNumber"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/curhat_detail_thumb_up_btn"
+                    app:layout_constraintStart_toStartOf="@+id/curhat_detail_thumb_up_btn"
+                    app:layout_constraintTop_toBottomOf="@+id/curhat_detail_thumb_up_btn" />
+
+                <TextView
+                    android:id="@+id/curhat_detail_dislike_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/countNumber"
+                    app:layout_constraintEnd_toEndOf="@+id/curhat_detail_thumb_down_btn"
+                    app:layout_constraintStart_toEndOf="@+id/curhat_detail_thumb_up_btn"
+                    app:layout_constraintTop_toBottomOf="@+id/curhat_detail_thumb_down_btn" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

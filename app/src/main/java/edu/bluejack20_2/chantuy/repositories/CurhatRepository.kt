@@ -2,7 +2,6 @@ package edu.bluejack20_2.chantuy.repositories
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import android.util.Log
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
@@ -239,6 +238,15 @@ class CurhatRepository {
             val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", id)
                 .orderBy("createdAt", Query.Direction.ASCENDING).limit(3)
             return curhats
+        }
+
+        fun getLikeDislikeCount(id: String, callback: (Long, Long) -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+            db.collection(COLLECTION_NAME).document(id).get()
+                .addOnSuccessListener {
+                    val (likeCount, dislikeCount) = Pair(it.get("likeCount"), it.get("dislikeCount"))
+                    callback(likeCount as Long, dislikeCount as Long)
+                }
         }
     }
 

@@ -19,6 +19,9 @@ class NewestCurhatViewModel : ViewModel() {
         MutableLiveData<Boolean>().apply { value = true }
     val isFetchingData: LiveData<Boolean> get() = _isFetchingData
 
+    private var _isSizeZero = MutableLiveData<Boolean>().apply { value = false }
+    val isSizeZero: LiveData<Boolean> get() = _isSizeZero
+
     private var isLoadingMore = false
     var lastCurhat: Curhat? = null
 
@@ -30,6 +33,7 @@ class NewestCurhatViewModel : ViewModel() {
         _curhats.value = listOf()
         _isFetchingData.value = true
         CurhatRepository.getNewestCurhat(null) { curhats ->
+            _isSizeZero.value = curhats.isEmpty()
             _curhats.value = curhats
             _isFetchingData.value = false
             callback()

@@ -225,6 +225,8 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
             binding.curhatDetailContent.text = curhat.content
             binding.curhatDetailDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
             binding.curhatDetailCommentCount.text = curhat.commentCount.toString() + " comment(s)"
+            binding.curhatDetailLikeCount.text = curhat.likeCount.toString()
+            binding.curhatDetailDislikeCount.text = curhat.dislikeCount.toString()
 
             setActionBtnVisibility(curhat.user)
 
@@ -241,8 +243,19 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
                 binding.curhatDetailThumbDownBtn,
                 curhat, binding.root
             )
-            CurhatViewUtil.setLikePopupMenu(binding.curhatDetailThumbUpBtn, binding.curhatDetailThumbDownBtn, curhat, binding.root)
-            CurhatViewUtil.setDislikePopupMenu(binding.curhatDetailThumbUpBtn, binding.curhatDetailThumbDownBtn, curhat, binding.root)
+            CurhatViewUtil.setLikePopupMenu(binding.curhatDetailThumbUpBtn, binding.curhatDetailThumbDownBtn, curhat, binding.root) {
+                updateLikeDislikeCount(curhat.id)
+            }
+            CurhatViewUtil.setDislikePopupMenu(binding.curhatDetailThumbUpBtn, binding.curhatDetailThumbDownBtn, curhat, binding.root) {
+                updateLikeDislikeCount(curhat.id)
+            }
+        }
+
+        private fun updateLikeDislikeCount(curhatId: String) {
+            CurhatRepository.getLikeDislikeCount(curhatId) { likeCount: Long, dislikeCount: Long ->
+                binding.curhatDetailLikeCount.text = likeCount.toString()
+                binding.curhatDetailDislikeCount.text = dislikeCount.toString()
+            }
         }
 
         private fun setActionBtnVisibility(userId: String) {

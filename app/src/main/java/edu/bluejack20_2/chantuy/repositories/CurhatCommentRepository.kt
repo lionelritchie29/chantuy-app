@@ -12,7 +12,7 @@ class CurhatCommentRepository {
     companion object {
         private val COLLECTION_NAME = "comments"
 
-        fun addComment(curhatId: String, userId: String, content: String, callback: () -> Unit) {
+        fun addComment(curhatId: String, userId: String, content: String, callback: (String) -> Unit) {
             val db = FirebaseFirestore.getInstance()
 
             val comment =
@@ -20,7 +20,7 @@ class CurhatCommentRepository {
             db.collection(COLLECTION_NAME).add(comment)
                 .addOnSuccessListener {
                     CurhatRepository.incrementCommentCount(curhatId)
-                    callback()
+                    callback(it.id)
                 }
         }
 
@@ -90,7 +90,5 @@ class CurhatCommentRepository {
                     callback()
                 }
         }
-
-
     }
 }

@@ -17,6 +17,9 @@ class HottestCurhatViewModel : ViewModel(){
         MutableLiveData<Boolean>().apply { value = true }
     val isFetchingData: LiveData<Boolean> get() = _isFetchingData
 
+    private var _isSizeZero = MutableLiveData<Boolean>().apply { value = false }
+    val isSizeZero: LiveData<Boolean> get() = _isSizeZero
+
     var isLoadingMore = false
     var lastCurhat: Curhat? = null
 
@@ -28,6 +31,9 @@ class HottestCurhatViewModel : ViewModel(){
         _curhats.value = listOf()
         _isFetchingData.value = true
         CurhatRepository.getHottestCurhat (null) { curhats ->
+            _isSizeZero.value = curhats.isEmpty()
+            Log.i("HottestCurhatViewModel", "Size: " + curhats.size)
+            Log.i("HottestCurhatViewModel", "Size Zero: " + _isSizeZero.value)
             _curhats.value = curhats
             _isFetchingData.value = false
             callback()

@@ -11,6 +11,7 @@ import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatComment
 import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
+import edu.bluejack20_2.chantuy.repositories.NotificationRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 
 class CurhatDetailViewModel: ViewModel() {
@@ -63,13 +64,14 @@ class CurhatDetailViewModel: ViewModel() {
 
     fun addComment(content: TextView) {
         val currentUserId = UserRepository.getCurrentUserId()
-        CurhatCommentRepository.addComment(id, currentUserId, content.text.toString()) {
+        CurhatCommentRepository.addComment(id, currentUserId, content.text.toString()) {newCommentId ->
             content.text = ""
             if ((toIndex + 1) % 5 != 1) {
                 toIndex += 1
             }
             Toast.makeText(content.context, "Comment succesfully added!", Toast.LENGTH_SHORT).show()
             getCurhatDetail(null)
+            NotificationRepository.addNotif(newCommentId, curhat.user) {}
         }
     }
 

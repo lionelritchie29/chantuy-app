@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
@@ -39,7 +40,7 @@ class CurhatViewUtil {
         }
 
         @SuppressLint("RestrictedApi")
-        fun setDislikePopupMenu(likeBtn: ImageButton, dislikeBtn: ImageButton, curhat: Curhat, view: View) {
+        fun setDislikePopupMenu(likeBtn: ImageButton, dislikeBtn: ImageButton, curhat: Curhat, view: View, callback: () -> Unit) {
             val userId = UserRepository.getCurrentUserId()
             dislikeBtn.setOnClickListener {
                 val popupMenu = PopupMenu(view.context, it)
@@ -53,6 +54,8 @@ class CurhatViewUtil {
                                 val resetedCurhat = resetReactionList(curhat)
                                 resetedCurhat.usersGiveThumbDowns = addUserIdToReactionList(resetedCurhat.usersGiveThumbDowns!!, userId)
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
+                                Toast.makeText(view.context, "Curhat succesfully disliked!", Toast.LENGTH_SHORT).show()
+                                callback()
                             }
                             true
                         }
@@ -61,6 +64,8 @@ class CurhatViewUtil {
                                 val resetedCurhat = resetReactionList(curhat)
                                 resetedCurhat.usersGiveAngry = addUserIdToReactionList(resetedCurhat.usersGiveAngry!!, userId)
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
+                                Toast.makeText(view.context, "Curhat succesfully disliked!", Toast.LENGTH_SHORT).show()
+                                callback()
                             }
                             true
                         }
@@ -75,7 +80,7 @@ class CurhatViewUtil {
         }
 
         @SuppressLint("RestrictedApi", "ResourceAsColor")
-        fun setLikePopupMenu(likeBtn: ImageButton, dislikeBtn: ImageButton, curhat: Curhat, view: View) {
+        fun setLikePopupMenu(likeBtn: ImageButton, dislikeBtn: ImageButton, curhat: Curhat, view: View, callback: () -> Unit) {
             val userId = UserRepository.getCurrentUserId()
             likeBtn.setOnClickListener {
                 val popupMenu = PopupMenu(view.context, it)
@@ -88,6 +93,8 @@ class CurhatViewUtil {
                                 val resetedCurhat = resetReactionList(curhat)
                                 resetedCurhat.usersGiveThumbUp = addUserIdToReactionList(resetedCurhat.usersGiveThumbUp!!, userId)
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
+                                Toast.makeText(view.context, "Curhat succesfully liked!", Toast.LENGTH_SHORT).show()
+                                callback()
                             }
                             true
                         }
@@ -96,6 +103,8 @@ class CurhatViewUtil {
                             resetedCurhat.usersGiveCool = addUserIdToReactionList(resetedCurhat.usersGiveCool!!, userId)
                             CurhatReactionRepository.addLikeReaction(curhat.id, CurhatReaction.COOL) {
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
+                                Toast.makeText(view.context, "Curhat succesfully liked!", Toast.LENGTH_SHORT).show()
+                                callback()
                             }
                             true
                         }
@@ -104,6 +113,8 @@ class CurhatViewUtil {
                             resetedCurhat.usersGiveLove = addUserIdToReactionList(resetedCurhat.usersGiveLove!!, userId)
                             CurhatReactionRepository.addLikeReaction(curhat.id, CurhatReaction.LOVE) {
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
+                                Toast.makeText(view.context, "Curhat succesfully liked!", Toast.LENGTH_SHORT).show()
+                                callback()
                             }
                             true
                         }
@@ -180,6 +191,7 @@ class CurhatViewUtil {
                     .load(storageReference)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
+                    .placeholder(R.drawable.baseline_account_circle_24)
                     .into(imageView)
 
             }catch(e: Exception) {
@@ -191,6 +203,7 @@ class CurhatViewUtil {
             val image = if (isMale) R.drawable.ic_profile_male else R.drawable.ic_profile_female
             GlideApp.with(view).load(image).into(imageView)
         }
+
     }
 
 }

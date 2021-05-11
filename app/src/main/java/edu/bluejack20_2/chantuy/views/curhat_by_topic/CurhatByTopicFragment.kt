@@ -17,12 +17,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.databinding.FragmentCurhatByTopicBinding
+import edu.bluejack20_2.chantuy.utils.InputUtil
 import edu.bluejack20_2.chantuy.views.CurhatAdapter
 import edu.bluejack20_2.chantuy.views.CurhatTopicChipAdapter
 
 class CurhatByTopicFragment : Fragment() {
 
     private lateinit var binding: FragmentCurhatByTopicBinding
+    private var isScrollingUp = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +41,22 @@ class CurhatByTopicFragment : Fragment() {
 
         binding.filterTopicBtn.setOnClickListener {
             viewModel.OnFilter(binding.filterTopicAutoComplete.text.toString())
+            InputUtil.hideKeyboardFrom(binding.root.context, binding.root)
+            isScrollingUp = true
+            binding.filterTopicAutoComplete.setText("")
         }
+
+        binding.filterTopicAutoComplete.setOnClickListener {
+            isScrollingUp = false
+        }
+
+        viewModel.isSizeZero.observe(viewLifecycleOwner, Observer { isZero ->
+            if (isZero) {
+                binding.curhatByTopicNoCurhat.visibility = View.VISIBLE
+            } else {
+                binding.curhatByTopicNoCurhat.visibility = View.GONE
+            }
+        })
 
         viewModel.topics.observe(viewLifecycleOwner, Observer {
             binding.exampleTopicsLabel.text = it.map { topic -> topic.name }.toString()
@@ -52,19 +69,6 @@ class CurhatByTopicFragment : Fragment() {
         return binding.root
     }
 
-//    private fun setTopicChipRecyclerView(view: View) : CurhatTopicChipAdapter {
-//        val adapter = CurhatTopicChipAdapter()
-//        val chipRecyclerView: RecyclerView = view.findViewById(R.id.filter_topic_chip_recycler)
-//        val manager = object: LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false) {
-//            override fun canScrollVertically(): Boolean = false
-//        }
-//
-//        chipRecyclerView.adapter = adapter
-//        chipRecyclerView.layoutManager = manager
-//
-//        return adapter
-//    }
-
     private fun setFilteredCurhatRecyclerView(): CurhatAdapter {
         val adapter = CurhatAdapter()
 
@@ -74,10 +78,11 @@ class CurhatByTopicFragment : Fragment() {
                 override fun canScrollVertically(): Boolean = true
             }
 
-        var isScrollingUp = false
         binding.filterTopicCurhatRecycler.addOnScrollListener(object:
             RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+
+                Log.i("CurhatByTopicFragment", dy.toString())
                 if (dy < 0) { //scroll down
                     if (!isScrollingUp) {
                         binding.filterTopicCard.startAnimation(AnimationUtils.loadAnimation(

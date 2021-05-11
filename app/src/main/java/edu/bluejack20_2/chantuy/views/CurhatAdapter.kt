@@ -1,16 +1,18 @@
 package edu.bluejack20_2.chantuy.views
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
@@ -48,7 +50,8 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
             binding.curhatCardContent.text = curhat.content
             binding.curhatCardDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
             CurhatRepository.incrementViewCount(curhat.id)
-            binding.curhatCardCommentCount.text = curhat.commentCount.toString()
+            binding.curhatCardLikeCount.text = curhat.likeCount.toString()
+            binding.curhatCardDislikeCount.text = curhat.dislikeCount.toString()
             setOnViewMoreListener(curhat.id)
 
             UserRepository.getUserById(curhat.user) { user ->
@@ -60,10 +63,41 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
                 binding.curhatCardThumbUpBtn,
                 binding.curhatCardThumbDownBtn,
                 curhat, binding.root)
-            CurhatViewUtil.setLikePopupMenu(binding.curhatCardThumbUpBtn, binding.curhatCardThumbDownBtn, curhat, binding.root)
-            CurhatViewUtil.setDislikePopupMenu(binding.curhatCardThumbUpBtn, binding.curhatCardThumbDownBtn, curhat, binding.root)
+            CurhatViewUtil.setLikePopupMenu(binding.curhatCardThumbUpBtn, binding.curhatCardThumbDownBtn, curhat, binding.root) {
+                updateLikeDislikeCount(curhat.id)
+            }
+            CurhatViewUtil.setDislikePopupMenu(binding.curhatCardThumbUpBtn, binding.curhatCardThumbDownBtn, curhat, binding.root) {
+                updateLikeDislikeCount(curhat.id)
+            }
+
+            binding.curhatCardInfoBtn.setOnClickListener {
+                showCurhatInfo()
+            }
         }
 
+        private fun updateLikeDislikeCount(curhatId: String) {
+            CurhatRepository.getLikeDislikeCount(curhatId) { likeCount: Long, dislikeCount: Long ->
+                binding.curhatCardLikeCount.text = likeCount.toString()
+                binding.curhatCardDislikeCount.text = dislikeCount.toString()
+            }
+        }
+
+        private fun showCurhatInfo() {
+            val context = binding.root.context
+            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view = inflater.inflate(R.layout.curhat_info_popup, null)
+
+            val popup = PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            popup?.isOutsideTouchable = true
+            popup?.isFocusable = true
+            popup?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//            popup?.showAtLocation(binding.root, Gravity.CENTER, 0, 0)
+            popup?.showAsDropDown(binding.root)
+            Log.i("CurhatAdapter", popup.toString())
+            Log.i("CurhatAdapter", popup.isShowing.toString())
+            Log.i("CurhatAdapter", popup.width.toString())
+            Log.i("CurhatAdapter", popup.height.toString())
+        }
 
         private fun setOnViewMoreListener(id: String) {
             binding.curhatCardViewBtn.setOnClickListener {
