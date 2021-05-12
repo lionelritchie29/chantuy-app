@@ -41,6 +41,7 @@ android {
 
 dependencies {
     def lifecycle_version = "2.3.1"
+    implementation 'com.wajahatkarim3.EasyFlipView:EasyFlipView:3.0.0'
     implementation 'net.danlew:android.joda:2.10.9.1'
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     implementation 'de.hdodenhof:circleimageview:3.1.0'

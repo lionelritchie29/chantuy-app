@@ -1,8 +1,11 @@
 package edu.bluejack20_2.chantuy.utils
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -18,10 +21,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import edu.bluejack20_2.chantuy.GlideApp
 import edu.bluejack20_2.chantuy.R
+import edu.bluejack20_2.chantuy.databinding.CurhatInfoPopupBinding
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatReaction
 import edu.bluejack20_2.chantuy.models.User
+import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatReactionRepository
+import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -202,6 +208,29 @@ class CurhatViewUtil {
         fun setAnonymousImage(imageView: ImageView, view: View, isMale: Boolean) {
             val image = if (isMale) R.drawable.ic_profile_male else R.drawable.ic_profile_female
             GlideApp.with(view).load(image).into(imageView)
+        }
+
+        fun showCurhatInfoModal(curhatId: String, context: Context) {
+            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val dialogBinding = CurhatInfoPopupBinding.inflate(inflater)
+
+            CurhatRepository.getById(curhatId) { curhat ->
+                dialogBinding.curhatInfoAngryCount.text = curhat.usersGiveAngry?.size.toString()
+                dialogBinding.curhatInfoThumbsDownCount.text = curhat.usersGiveThumbDowns?.size.toString()
+                dialogBinding.curhatInfoThumbUpCount.text = curhat.usersGiveThumbUp?.size.toString()
+                dialogBinding.curhatInfoCoolCount.text = curhat.usersGiveCool?.size.toString()
+                dialogBinding.curhatInfoLoveCount.text = curhat.usersGiveLove?.size.toString()
+                dialogBinding.curhatInfoViewCount.text = curhat.viewCount.toString()
+                CurhatCommentRepository.getCommentsByCurhatId(curhatId) { comments ->
+                    dialogBinding.curhatInfoCommentCount.text = comments?.size.toString()
+                }
+            }
+
+            val dialog = AlertDialog.Builder(context)
+            dialog.setView(dialogBinding.root)
+            dialog.setTitle("Additional Info")
+
+            dialog.show()
         }
 
     }
