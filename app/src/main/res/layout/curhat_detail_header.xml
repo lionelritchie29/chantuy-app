@@ -153,5 +153,18 @@
             app:layout_constraintBottom_toBottomOf="@+id/curhat_detail_comment_header_img2"
             app:layout_constraintStart_toEndOf="@+id/curhat_detail_comment_header_img2"
             app:layout_constraintTop_toTopOf="@+id/curhat_detail_comment_header_img2" />
+
+        <ImageButton
+            android:id="@+id/curhat_detail_header_info_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/transparent"
+            android:padding="8dp"
+            android:tint="@color/primary_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2"
+            app:srcCompat="@drawable/baseline_info_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
