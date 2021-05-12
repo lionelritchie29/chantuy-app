@@ -248,6 +248,16 @@ class CurhatRepository {
                     callback(likeCount as Long, dislikeCount as Long)
                 }
         }
+
+        fun deleteUser(userId: String){
+            val db= FirebaseFirestore.getInstance()
+//            db.collection(COLLECTION_NAME).document(curhatId).delete()
+//                .addOnSuccessListener {
+//                    CurhatCommentRepository.deleteAllById(curhatId) {
+//                        callback()
+//                    }
+//                }
+        }
     }
 
 }

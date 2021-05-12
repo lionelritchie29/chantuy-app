@@ -17,50 +17,53 @@
         android:id="@+id/user_profile_image_view"
         android:layout_width="136dp"
         android:layout_height="119dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="60dp"
         android:src="@drawable/baseline_account_circle_18"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/submitDataText" />
 
-    <EditText
+    <TextView
         android:id="@+id/register_dob_submit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Date of Birth"
-        app:layout_constraintBottom_toTopOf="@+id/register_spinner_gender"
+        android:layout_marginTop="28dp"
+        android:hint="@string/dob_hint"
+        android:textAlignment="textStart"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_profile_image_view"
-        app:layout_constraintVertical_bias="0.88" />
+        app:layout_constraintTop_toBottomOf="@+id/user_profile_image_view" />
 
     <Button
         android:id="@+id/register_submit_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="104dp"
+        android:layout_marginTop="59dp"
         android:text="@string/submit_button_text"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_spinner_gender" />
 
     <Spinner
         android:id="@+id/register_spinner_gender"
         android:layout_width="313dp"
         android:layout_height="38dp"
-        android:layout_marginBottom="216dp"
-        app:layout_constraintBottom_toTopOf="@+id/register_submit_btn"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.637"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_dob_submit" />
 
     <TextView
         android:id="@+id/submitDataText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="100dp"
         android:text="@string/submit_data_text"
+        android:textSize="26dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

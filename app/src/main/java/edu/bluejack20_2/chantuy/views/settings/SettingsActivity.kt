@@ -1,10 +1,8 @@
 package edu.bluejack20_2.chantuy.views.settings
 
-import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
@@ -14,12 +12,16 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.InsertFeedbackActivity
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.databinding.ActivitySettingsBinding
 import edu.bluejack20_2.chantuy.models.GLOBALS
+import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.services.NotificationService
 import edu.bluejack20_2.chantuy.views.feedback.FeedbackActivity
+import edu.bluejack20_2.chantuy.views.login.LoginActivity
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -35,6 +37,7 @@ class SettingsActivity : AppCompatActivity() {
         sharedPrefEdit = appSettingPreferences.edit()
         isLarge = appSettingPreferences.getBoolean(GLOBALS.SETTINGS_LARGE_KEY, false)
         isNotificationOn = appSettingPreferences.getBoolean(GLOBALS.SETTINGS_NOTIFICATION_KEY, false)
+//        delete_account_btn
 
 //        when (isLarge) {
 //            true -> {
@@ -55,6 +58,7 @@ class SettingsActivity : AppCompatActivity() {
         setSwitchListener()
         setViewFeedbackListener()
         setSendFeedbackListener()
+        setDeleteAccountListener()
     }
 
     private fun setViewFeedbackListener() {
@@ -68,6 +72,29 @@ class SettingsActivity : AppCompatActivity() {
         binding.sendFeedbackBtn.setOnClickListener {
             val intent = Intent(this, InsertFeedbackActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun setDeleteAccountListener() {
+        binding.deleteAccountBtn.setOnClickListener {
+
+            AlertDialog.Builder(this).setMessage(getString(R.string.confirm_delete_account)).setPositiveButton(android.R.string.yes
+            ) { _, _ ->
+                // Delete all
+
+                val user= Firebase.auth.currentUser!!
+                Log.i("Testing","Name: "+user.displayName)
+                user.delete().addOnCompleteListener {task ->
+                    if(task.isSuccessful){
+                        AlertDialog.Builder(this).setMessage(R.string.delete_account_success)
+                            .setPositiveButton(android.R.string.ok,null).show()
+                        intent= Intent(applicationContext, LoginActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        startActivity(intent)
+                    }
+                }
+            }.setNegativeButton(android.R.string.no, null).show()
+
         }
     }
 
