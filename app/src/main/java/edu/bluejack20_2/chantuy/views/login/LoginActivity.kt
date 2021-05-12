@@ -36,9 +36,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setTheme(R.style.Theme_Chantuy_SplashScreen)
+
+
         if(FirebaseAuth.getInstance().currentUser==null){
-            themeAndLogo()
-            privacyAndTerms()
+
             createSignInIntent()
         }else{
             val intent  = Intent(this, MainActivity::class.java)
@@ -47,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
+//        setContentView(R.layout.activity_login)
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -79,51 +83,26 @@ class LoginActivity : AppCompatActivity() {
 
     private fun createSignInIntent(){
 //        AuthUI.IdpConfig googleIdp = new AuthUI.IdpConfig.GoogleBuilder().setScopes(Scopes.EMAIL).build()
+
+        if(FirebaseAuth.getInstance().currentUser!=null)return
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().setRequireName(true).build(),
             AuthUI.IdpConfig.GoogleBuilder().build()
         )
-        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(),RC_SIGN_IN)
+
+        startActivityForResult(AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(providers)
+            .setTheme(R.style.Theme_Chantuy) // Set theme
+            .setLogo(R.drawable.chantuylogo)
+//            .setTosAndPrivacyPolicyUrls(
+//                "https://example.com/terms.html",
+//                "https://example.com/privacy.html")
+            .build(),RC_SIGN_IN)
 
     }
-    private fun themeAndLogo() {
-        val providers = emptyList<AuthUI.IdpConfig>()
 
-        // [START auth_fui_theme_logo]
-        startActivityForResult(
-            AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-//                .setLogo(R.drawable.my_great_logo)
-                .setTheme(R.style.Theme_AppCompat_DayNight) // Set theme
-                .build(),
-            RC_SIGN_IN)
-        // [END auth_fui_theme_logo]
-    }
 
-    private fun privacyAndTerms() {
-        val providers = emptyList<AuthUI.IdpConfig>()
-        // [START auth_fui_pp_tos]
-        startActivityForResult(
-            AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .setTosAndPrivacyPolicyUrls(
-                    "https://example.com/terms.html",
-                    "https://example.com/privacy.html")
-                .build(),
-            RC_SIGN_IN)
-        // [END auth_fui_pp_tos]
-    }
-    private fun signOut() {
-        // [START auth_fui_signout]
-        AuthUI.getInstance()
-            .signOut(this)
-            .addOnCompleteListener {
-                // ...
-            }
-        // [END auth_fui_signout]
-    }
     companion object {
 
         private const val RC_SIGN_IN = 123

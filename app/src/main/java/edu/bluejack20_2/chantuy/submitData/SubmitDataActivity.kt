@@ -33,12 +33,13 @@ class SubmitDataActivity : AppCompatActivity() {
     var month: Int = cldr.get(Calendar.MONTH)
     var year: Int = cldr.get(Calendar.YEAR)
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_submit_data)
 
         var picker : DatePickerDialog
-        val dobButton: EditText = this.findViewById(R.id.register_dob_submit)
+        val dobButton: TextView = this.findViewById(R.id.register_dob_submit)
         val submitButton: Button = this.findViewById(R.id.register_submit_btn)
         val genderSpinner: Spinner = this.findViewById(R.id.register_spinner_gender)
         imageView= this.findViewById(R.id.user_profile_image_view)
@@ -79,7 +80,9 @@ class SubmitDataActivity : AppCompatActivity() {
         }
 
     }
+    override fun onBackPressed() {
 
+    }
     private fun setGenderSpinner(
         genderSpinner: Spinner,
         options: Array<String>) {

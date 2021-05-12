@@ -7,7 +7,9 @@ import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
@@ -75,7 +77,7 @@ class UserRepository {
                     hashMapOf(
                             "email" to email,
                             "name" to name
-                    )
+                    ), SetOptions.merge()
             )
         }
 
@@ -137,6 +139,9 @@ class UserRepository {
                 }
             }
         }
-
+        fun getCurrentUser(): FirebaseUser{
+            val user=Firebase.auth.currentUser!!
+            return user
+        }
     }
 }

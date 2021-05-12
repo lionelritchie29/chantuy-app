@@ -24,7 +24,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import edu.bluejack20_2.chantuy.models.GLOBALS
+import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.services.NotificationService
+import edu.bluejack20_2.chantuy.submitData.SubmitDataActivity
 import edu.bluejack20_2.chantuy.views.curhat_by_topic.CurhatByTopicFragment
 import edu.bluejack20_2.chantuy.views.hottest_curhat.HottestCurhatFragment
 import edu.bluejack20_2.chantuy.views.insert_curhat.InsertCurhatActivity
@@ -59,11 +61,23 @@ class MainActivity : AppCompatActivity() {
 
         createNotificationChannel()
         setViewPager()
+        setViewPager()
+        setBottomMenuItemListener()
+        checkUser()
         setBottomMenuItemListener()
         testPushNotification()
         setNotification()
     }
+    private fun checkUser(){
+        UserRepository.getUserById(UserRepository.currUser.uid).get().addOnSuccessListener { user->
+            if(user["gender"]==null){
+                val intent  = Intent(this, SubmitDataActivity::class.java)
+                startActivity(intent)
 
+            }
+
+        }
+    }
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name: CharSequence = "ChantuyReminderChannel"
@@ -157,6 +171,7 @@ class MainActivity : AppCompatActivity() {
     private fun moveToSettingsActivity() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
+
     }
 
     private fun moveToAddCurhatActivity() {
