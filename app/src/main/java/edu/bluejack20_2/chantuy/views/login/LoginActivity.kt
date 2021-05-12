@@ -41,13 +41,11 @@ class LoginActivity : AppCompatActivity() {
 
 
         if(FirebaseAuth.getInstance().currentUser==null){
-
             createSignInIntent()
         }else{
             val intent  = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
-
         }
 
 //        setContentView(R.layout.activity_login)

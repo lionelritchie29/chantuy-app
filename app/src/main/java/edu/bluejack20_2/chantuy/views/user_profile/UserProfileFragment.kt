@@ -92,12 +92,10 @@ class UserProfileFragment : Fragment() {
 //            when (motionEvent?.action){
 //                MotionEvent.ACTION_UP -> {
 //                    //view.performClick()
-//
 //                    val photoPickerIntent = Intent(Intent.ACTION_PICK)
 //                    photoPickerIntent.type = "image/*"
 //                    photoPickerIntent.action = Intent.ACTION_GET_CONTENT
 //                    startActivityForResult(Intent.createChooser(photoPickerIntent,"Select Picture"), 1)
-//
 //                }
 //            }
 //            return@OnTouchListener true

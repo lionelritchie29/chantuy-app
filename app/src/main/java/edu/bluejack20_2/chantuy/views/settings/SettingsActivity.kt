@@ -78,12 +78,13 @@ class SettingsActivity : AppCompatActivity() {
     private fun setDeleteAccountListener() {
         binding.deleteAccountBtn.setOnClickListener {
 
-            AlertDialog.Builder(this).setMessage(getString(R.string.confirm_delete_account)).setPositiveButton(android.R.string.yes
+            AlertDialog.Builder(this).setMessage(
+                 getString(R.string.confirm_delete_account)).setPositiveButton(android.R.string.yes
             ) { _, _ ->
                 // Delete all
 
                 val user= Firebase.auth.currentUser!!
-                Log.i("Testing","Name: "+user.displayName)
+
                 user.delete().addOnCompleteListener {task ->
                     if(task.isSuccessful){
                         AlertDialog.Builder(this).setMessage(R.string.delete_account_success)
@@ -131,5 +132,6 @@ class SettingsActivity : AppCompatActivity() {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         alarmManager.cancel(pendingIntent)
+
     }
 }

@@ -63,19 +63,19 @@ class MainActivity : AppCompatActivity() {
         setViewPager()
         setViewPager()
         setBottomMenuItemListener()
-        checkUser()
+
         setBottomMenuItemListener()
         testPushNotification()
         setNotification()
+        checkUser()
     }
     private fun checkUser(){
-        UserRepository.getUserById(UserRepository.currUser.uid).get().addOnSuccessListener { user->
-            if(user["gender"]==null){
+        UserRepository.getUserById(UserRepository.currUser.uid).addSnapshotListener{
+            user,e ->
+            if(user?.get("gender") ==null){
                 val intent  = Intent(this, SubmitDataActivity::class.java)
                 startActivity(intent)
-
             }
-
         }
     }
     private fun createNotificationChannel() {
@@ -85,7 +85,6 @@ class MainActivity : AppCompatActivity() {
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(GLOBALS.NOTIFICATION_CHANNEL_ID, name, importance)
             channel.description = description
-
             val notificationManager = getSystemService(NotificationManager::class.java);
             notificationManager.createNotificationChannel(channel)
         }
