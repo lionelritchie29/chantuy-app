@@ -64,7 +64,6 @@ class LoginActivity : AppCompatActivity() {
 
 
                 UserRepository.setUser(FirebaseAuth.getInstance().currentUser.uid,FirebaseAuth.getInstance().currentUser.email, FirebaseAuth.getInstance().currentUser.displayName)
-
                 val intent  = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()

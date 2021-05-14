@@ -72,7 +72,8 @@ class MainActivity : AppCompatActivity() {
     private fun checkUser(){
         UserRepository.getUserById(UserRepository.currUser.uid).addSnapshotListener{
             user,e ->
-            if(user?.get("gender") ==null){
+            if(user==null) return@addSnapshotListener;
+            else if(user?.get("gender") ==null){
                 val intent  = Intent(this, SubmitDataActivity::class.java)
                 startActivity(intent)
             }

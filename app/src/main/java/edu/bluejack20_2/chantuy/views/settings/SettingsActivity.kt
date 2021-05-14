@@ -18,6 +18,8 @@ import edu.bluejack20_2.chantuy.InsertFeedbackActivity
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.databinding.ActivitySettingsBinding
 import edu.bluejack20_2.chantuy.models.GLOBALS
+import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
+import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.services.NotificationService
 import edu.bluejack20_2.chantuy.views.feedback.FeedbackActivity
@@ -92,6 +94,8 @@ class SettingsActivity : AppCompatActivity() {
                         intent= Intent(applicationContext, LoginActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
+                        CurhatRepository.deleteUser(user.uid)
+
                     }
                 }
             }.setNegativeButton(android.R.string.no, null).show()
