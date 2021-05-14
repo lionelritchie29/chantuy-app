@@ -22,7 +22,7 @@
     <string name="insert_curhat_content_hint">Content</string>
     <string name="choose_topic">Choose Topic</string>
     <string name="add_curhat">Add Curhat</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Login</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -36,7 +36,7 @@
     <string name="register_invalid_confirm_password">Confirm Password must match password</string>
     <string name="register_invalid_password">Invalid Password</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_register">Register</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="add_comment">Add a comment...</string>
@@ -82,5 +82,5 @@
     <string name="delete_account_success">Account has been successfully deleted</string>
     <string name="countNumber">7</string>
     <string name="dob_hint">Date Of Birth</string>
-    <string name="countNumber">0</string>
+<!--    <string name="countNumber">0</string>-->
 </resources>

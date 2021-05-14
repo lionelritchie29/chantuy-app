@@ -250,13 +250,17 @@ class CurhatRepository {
         }
 
         fun deleteUser(userId: String){
-            val db= FirebaseFirestore.getInstance()
-//            db.collection(COLLECTION_NAME).document(curhatId).delete()
-//                .addOnSuccessListener {
-//                    CurhatCommentRepository.deleteAllById(curhatId) {
-//                        callback()
-//                    }
-//                }
+            val db = Firebase.firestore
+            val collection = db.collection(COLLECTION_NAME)
+            val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", userId)
+
+
+            curhats.get().addOnSuccessListener { it ->
+                for (a in it){
+                    collection.document(a.id).delete()
+                }
+            }
+
         }
     }
 

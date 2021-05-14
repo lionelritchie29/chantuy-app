@@ -20,7 +20,6 @@
     <style name="Theme.Chantuy.SplashScreen" parent="Theme.Chantuy">
         <item name="android:windowBackground">@drawable/splash_image</item>
         <item name="android:statusBarColor">@color/primary_blue_very_light</item>
-<!--        <item name="android:windowBackground"></item>-->
 
     </style>
 

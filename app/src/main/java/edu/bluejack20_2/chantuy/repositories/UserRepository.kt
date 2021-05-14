@@ -36,6 +36,8 @@ class UserRepository {
                 ).addOnSuccessListener {
                     getUserById(currUser.uid).set(
                         hashMapOf(
+                            "email" to currUser.email ,
+                            "name" to currUser.displayName,
                             "profileImageId" to url,
                             "gender" to gender,
                             "dateOfBirth" to dob

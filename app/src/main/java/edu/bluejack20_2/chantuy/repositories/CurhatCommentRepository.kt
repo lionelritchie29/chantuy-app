@@ -36,7 +36,6 @@ class CurhatCommentRepository {
 
         fun getCommentsByCurhatId(curhatId: String, callback: (List<CurhatComment>?) -> Unit) {
             val db = FirebaseFirestore.getInstance()
-
             db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId)
                 .orderBy("createdAt").get()
                 .addOnSuccessListener {
@@ -89,6 +88,19 @@ class CurhatCommentRepository {
                     }
                     callback()
                 }
+        }
+        fun deleteUser(userId: String){
+            val db = Firebase.firestore
+            val collection = db.collection(COLLECTION_NAME)
+            val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", userId)
+
+
+            curhats.get().addOnSuccessListener { it ->
+                for (a in it){
+                    collection.document(a.id).delete()
+                }
+            }
+
         }
     }
 }
