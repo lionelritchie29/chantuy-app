@@ -82,5 +82,19 @@
     <string name="delete_account_success">Account has been successfully deleted</string>
     <string name="countNumber">7</string>
     <string name="dob_hint">Date Of Birth</string>
-<!--    <string name="countNumber">0</string>-->
+    <string name="password_hint">Password</string>
+    <string name="title_activity_notification">NotificationActivity</string>
+    <string name="login_emptyE">Email cannot be empty</string>
+    <string name="login_emptyP">Password cannot be empty</string>
+    <string name="login_wrongE">User not found</string>
+    <string name="login_wrongP">Wrong password</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="user_name_hint">UserName</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="title_activity_change_password">ChangePasswordActivity</string>>
+
 </resources>

@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.bluejack20_2.chantuy">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,10 +12,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Chantuy.SplashScreen">
-<!--        <activity android:name=".views.curhat_info_pop_up.CurhatInfoPopUpWindow"></activity>-->
+
+
+        <!--
+               Set to true if your app is Standalone, that is, it does not require the handheld
+               app to run.
+        -->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+
+        <activity
+            android:name=".views.change_password.ChangePasswordActivity"
+            android:label="@string/title_activity_change_password"/>
+
+
+        <activity
+            android:name=".views.register.RegisterActivity"
+            android:label="@string/title_activity_register" /> <!-- <activity -->
+        <!-- android:name=".views.notification_page.NotificationActivity" -->
+        <!-- android:label="@string/title_activity_notification"/> -->
         <activity android:name=".views.feedback.FeedbackActivity" />
         <activity android:name=".submitData.SubmitDataActivity" />
-
         <activity android:name=".InsertFeedbackActivity" />
         <activity android:name=".views.settings.SettingsActivity" />
         <activity android:name=".views.update_curhat.UpdateCurhatActivity" />

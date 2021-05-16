@@ -27,6 +27,7 @@ import edu.bluejack20_2.chantuy.models.GLOBALS
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.services.NotificationService
 import edu.bluejack20_2.chantuy.submitData.SubmitDataActivity
+import edu.bluejack20_2.chantuy.views.change_password.ChangePasswordActivity
 import edu.bluejack20_2.chantuy.views.curhat_by_topic.CurhatByTopicFragment
 import edu.bluejack20_2.chantuy.views.hottest_curhat.HottestCurhatFragment
 import edu.bluejack20_2.chantuy.views.insert_curhat.InsertCurhatActivity
@@ -73,10 +74,17 @@ class MainActivity : AppCompatActivity() {
         UserRepository.getUserById(UserRepository.currUser.uid).addSnapshotListener{
             user,e ->
             if(user==null) return@addSnapshotListener;
+            else if(user?.get("password")==null){
+                GLOBALS.PASSWORD_CONTEXT="Input Password"
+                val intent  = Intent(this, ChangePasswordActivity::class.java)
+                startActivity(intent)
+            }
             else if(user?.get("gender") ==null){
                 val intent  = Intent(this, SubmitDataActivity::class.java)
                 startActivity(intent)
             }
+
+
         }
     }
     private fun createNotificationChannel() {
