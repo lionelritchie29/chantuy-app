@@ -93,5 +93,9 @@
     <string name="hello_world">Hello Square World!</string>
     <string name="user_name_hint" >UserName</string>>
 
+    <string name="confirm_password">Konfirmasi Password</string>
+    <string name="title_activity_change_password">Password</string>
+    <string name="nf_show_more">Tunjukan lebih</string>>
+
 </resources>
 

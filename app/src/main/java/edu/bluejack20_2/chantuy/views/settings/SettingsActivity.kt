@@ -97,7 +97,7 @@ class SettingsActivity : AppCompatActivity() {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
                         CurhatRepository.deleteUser(user.uid)
-
+                        CurhatCommentRepository.deleteUser(user.uid)
                     }
                 }
             }.setNegativeButton(android.R.string.no, null).show()

@@ -36,7 +36,6 @@ class HottestCurhatFragment : Fragment() {
 
         viewModel.curhats.observe(viewLifecycleOwner, Observer {curhats ->
             curhatAdapter.submitList(curhats)
-
             if (curhats.size > 0) {
                 viewModel.lastCurhat = curhats.get(curhats.size - 1)
             }
@@ -69,6 +68,7 @@ class HottestCurhatFragment : Fragment() {
         })
 
         viewModel.handleOnScrollListener(binding.curhatRecyclerView, manager)
+
 
         return binding.root
     }

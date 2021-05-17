@@ -1,5 +1,4 @@
-package com.example.todolist
-
+package edu.bluejack20_2.chantuy.views
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,7 +19,10 @@ class TextAdapter(private var texts:MutableList<Text>): RecyclerView.Adapter<Tex
              )
         )
     }
-
+    fun setList(nList:MutableList<Text>){
+        texts=nList
+        notifyDataSetChanged()
+    }
     override fun getItemCount(): Int {
         return texts.size
     }

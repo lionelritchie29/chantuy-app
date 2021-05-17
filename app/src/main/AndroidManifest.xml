@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Chantuy.SplashScreen">
-
-
+        <activity android:name=".views.update_profile.UpdateProfileActivity"></activity>
+        <activity android:name=".views.notification.NotificationActivity" />
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
@@ -24,9 +23,7 @@
 
         <activity
             android:name=".views.change_password.ChangePasswordActivity"
-            android:label="@string/title_activity_change_password"/>
-
-
+            android:label="@string/title_activity_change_password" />
         <activity
             android:name=".views.register.RegisterActivity"
             android:label="@string/title_activity_register" /> <!-- <activity -->

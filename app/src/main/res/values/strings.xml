@@ -95,6 +95,7 @@
     <string name="hello_world">Hello Square World!</string>
     <string name="user_name_hint">UserName</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="title_activity_change_password">ChangePasswordActivity</string>>
+    <string name="title_activity_change_password">ChangePasswordActivity</string>
+    <string name="nf_show_more">Show More</string>>
 
 </resources>
