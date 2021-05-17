@@ -1,11 +1,8 @@
 package com.example.todolist
 
-import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
 
@@ -16,7 +13,7 @@ class TextAdapter(private var texts:MutableList<Text>): RecyclerView.Adapter<Tex
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TextViewHolder {
         return TextViewHolder(
              LayoutInflater.from(parent.context).inflate(
-                     R.layout.item_text, parent, false
+                     R.layout.profile_posted_curhat_card_item, parent, false
              )
         )
     }
@@ -36,7 +33,7 @@ class TextAdapter(private var texts:MutableList<Text>): RecyclerView.Adapter<Tex
 
     override fun onBindViewHolder(holder: TextViewHolder, position: Int) {
         val currTodo= texts[position]
-        val tvContent : TextView = holder.itemView.findViewById(R.id.tv_content)
-        tvContent.text=currTodo.content
+//        val tvContent : TextView = holder.itemView.findViewById(R.id.tv_content)
+//        tvContent.text=currTodo.content
     }
 }

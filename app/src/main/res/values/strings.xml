@@ -89,5 +89,10 @@
     <string name="posted_one_week">Posted Last One Week</string>
     <string name="posted_one_month">Posted Last One Month</string>
     <string name="posted_one_year">Posted Last One Year </string>
+    <string name="view">View</string>
+    <string name="posted_at">"Posted at"</string>
+    <string name="logout">Log out</string>
+    <string name="replied_at">Replied at</string>
+    <string name="view_replied_curhat">View Replied Curhat</string>
     <!--    <string name="countNumber">0</string>-->
 </resources>

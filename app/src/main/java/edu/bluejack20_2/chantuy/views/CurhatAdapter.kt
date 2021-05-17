@@ -31,6 +31,7 @@ import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
+import edu.bluejack20_2.chantuy.utils.CurhatUtil
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import edu.bluejack20_2.chantuy.views.curhat_detail.CurhatDetailActivity
 import kotlin.random.Random
@@ -86,16 +87,8 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
 
         private fun setOnViewMoreListener(id: String) {
             binding.curhatCardViewBtn.setOnClickListener {
-                moveToCurhatDetail(id)
+                CurhatUtil.moveToCurhatDetail(id, binding.root.context)
             }
-        }
-
-        private fun moveToCurhatDetail(id: String) {
-            val intent = Intent(binding.root.context, CurhatDetailActivity::class.java)
-            val b = Bundle()
-            b.putString("id", id);
-            intent.putExtras(b)
-            binding.root.context.startActivity(intent)
         }
 
         companion object {
