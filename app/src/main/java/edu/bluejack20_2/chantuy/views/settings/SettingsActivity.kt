@@ -34,11 +34,13 @@ class SettingsActivity : AppCompatActivity() {
     var isNotificationOn: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings)
         appSettingPreferences = getSharedPreferences(GLOBALS.SETTINGS_PREFERENCES_NAME, 0)
         sharedPrefEdit = appSettingPreferences.edit()
         isLarge = appSettingPreferences.getBoolean(GLOBALS.SETTINGS_LARGE_KEY, false)
         isNotificationOn = appSettingPreferences.getBoolean(GLOBALS.SETTINGS_NOTIFICATION_KEY, false)
+
 //        delete_account_btn
 
 //        when (isLarge) {
@@ -95,7 +97,7 @@ class SettingsActivity : AppCompatActivity() {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
                         CurhatRepository.deleteUser(user.uid)
-
+                        CurhatCommentRepository.deleteUser(user.uid)
                     }
                 }
             }.setNegativeButton(android.R.string.no, null).show()

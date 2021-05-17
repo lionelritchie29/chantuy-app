@@ -40,11 +40,12 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
-                    android:background="@drawable/edit_text_background"
                     android:ems="10"
                     android:hint="@string/insert_curhat_content_hint"
                     android:inputType="textMultiLine"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+
+                    android:background="@drawable/edit_text_background"
                     android:textColor="@color/white"
                     android:textColorHint="@color/transparent_white"
                     app:layout_constraintEnd_toEndOf="parent"

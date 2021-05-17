@@ -52,10 +52,10 @@ class HottestCurhatViewModel : ViewModel(){
                     val visibleItemCount = manager.childCount
                     val totalItemCount = manager.itemCount
                     val pastVisibleItem = manager.findFirstVisibleItemPosition()
-
                     if (!isLoadingMore) {
                         handleAddMoreData(visibleItemCount, totalItemCount, pastVisibleItem)
                     }
+
                 }
             }
         })

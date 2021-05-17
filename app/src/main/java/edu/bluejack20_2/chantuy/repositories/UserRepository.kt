@@ -27,7 +27,38 @@ import java.net.URL
 class UserRepository {
     companion object{
         val COLLECTION_NAME = "users"
-        val currUser=FirebaseAuth.getInstance().currentUser
+
+
+
+        fun userRegister(id:String,userName:String,email: String,password: String ){
+            val db = FirebaseFirestore.getInstance()
+            val user=db.collection(UserRepository.COLLECTION_NAME).document(id)
+
+            user.set(
+                hashMapOf(
+                    "email" to email,
+                    "name" to userName,
+                    "password" to password,
+                    "isAdmin" to false,
+                    "joinedAt" to Timestamp.now()
+                ), SetOptions.merge()
+            )
+
+        }
+        fun userSetPassword(password:String){
+            val db = FirebaseFirestore.getInstance()
+            val currUser=getCurrentUser()
+            val user=db.collection(UserRepository.COLLECTION_NAME).document(currUser.uid)
+
+            user.set(
+                hashMapOf(
+                    "email" to currUser.email ,
+                    "name" to currUser.displayName,
+                    "password" to password
+                ), SetOptions.merge()
+            )
+
+        }
 
         fun userSubmitData(url:String, gender: String, dob: Timestamp){
             val currUser= FirebaseAuth.getInstance().currentUser
@@ -43,8 +74,9 @@ class UserRepository {
                             "name" to currUser.displayName,
                             "profileImageId" to url,
                             "gender" to gender,
-                            "dateOfBirth" to dob
-
+                            "dateOfBirth" to dob,
+                            "isAdmin" to false,
+                            "joinedAt" to Timestamp.now()
                         ), SetOptions.merge())
                 }
             }
@@ -57,7 +89,7 @@ class UserRepository {
         }
 
         fun getUserProfileUrl():String{
-            return currUser.photoUrl.toString()
+            return getCurrentUser().photoUrl.toString()
         }
 
         fun getUserByEmail(email: String,callback: (List<User>) -> Unit) {
@@ -81,7 +113,10 @@ class UserRepository {
             user.set(
                     hashMapOf(
                             "email" to email,
-                            "name" to name
+                            "name" to name,
+                        "isAdmin" to false,
+                        "joinedAt" to Timestamp.now()
+
                     ), SetOptions.merge()
             )
         }
@@ -130,6 +165,9 @@ class UserRepository {
         fun updateProfileImage(url: Uri){
             val currUser= FirebaseAuth.getInstance().currentUser
 //
+
+
+
 //            currUser.updateProfile(userProfileChangeRequest {
 //                photoUri= Uri.parse(""+url)
 //            })

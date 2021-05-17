@@ -1,6 +1,8 @@
 package edu.bluejack20_2.chantuy.repositories
 
+import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -47,6 +49,13 @@ class CurhatCommentRepository {
                     callback(comments)
                 }
         }
+        fun getComment(commentId: String): Task<DocumentSnapshot> {
+            val db=FirebaseFirestore.getInstance()
+            return db.collection(COLLECTION_NAME).document(commentId).get()
+        }
+
+
+
 
         fun deleteById(curhatId: String, commentId: String, callback: () -> Unit)  {
             val db = FirebaseFirestore.getInstance()

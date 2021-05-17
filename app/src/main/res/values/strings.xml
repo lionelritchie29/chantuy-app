@@ -82,6 +82,17 @@
     <string name="delete_account_success">Account has been successfully deleted</string>
     <string name="countNumber">0</string>
     <string name="dob_hint">Date Of Birth</string>
+    <string name="password_hint">Password</string>
+    <string name="title_activity_notification">NotificationActivity</string>
+    <string name="login_emptyE">Email cannot be empty</string>
+    <string name="login_emptyP">Password cannot be empty</string>
+    <string name="login_wrongE">User not found</string>
+    <string name="login_wrongP">Wrong password</string>
+    <string name="hello_world">Hello Square World!</string>
+    <string name="user_name_hint">UserName</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="title_activity_change_password">ChangePasswordActivity</string>
+    <string name="nf_show_more">Show More</string>>
     <string name="sorted_by">Sorted by: </string>
     <string name="most_liked">Most Liked</string>
     <string name="most_disliked">Most Disliked</string>
@@ -94,5 +105,4 @@
     <string name="logout">Log out</string>
     <string name="replied_at">Replied at</string>
     <string name="view_replied_curhat">View Replied Curhat</string>
-    <!--    <string name="countNumber">0</string>-->
 </resources>

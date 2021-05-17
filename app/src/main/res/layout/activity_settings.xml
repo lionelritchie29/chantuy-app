@@ -5,6 +5,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/primary_blue_very_light"
         tools:context=".views.settings.SettingsActivity">
 
         <Switch

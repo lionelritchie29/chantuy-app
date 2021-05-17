@@ -27,10 +27,12 @@ import edu.bluejack20_2.chantuy.models.GLOBALS
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.services.NotificationService
 import edu.bluejack20_2.chantuy.submitData.SubmitDataActivity
+import edu.bluejack20_2.chantuy.views.change_password.ChangePasswordActivity
 import edu.bluejack20_2.chantuy.views.curhat_by_topic.CurhatByTopicFragment
 import edu.bluejack20_2.chantuy.views.hottest_curhat.HottestCurhatFragment
 import edu.bluejack20_2.chantuy.views.insert_curhat.InsertCurhatActivity
 import edu.bluejack20_2.chantuy.views.newest_curhat.NewestCurhatFragment
+import edu.bluejack20_2.chantuy.views.notification.NotificationActivity
 import edu.bluejack20_2.chantuy.views.search_curhat.SearchCurhatFragment
 import edu.bluejack20_2.chantuy.views.settings.SettingsActivity
 import edu.bluejack20_2.chantuy.views.user_profile.UserProfileFragment
@@ -70,13 +72,20 @@ class MainActivity : AppCompatActivity() {
         checkUser()
     }
     private fun checkUser(){
-        UserRepository.getUserById(UserRepository.currUser.uid).addSnapshotListener{
+        UserRepository.getUserById(UserRepository.getCurrentUser().uid).addSnapshotListener{
             user,e ->
             if(user==null) return@addSnapshotListener;
+            else if(user?.get("password")==null){
+                GLOBALS.PASSWORD_CONTEXT="Input Password"
+                val intent  = Intent(this, ChangePasswordActivity::class.java)
+                startActivity(intent)
+            }
             else if(user?.get("gender") ==null){
                 val intent  = Intent(this, SubmitDataActivity::class.java)
                 startActivity(intent)
             }
+
+
         }
     }
     private fun createNotificationChannel() {
@@ -162,12 +171,15 @@ class MainActivity : AppCompatActivity() {
                 moveToSettingsActivity()
             }
             R.id.notification_menu_item -> {
-                Log.i("MainActivity", "Notifications clicked!")
+                moveToNotificationsActivity()
             }
         }
         return super.onOptionsItemSelected(item)
     }
-
+    private fun moveToNotificationsActivity(){
+        val intent=Intent(this, NotificationActivity::class.java)
+        startActivity(intent)
+    }
     private fun moveToSettingsActivity() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)

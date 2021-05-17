@@ -20,8 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.todolist.Text
-import com.example.todolist.TextAdapter
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
@@ -34,6 +32,8 @@ import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.views.ProfileCurhatPostedAdapter
 import edu.bluejack20_2.chantuy.views.ProfileRepliedCurhatAdapter
 import edu.bluejack20_2.chantuy.views.login.LoginActivity
+import edu.bluejack20_2.chantuy.views.Text
+import edu.bluejack20_2.chantuy.views.TextAdapter
 import java.io.IOException
 import java.lang.Exception
 

@@ -14,4 +14,5 @@ data class User (
     val joinedAt: Timestamp?=null,
     val isAdmin: Boolean?=false,
     val profileImageId: String?=""
+
 )

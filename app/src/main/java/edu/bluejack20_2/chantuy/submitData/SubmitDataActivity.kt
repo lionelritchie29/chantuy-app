@@ -65,6 +65,7 @@ class SubmitDataActivity : AppCompatActivity() {
             )
             picker.show()
             viewModel.dob= Timestamp(Date(year,month,day))
+
         }
 
         val options = arrayOf("Female","Male")

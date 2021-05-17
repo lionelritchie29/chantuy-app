@@ -40,6 +40,8 @@ android {
 
 
 dependencies {
+    implementation 'androidx.wear:wear:1.1.0'
+    compileOnly 'com.google.android.wearable:wearable:2.8.1'
     def lifecycle_version = "2.3.1"
     implementation 'com.wajahatkarim3.EasyFlipView:EasyFlipView:3.0.0'
     implementation 'net.danlew:android.joda:2.10.9.1'

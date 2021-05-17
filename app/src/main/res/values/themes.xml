@@ -23,7 +23,7 @@
 
     </style>
 
-    
+
     <style name="Theme.Chantuy.FontLarge" parent="Theme.Chantuy">
         <item name="textAppearanceBody1">@style/TextAppearance.Chantuy.Body1</item>
         <item name="textAppearanceBody2">@style/TextAppearance.Chantuy.Body2</item>
