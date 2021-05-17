@@ -71,6 +71,9 @@ class MainActivity : AppCompatActivity() {
         setNotification()
         checkUser()
     }
+
+
+    var checkUserIntent:Intent?=null
     private fun checkUser(){
         UserRepository.getUserById(UserRepository.getCurrentUser().uid).addSnapshotListener{
             user,e ->
