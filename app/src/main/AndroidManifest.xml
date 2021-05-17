@@ -9,9 +9,9 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/splash_image"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Chantuy.SplashScreen"
-        >
-        <activity android:name=".views.update_profile.UpdateProfileActivity"></activity>
+        android:theme="@style/Theme.Chantuy.SplashScreen">
+        <activity android:name=".views.update_password.UpdatePasswordActivity"></activity>
+        <activity android:name=".views.update_profile.UpdateProfileActivity" />
         <activity android:name=".views.notification.NotificationActivity" />
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld

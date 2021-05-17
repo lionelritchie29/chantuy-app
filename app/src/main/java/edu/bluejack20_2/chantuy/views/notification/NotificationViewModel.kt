@@ -30,6 +30,7 @@ class NotificationViewModel () {
         NotificationRepository.getNotif(UserRepository.getCurrentUser().uid).get().addOnSuccessListener {
             totalPage= ceil(it.size().toDouble()/5.toDouble()).toInt()
             totalData= it.size()
+            getData()
         }
 
     }
