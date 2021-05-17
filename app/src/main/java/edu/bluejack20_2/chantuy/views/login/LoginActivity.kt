@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.*
+import androidx.appcompat.app.AppCompatDelegate
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
@@ -23,7 +24,10 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
         super.onCreate(savedInstanceState)
+
 
         setTheme(R.style.Theme_Chantuy_SplashScreen)
 
@@ -45,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
         linkBtn.setOnClickListener {
             val intent  = Intent(this,  RegisterActivity::class.java)
             startActivity(intent)
-
+            finish()
         }
     }
     fun setLoginListener(){

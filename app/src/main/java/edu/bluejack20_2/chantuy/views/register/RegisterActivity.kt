@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthAnonymousUpgradeException
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +21,7 @@ import edu.bluejack20_2.chantuy.views.login.LoginActivity
 class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         setRegisterListener()
@@ -100,8 +102,9 @@ class RegisterActivity : AppCompatActivity() {
     fun setLinkListener(){
         val linkBtn: TextView=findViewById(R.id.register_link)
         linkBtn.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
             finish()
-
         }
     }
     private fun initFireBaseUIIntent(){

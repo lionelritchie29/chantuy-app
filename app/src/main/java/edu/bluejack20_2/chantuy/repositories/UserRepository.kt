@@ -139,6 +139,8 @@ class UserRepository {
             db.collection(COLLECTION_NAME).document(currentUserId).get()
                 .addOnSuccessListener {
                     val user = it.toObject(User::class.java)
+                    user?.age = user?.dateOfBirth?.let { dob -> AgeCalculatorUtil.calculateAge(dob.toDate()) }
+                    user?.isAdmin = it.getBoolean("isAdmin")
                     callback(user)
                 }
         }
@@ -156,6 +158,7 @@ class UserRepository {
                 .addOnSuccessListener {
                     var user = it.toObject(User::class.java)
                     user?.age = user?.dateOfBirth?.let { dob -> AgeCalculatorUtil.calculateAge(dob.toDate()) }
+                    user?.isAdmin = it.getBoolean("isAdmin")
                     Log.i("UserRepository", userId)
                     Log.i("UserRepository", user.toString())
                     Log.i("UserRepository", it.toString())

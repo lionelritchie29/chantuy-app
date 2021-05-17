@@ -108,4 +108,5 @@
     <string name="no_post">Nothing posted</string>
     <string name="joined_at">Joined at</string>
     <string name="click_photo_to_update">Click photo to update</string>
+    <string name="already_have_account">Already have an account? login</string>
 </resources>

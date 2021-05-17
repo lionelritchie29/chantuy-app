@@ -12,7 +12,7 @@ data class User (
     val password:String?="",
     val dateOfBirth: Timestamp? = null,
     val joinedAt: Timestamp?=null,
-    val isAdmin: Boolean?=false,
+    var isAdmin: Boolean?=false,
     val profileImageId: String?=""
 
 )

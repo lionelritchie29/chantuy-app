@@ -78,7 +78,7 @@
             android:backgroundTint="@color/fui_bgGitHub"
             android:text="@string/view_feedback"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/send_feedback_btn"
+            app:layout_constraintBottom_toTopOf="@+id/delete_account_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

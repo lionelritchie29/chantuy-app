@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
@@ -63,6 +64,17 @@ class SettingsActivity : AppCompatActivity() {
         setViewFeedbackListener()
         setSendFeedbackListener()
         setDeleteAccountListener()
+
+        UserRepository.getCurrentUser {
+            Log.i("SettingsActivity", it?.isAdmin!!.toString())
+            if (it?.isAdmin!!) {
+                binding.viewFeedbackBtn.visibility = View.VISIBLE
+                binding.sendFeedbackBtn.visibility = View.GONE
+            } else {
+                binding.viewFeedbackBtn.visibility = View.GONE
+                binding.sendFeedbackBtn.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun setViewFeedbackListener() {
