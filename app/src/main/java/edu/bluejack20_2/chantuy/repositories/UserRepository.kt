@@ -1,7 +1,9 @@
 package edu.bluejack20_2.chantuy.repositories
 
 import android.net.Uri
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.bumptech.glide.annotation.GlideModule
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
@@ -17,6 +19,7 @@ import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.models.User
+import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import edu.bluejack20_2.chantuy.views.user_profile.UserProfileViewModel
 import java.net.URI
 import java.net.URL
@@ -151,7 +154,8 @@ class UserRepository {
 
             db.collection(COLLECTION_NAME).document(userId).get()
                 .addOnSuccessListener {
-                    val user = it.toObject(User::class.java)
+                    var user = it.toObject(User::class.java)
+                    user?.age = user?.dateOfBirth?.let { dob -> AgeCalculatorUtil.calculateAge(dob.toDate()) }
                     Log.i("UserRepository", userId)
                     Log.i("UserRepository", user.toString())
                     Log.i("UserRepository", it.toString())

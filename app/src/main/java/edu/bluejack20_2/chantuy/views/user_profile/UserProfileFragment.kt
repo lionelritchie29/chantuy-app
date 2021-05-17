@@ -29,6 +29,8 @@ import com.google.firebase.storage.UploadTask
 import edu.bluejack20_2.chantuy.GlideApp
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.repositories.UserRepository
+import edu.bluejack20_2.chantuy.views.ProfileCurhatPostedAdapter
+import edu.bluejack20_2.chantuy.views.ProfileRepliedCurhatAdapter
 import edu.bluejack20_2.chantuy.views.login.LoginActivity
 import edu.bluejack20_2.chantuy.views.Text
 import edu.bluejack20_2.chantuy.views.TextAdapter
@@ -69,12 +71,11 @@ class UserProfileFragment : Fragment() {
 
         }
 
-//        Glide.with(this).load(storageReference).into(imageView)
-        val curhatAdapter = TextAdapter(mutableListOf())
+        val curhatAdapter = ProfileCurhatPostedAdapter()
         val curhatRecyclerView: RecyclerView = rootView.findViewById(R.id.recent_post_rview)
         curhatRecyclerView.adapter = curhatAdapter
         curhatRecyclerView.layoutManager=LinearLayoutManager(this.activity)
-        val replyAdapter = TextAdapter(mutableListOf())
+        val replyAdapter = ProfileRepliedCurhatAdapter()
         val replyRecyclerView: RecyclerView = rootView.findViewById(R.id.recent_reply_rview)
         replyRecyclerView.adapter = replyAdapter
         replyRecyclerView.layoutManager=LinearLayoutManager(this.activity)
@@ -140,24 +141,11 @@ class UserProfileFragment : Fragment() {
         }
 
         viewModel.recentCurhats.observe(viewLifecycleOwner, Observer {curhats ->
-
-            if(!curhats.isEmpty()){
-                curhatAdapter.clearAllText()
-            }
-            for (curhat in curhats){
-                curhatAdapter.addText(Text(curhat.content))
-            }
-
+            curhatAdapter.submitList(curhats)
         })
 
         viewModel.recentReplies.observe(viewLifecycleOwner, Observer {replies ->
-            if(!replies.isEmpty()){
-                replyAdapter.clearAllText()
-            }
-            for (reply in replies){
-                replyAdapter.addText(Text(reply.content))
-            }
-
+            replyAdapter.submitList(replies)
         })
 
 

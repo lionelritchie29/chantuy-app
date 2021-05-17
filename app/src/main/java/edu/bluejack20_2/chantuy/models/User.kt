@@ -6,12 +6,12 @@ import com.google.firebase.firestore.DocumentId
 data class User (
     @DocumentId var id: String="",
     val name: String="Kosong",
-    val age: Int?=1,
+    var age: Int?=1,
     val email:String?="",
-    val gender:String?="",
+    val gender:String? = "",
     val password:String?="",
+    val dateOfBirth: Timestamp? = null,
     val joinedAt: Timestamp?=null,
-    val notification: List<Notification>?= null,
     val isAdmin: Boolean?=false,
     val profileImageId: String?=""
 

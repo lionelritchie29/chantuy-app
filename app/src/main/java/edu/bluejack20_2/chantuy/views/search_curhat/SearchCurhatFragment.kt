@@ -2,7 +2,6 @@ package edu.bluejack20_2.chantuy.views.search_curhat
 
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
@@ -21,10 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
-import edu.bluejack20_2.chantuy.models.CurhatReaction
-import edu.bluejack20_2.chantuy.repositories.CurhatReactionRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
-import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import edu.bluejack20_2.chantuy.views.CurhatAdapter
 
 
@@ -41,8 +37,15 @@ class SearchCurhatFragment : Fragment() {
         var filterButton: ImageButton= rootView.findViewById(R.id.filter_button)
         val searchTextView: EditText= rootView.findViewById(R.id.search_auto_complete)
         val rv: RecyclerView = rootView.findViewById(R.id.search_curhat_recycler_view)
-        rv.layoutManager=LinearLayoutManager(this.activity)
-        setFilterPopUp(rootView,viewModel, filterButton)
+        val sortedByTv: TextView = rootView.findViewById(R.id.search_sorted_by)
+
+        rv.layoutManager = object: LinearLayoutManager(rootView.context) {
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+        }
+
+        setFilterPopUp(rootView,viewModel, filterButton, sortedByTv)
 
         searchButton.setOnClickListener{
             viewModel.searchString=searchTextView.text.toString()
@@ -81,15 +84,15 @@ class SearchCurhatFragment : Fragment() {
             rg.addView(rb)
         }
 
-
-        rg.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener{ group, checkedId ->
-            Log.i("testing","A: "+checkedId)
-        })
-
         dialog.show()
     }
     @SuppressLint("RestrictedApi")
-    fun setFilterPopUp(rootView: View, viewModel: SearchCurhatViewModel, filterButton:ImageButton){
+    fun setFilterPopUp(
+        rootView: View,
+        viewModel: SearchCurhatViewModel,
+        filterButton: ImageButton,
+        sortedByTv: TextView
+    ){
         val userId = UserRepository.getCurrentUserId()
         filterButton.setOnClickListener {
             val popupMenu = PopupMenu(rootView.context, it)
@@ -99,26 +102,32 @@ class SearchCurhatFragment : Fragment() {
                 it.isChecked = true
                 when (it.itemId) {
                     R.id.like_menu->{
+                        sortedByTv.text = getString(R.string.most_liked)
                         viewModel.searchType=1
                         true
                     }
                     R.id.dislike_menu->{
+                        sortedByTv.text = getString(R.string.most_disliked)
                         viewModel.searchType=2
                         true
                     }
                     R.id.day_menu->{
+                        sortedByTv.text = getString(R.string.posted_24_hours)
                         viewModel.searchType=3
                         true
                     }
                     R.id.week_menu->{
+                        sortedByTv.text = getString(R.string.posted_one_week)
                         viewModel.searchType=4
                         true
                     }
                     R.id.month_menu->{
+                        sortedByTv.text = getString(R.string.posted_one_month)
                         viewModel.searchType=5
                         true
                     }
                     R.id.year_menu->{
+                        sortedByTv.text = getString(R.string.posted_one_year)
                         viewModel.searchType=6
                         true
                     }

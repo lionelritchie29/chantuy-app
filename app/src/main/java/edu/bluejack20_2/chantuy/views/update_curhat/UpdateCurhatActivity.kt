@@ -31,13 +31,17 @@ class UpdateCurhatActivity : AppCompatActivity() {
         })
 
         updateBtn.setOnClickListener {
-            viewModel.onUpdate(
-                contentTv,
-                topicTv.text.toString(),
-                anonymousCb.isChecked
-            ) {
-                Toast.makeText(this, "Curhat Updated Succesfully", Toast.LENGTH_SHORT).show()
-                finish()
+            if (contentTv.text.isEmpty()) {
+              contentTv.error = "Content must not be empty"
+            }  else {
+                viewModel.onUpdate(
+                    contentTv,
+                    topicTv.text.toString(),
+                    anonymousCb.isChecked
+                ) {
+                    Toast.makeText(this, "Curhat Updated Succesfully", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
             }
         }
     }

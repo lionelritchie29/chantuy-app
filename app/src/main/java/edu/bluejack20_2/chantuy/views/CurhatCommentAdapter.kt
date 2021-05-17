@@ -109,7 +109,7 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
 
             if (comment.user.length > 0) {
                 UserRepository.getUserById(comment.user) {user ->
-                    name.text = user?.name
+                    name.text = "${user?.name} (${user?.age}, ${user?.gender})"
                     CurhatViewUtil.setCurhatUserImage(false, user!!, userImage, view)
                 }
             }
@@ -253,7 +253,7 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
             }
 
             binding.curhatDetailHeaderInfoBtn.setOnClickListener {
-                CurhatViewUtil.showCurhatInfoModal(curhat.id, binding.root.context)
+                CurhatViewUtil.showCurhatInfoModal(curhat, binding.root.context)
             }
         }
 

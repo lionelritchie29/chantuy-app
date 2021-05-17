@@ -80,7 +80,7 @@
     <string name="filter_year">Filter curhats posted last 1 year</string>
     <string name="confirm_delete_account">Are you sure you want to delete this account? All curhats and comments you\'ve posted will also be deleted </string>
     <string name="delete_account_success">Account has been successfully deleted</string>
-    <string name="countNumber">7</string>
+    <string name="countNumber">0</string>
     <string name="dob_hint">Date Of Birth</string>
     <string name="password_hint">Password</string>
     <string name="title_activity_notification">NotificationActivity</string>
@@ -88,14 +88,21 @@
     <string name="login_emptyP">Password cannot be empty</string>
     <string name="login_wrongE">User not found</string>
     <string name="login_wrongP">Wrong password</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
     <string name="hello_world">Hello Square World!</string>
     <string name="user_name_hint">UserName</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
     <string name="nf_show_more">Show More</string>>
-
+    <string name="sorted_by">Sorted by: </string>
+    <string name="most_liked">Most Liked</string>
+    <string name="most_disliked">Most Disliked</string>
+    <string name="posted_24_hours">Posted Last 24 Hours</string>
+    <string name="posted_one_week">Posted Last One Week</string>
+    <string name="posted_one_month">Posted Last One Month</string>
+    <string name="posted_one_year">Posted Last One Year </string>
+    <string name="view">View</string>
+    <string name="posted_at">"Posted at"</string>
+    <string name="logout">Log out</string>
+    <string name="replied_at">Replied at</string>
+    <string name="view_replied_curhat">View Replied Curhat</string>
 </resources>
