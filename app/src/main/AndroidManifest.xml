@@ -36,7 +36,7 @@
         <activity android:name=".views.update_curhat.UpdateCurhatActivity" />
         <activity
             android:name=".views.login.LoginActivity"
-            android:label="@string/title_activity_login">
+            android:label="Chantuy">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

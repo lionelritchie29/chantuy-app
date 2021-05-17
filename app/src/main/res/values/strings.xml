@@ -105,4 +105,7 @@
     <string name="logout">Log out</string>
     <string name="replied_at">Replied at</string>
     <string name="view_replied_curhat">View Replied Curhat</string>
+    <string name="no_post">Nothing posted</string>
+    <string name="joined_at">Joined at</string>
+    <string name="click_photo_to_update">Click photo to update</string>
 </resources>

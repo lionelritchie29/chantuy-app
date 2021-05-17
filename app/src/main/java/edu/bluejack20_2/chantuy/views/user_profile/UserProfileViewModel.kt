@@ -18,14 +18,6 @@ class UserProfileViewModel {
     var initCurhats : List<Curhat>? = listOf()
     var initReplies : List<CurhatComment>? = listOf()
 
-    val userName: String = FirebaseAuth.getInstance().currentUser.displayName
-    val userEmail: String = FirebaseAuth.getInstance().currentUser.email
-    var userPictureUrl: String = ""
-
-    init {
-
-    }
-
     val curhatCount : MutableLiveData<Int> by lazy{
         MutableLiveData<Int>()
     }

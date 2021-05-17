@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import edu.bluejack20_2.chantuy.databinding.CurhatCardItemBinding
 import edu.bluejack20_2.chantuy.databinding.ProfilePostedCurhatCardItemBinding
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.utils.CurhatUtil

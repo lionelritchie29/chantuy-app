@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.firebase.ui.auth.AuthUI
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.OnProgressListener
@@ -29,6 +31,8 @@ import com.google.firebase.storage.UploadTask
 import edu.bluejack20_2.chantuy.GlideApp
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.repositories.UserRepository
+import edu.bluejack20_2.chantuy.utils.CurhatUtil
+import edu.bluejack20_2.chantuy.utils.UserUtil
 import edu.bluejack20_2.chantuy.views.ProfileCurhatPostedAdapter
 import edu.bluejack20_2.chantuy.views.ProfileRepliedCurhatAdapter
 import edu.bluejack20_2.chantuy.views.login.LoginActivity
@@ -36,6 +40,7 @@ import edu.bluejack20_2.chantuy.views.Text
 import edu.bluejack20_2.chantuy.views.TextAdapter
 import java.io.IOException
 import java.lang.Exception
+import java.util.*
 
 
 class UserProfileFragment : Fragment() {
@@ -45,17 +50,9 @@ class UserProfileFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_user_profile, container, false)
-
         val viewModel = UserProfileViewModel()
-
-//        val recyclerView: RecyclerView = rootView.findViewById(R.id.curhat_recycler_view)
-
-        //downloadImage
-
-
         imageView= rootView.findViewById(R.id.user_profile_image_view)
 
-        //vv will be fixed
         try {
             Log.i("Testing",viewModel.currUser.photoUrl.toString())
             val storageReference=FirebaseStorage.getInstance().getReferenceFromUrl(viewModel
@@ -74,36 +71,38 @@ class UserProfileFragment : Fragment() {
         val curhatAdapter = ProfileCurhatPostedAdapter()
         val curhatRecyclerView: RecyclerView = rootView.findViewById(R.id.recent_post_rview)
         curhatRecyclerView.adapter = curhatAdapter
-        curhatRecyclerView.layoutManager=LinearLayoutManager(this.activity)
+        curhatRecyclerView.layoutManager = object : LinearLayoutManager(rootView.context) {
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+        }
+
         val replyAdapter = ProfileRepliedCurhatAdapter()
         val replyRecyclerView: RecyclerView = rootView.findViewById(R.id.recent_reply_rview)
         replyRecyclerView.adapter = replyAdapter
-        replyRecyclerView.layoutManager=LinearLayoutManager(this.activity)
+        replyRecyclerView.layoutManager = object : LinearLayoutManager(rootView.context) {
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+        }
 
 
 
         val nameView : TextView = rootView.findViewById(R.id.user_profile_name)
         val emailView : TextView = rootView.findViewById(R.id.user_profile_email)
-        nameView.setText(viewModel.userName)
-        emailView.setText(viewModel.userEmail)
+        val joinedAtView: TextView = rootView.findViewById(R.id.user_profile_joined_at)
+        val noCurhatPosted: TextView = rootView.findViewById(R.id.profile_no_curhat_posted)
+        val noReplyPosted: TextView = rootView.findViewById(R.id.profile_no_reply_posted)
+
+        UserRepository.getCurrentUser {
+            nameView.text = it?.name
+            emailView.text = it?.email
+            joinedAtView.text = UserUtil.formatDate(it?.joinedAt)
+        }
+
         imageView.setOnClickListener{
             launchGallery()
         }
-//        nameView.setOnTouchListener(View.OnTouchListener { v, motionEvent ->
-//            when (motionEvent?.action){
-//                MotionEvent.ACTION_UP -> {
-//                    //view.performClick()
-//                    val photoPickerIntent = Intent(Intent.ACTION_PICK)
-//                    photoPickerIntent.type = "image/*"
-//                    photoPickerIntent.action = Intent.ACTION_GET_CONTENT
-//                    startActivityForResult(Intent.createChooser(photoPickerIntent,"Select Picture"), 1)
-//                }
-//            }
-//            return@OnTouchListener true
-//        })
-
-
-//        Log.i("Testing Info", )
 
         val curhatCountView : TextView = rootView.findViewById(R.id.total_post)
         val totalPostObserver = Observer<Int>{totalPostCount->
@@ -141,10 +140,21 @@ class UserProfileFragment : Fragment() {
         }
 
         viewModel.recentCurhats.observe(viewLifecycleOwner, Observer {curhats ->
+            if (curhats.isEmpty()) {
+                noCurhatPosted.visibility = View.VISIBLE
+            } else {
+                noCurhatPosted.visibility = View.INVISIBLE
+            }
             curhatAdapter.submitList(curhats)
         })
 
         viewModel.recentReplies.observe(viewLifecycleOwner, Observer {replies ->
+            if (replies.isEmpty()) {
+                noReplyPosted.visibility = View.VISIBLE
+            } else {
+                noReplyPosted.visibility = View.INVISIBLE
+            }
+
             replyAdapter.submitList(replies)
         })
 
