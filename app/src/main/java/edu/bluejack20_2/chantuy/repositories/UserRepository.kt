@@ -59,6 +59,18 @@ class UserRepository {
             )
 
         }
+        fun userUpdatePassword(password:String){
+            val db = FirebaseFirestore.getInstance()
+            val currUser=getCurrentUser()
+            val user=db.collection(UserRepository.COLLECTION_NAME).document(currUser.uid)
+
+            user.set(
+                hashMapOf(
+                    "password" to password
+                ), SetOptions.merge()
+            )
+
+        }
 
         fun userSubmitData(url:String, gender: String, dob: Timestamp){
             val currUser= FirebaseAuth.getInstance().currentUser
@@ -112,9 +124,8 @@ class UserRepository {
             val user=db.collection(UserRepository.COLLECTION_NAME).document(id)
             user.set(
                     hashMapOf(
-                            "email" to email,
-                            "name" to name,
-                        "isAdmin" to false,
+                        "email" to email,
+                        "name" to name,
                         "joinedAt" to Timestamp.now()
 
                     ), SetOptions.merge()
