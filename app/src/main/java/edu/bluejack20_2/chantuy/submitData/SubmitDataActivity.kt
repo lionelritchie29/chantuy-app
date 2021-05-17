@@ -7,6 +7,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.health.TimerStat
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -22,6 +23,7 @@ import edu.bluejack20_2.chantuy.GlideApp
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import java.io.IOException
+import java.sql.Time
 import java.util.*
 
 
@@ -48,7 +50,7 @@ class SubmitDataActivity : AppCompatActivity() {
         imageView.setOnClickListener{
             launchGallery()
         }
-
+        viewModel.dob=Timestamp.now()
         dobButton.setOnClickListener {
             picker = DatePickerDialog(
                 this,
@@ -63,8 +65,15 @@ class SubmitDataActivity : AppCompatActivity() {
                 month,
                 day
             )
+
             picker.show()
-            viewModel.dob= Timestamp(Date(year,month,day))
+
+
+
+
+
+            viewModel.dob= Timestamp(Date(year-1900,month,day,0,0))
+
 
         }
 
@@ -75,7 +84,10 @@ class SubmitDataActivity : AppCompatActivity() {
         setGenderSpinner(genderSpinner, options)
 
         submitButton.setOnClickListener{
+            viewModel.dob= Timestamp(Date(year-1900,month,day,0,0))
+
             UserRepository.userSubmitData(viewModel.imageUrl,viewModel.genderString,viewModel.dob)
+
             finish()
 
         }
