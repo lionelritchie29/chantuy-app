@@ -9,6 +9,7 @@ import edu.bluejack20_2.chantuy.databinding.ProfilePostedReplyCardItemBinding
 import edu.bluejack20_2.chantuy.models.CurhatComment
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.utils.CurhatUtil
+import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 
 class ProfileRepliedCurhatAdapter(): ListAdapter<CurhatComment, ProfileRepliedCurhatAdapter.ViewHolder>(ProfileRepliedCurhatDiffCallback) {
 
@@ -19,6 +20,7 @@ class ProfileRepliedCurhatAdapter(): ListAdapter<CurhatComment, ProfileRepliedCu
             }
 
             binding.profileRepliedContent.text = comment.content
+            binding.profileRepliedDate.text = CurhatViewUtil.formatDate(comment.createdAt)
 
             binding.profileRepliedViewBtn.setOnClickListener {
                 CurhatUtil.moveToCurhatDetail(comment.curhatId, binding.root.context)

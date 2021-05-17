@@ -76,7 +76,7 @@ class CurhatCommentRepository {
         fun userProfilePost(id: String): Query {
             val db = Firebase.firestore
             val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user",  id)
-                .orderBy("createdAt", Query.Direction.ASCENDING).limit(3)
+                .orderBy("createdAt", Query.Direction.DESCENDING).limit(3)
             return curhats
         }
 
