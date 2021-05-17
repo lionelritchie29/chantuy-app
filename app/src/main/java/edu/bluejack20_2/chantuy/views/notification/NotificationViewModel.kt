@@ -32,7 +32,6 @@ class NotificationViewModel () {
             totalData= it.size()
             getData()
         }
-
     }
     fun getData(){
 
