@@ -67,11 +67,8 @@ class RegisterActivity : AppCompatActivity() {
                 errorText.text="Confirm password doesn't match password"
                 return@setOnClickListener
             }
-
-
             UserRepository.getUserByEmail(emailText.text.toString()).addOnSuccessListener { it->
                 val its=it.toObjects(User::class.java)
-
                 if(its.isEmpty()){
                     //registerLogic
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password).addOnCompleteListener(this){task->
@@ -92,18 +89,17 @@ class RegisterActivity : AppCompatActivity() {
                 }
                 val itUser=its[0]
                 errorText.text="User with this email have already existed"
-
             }
-
         }
     }
+
     fun setLinkListener(){
         val linkBtn: TextView=findViewById(R.id.register_link)
         linkBtn.setOnClickListener {
             finish()
-
         }
     }
+
     private fun initFireBaseUIIntent(){
         val providers = arrayListOf(
             AuthUI.IdpConfig.GoogleBuilder().build()
@@ -119,8 +115,8 @@ class RegisterActivity : AppCompatActivity() {
 //                "https://example.com/privacy.html")
             .build(), RC_SIGN_IN
         )
-
     }
+
     companion object {
 
         private const val RC_SIGN_IN = 123
