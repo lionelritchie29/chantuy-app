@@ -11,7 +11,7 @@ import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 
 class SearchCurhatViewModel {
-    var searchType: Int=0
+    var searchType: Int=1
     var searchString: String=""
     private var _curhats: MutableLiveData<List<Curhat>> = MutableLiveData<List<Curhat>>().apply {
         postValue(listOf())

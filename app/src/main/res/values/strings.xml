@@ -82,5 +82,12 @@
     <string name="delete_account_success">Account has been successfully deleted</string>
     <string name="countNumber">0</string>
     <string name="dob_hint">Date Of Birth</string>
-<!--    <string name="countNumber">0</string>-->
+    <string name="sorted_by">Sorted by: </string>
+    <string name="most_liked">Most Liked</string>
+    <string name="most_disliked">Most Disliked</string>
+    <string name="posted_24_hours">Posted Last 24 Hours</string>
+    <string name="posted_one_week">Posted Last One Week</string>
+    <string name="posted_one_month">Posted Last One Month</string>
+    <string name="posted_one_year">Posted Last One Year </string>
+    <!--    <string name="countNumber">0</string>-->
 </resources>
