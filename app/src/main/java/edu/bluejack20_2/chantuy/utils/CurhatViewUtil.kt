@@ -4,12 +4,14 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
@@ -24,19 +26,20 @@ import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.databinding.CurhatInfoPopupBinding
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatReaction
+import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.models.User
-import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
-import edu.bluejack20_2.chantuy.repositories.CurhatReactionRepository
-import edu.bluejack20_2.chantuy.repositories.CurhatRepository
-import edu.bluejack20_2.chantuy.repositories.UserRepository
+import edu.bluejack20_2.chantuy.repositories.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.Period
+import java.time.ZoneId
 import kotlin.random.Random
 
 class CurhatViewUtil {
     companion object {
         fun formatDate(timestamp: Timestamp?) : String {
-            val sdf = SimpleDateFormat("dd-MM-yyyy 'at' HH:mm:ss")
+            val sdf = SimpleDateFormat("dd MMM yyyy 'at' HH:mm")
             var formatted: String = ""
 
             if (timestamp != null) {
@@ -185,7 +188,7 @@ class CurhatViewUtil {
             if (!isAnon) {
                 setUserImage(imageView, view, user.profileImageId!!)
             } else {
-                val isMale = Random.nextBoolean()
+                val isMale = user.gender == "Male"
                 setAnonymousImage(imageView, view, isMale)
             }
         }
@@ -210,18 +213,22 @@ class CurhatViewUtil {
             GlideApp.with(view).load(image).into(imageView)
         }
 
-        fun showCurhatInfoModal(curhatId: String, context: Context) {
+        fun showCurhatInfoModal(curhat: Curhat, context: Context) {
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val dialogBinding = CurhatInfoPopupBinding.inflate(inflater)
 
-            CurhatRepository.getById(curhatId) { curhat ->
+            CurhatTopicRepository.get(curhat.topic) {
+                dialogBinding.curhatInfoTopic.text = it.name
+            }
+
+            CurhatRepository.getById(curhat.id) { curhat ->
                 dialogBinding.curhatInfoAngryCount.text = curhat.usersGiveAngry?.size.toString()
                 dialogBinding.curhatInfoThumbsDownCount.text = curhat.usersGiveThumbDowns?.size.toString()
                 dialogBinding.curhatInfoThumbUpCount.text = curhat.usersGiveThumbUp?.size.toString()
                 dialogBinding.curhatInfoCoolCount.text = curhat.usersGiveCool?.size.toString()
                 dialogBinding.curhatInfoLoveCount.text = curhat.usersGiveLove?.size.toString()
                 dialogBinding.curhatInfoViewCount.text = curhat.viewCount.toString()
-                CurhatCommentRepository.getCommentsByCurhatId(curhatId) { comments ->
+                CurhatCommentRepository.getCommentsByCurhatId(curhat.id) { comments ->
                     dialogBinding.curhatInfoCommentCount.text = comments?.size.toString()
                 }
             }
@@ -232,7 +239,6 @@ class CurhatViewUtil {
 
             dialog.show()
         }
-
     }
 
 }

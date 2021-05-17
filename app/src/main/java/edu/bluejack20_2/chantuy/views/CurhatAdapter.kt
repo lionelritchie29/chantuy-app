@@ -73,7 +73,7 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
             }
 
             binding.curhatCardInfoBtn.setOnClickListener {
-                CurhatViewUtil.showCurhatInfoModal(curhat.id, binding.root.context)
+                CurhatViewUtil.showCurhatInfoModal(curhat, binding.root.context)
             }
         }
 
