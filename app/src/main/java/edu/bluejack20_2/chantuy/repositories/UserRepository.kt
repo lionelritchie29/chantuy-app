@@ -125,9 +125,7 @@ class UserRepository {
             user.set(
                     hashMapOf(
                         "email" to email,
-                        "name" to name,
-                        "joinedAt" to Timestamp.now()
-
+                        "name" to name
                     ), SetOptions.merge()
             )
         }
