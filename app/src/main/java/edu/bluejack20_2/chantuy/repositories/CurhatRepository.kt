@@ -111,13 +111,12 @@ class CurhatRepository {
 
             db.collection(COLLECTION_NAME).document(curhatId).get()
                 .addOnSuccessListener { curhatDoc ->
-                    val curhat = curhatDoc?.toObject(Curhat::class.java)
-                    callback(curhat!!)
+                    val curhat = curhatDoc.toObject(Curhat::class.java)
+                    if (curhat != null) {
+                        callback(curhat)
+                    }
                 }
         }
-
-
-
 
         fun getByTopic(topicId: String, callback: (List<Curhat>) -> Unit) {
             val db = FirebaseFirestore.getInstance()
@@ -231,13 +230,13 @@ class CurhatRepository {
         }
 
         fun countUserPost(id: String): Query {
-            val db = Firebase.firestore
+            val db = FirebaseFirestore.getInstance()
             val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", id)
             return curhats
         }
 
         fun userProfilePost(id: String): Query {
-            val db = Firebase.firestore
+            val db = FirebaseFirestore.getInstance()
             val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", id)
                 .orderBy("createdAt", Query.Direction.DESCENDING).limit(3)
             return curhats
@@ -253,7 +252,7 @@ class CurhatRepository {
         }
 
         fun deleteUser(userId: String){
-            val db = Firebase.firestore
+            val db = FirebaseFirestore.getInstance()
             val collection = db.collection(COLLECTION_NAME)
             val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", userId)
 

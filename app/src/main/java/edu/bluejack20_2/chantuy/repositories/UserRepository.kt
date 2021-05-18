@@ -147,7 +147,7 @@ class UserRepository {
         }
 
         fun getUserByEmail(email:String):Task<QuerySnapshot>{
-            val db= Firebase.firestore
+            val db= FirebaseFirestore.getInstance()
             val user = db.collection(COLLECTION_NAME).whereEqualTo("email",email)
             return user.get()
         }

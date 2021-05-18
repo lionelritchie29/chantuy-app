@@ -69,13 +69,13 @@ class CurhatCommentRepository {
         }
 
         fun countUserComment(id: String): Query {
-            val db = Firebase.firestore
+            val db = FirebaseFirestore.getInstance()
             val curhatReplies = db.collection(COLLECTION_NAME).whereEqualTo("user", id)
             return curhatReplies
         }
 
         fun userProfilePost(id: String): Query {
-            val db = Firebase.firestore
+            val db = FirebaseFirestore.getInstance()
             val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user",  id)
                 .orderBy("createdAt", Query.Direction.DESCENDING).limit(3)
             return curhats
@@ -101,7 +101,7 @@ class CurhatCommentRepository {
                 }
         }
         fun deleteUser(userId: String){
-            val db = Firebase.firestore
+            val db = FirebaseFirestore.getInstance()
             val collection = db.collection(COLLECTION_NAME)
             val curhats = db.collection(COLLECTION_NAME).whereEqualTo("user", userId)
 
