@@ -2,6 +2,7 @@ package edu.bluejack20_2.chantuy
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import edu.bluejack20_2.chantuy.databinding.ActivityInsertFeedbackBinding
@@ -15,6 +16,14 @@ class InsertFeedbackActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_insert_feedback)
 
         setInsertFeedbackBtn()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setInsertFeedbackBtn() {

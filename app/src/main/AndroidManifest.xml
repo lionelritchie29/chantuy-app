@@ -10,9 +10,9 @@
         android:roundIcon="@drawable/splash_image"
         android:supportsRtl="true"
         android:theme="@style/Theme.Chantuy.SplashScreen">
-        <activity android:name=".views.update_password.UpdatePasswordActivity"></activity>
-        <activity android:name=".views.update_profile.UpdateProfileActivity" />
-        <activity android:name=".views.notification.NotificationActivity" />
+        <activity android:name=".views.update_password.UpdatePasswordActivity" android:label="@string/title_activity_update_password"></activity>
+        <activity android:name=".views.update_profile.UpdateProfileActivity" android:label="@string/title_activity_update_profile"/>
+        <activity android:name=".views.notification.NotificationActivity" android:label="@string/title_activity_notif"/>
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
@@ -29,11 +29,11 @@
             android:label="@string/title_activity_register" /> <!-- <activity -->
         <!-- android:name=".views.notification_page.NotificationActivity" -->
         <!-- android:label="@string/title_activity_notification"/> -->
-        <activity android:name=".views.feedback.FeedbackActivity" />
-        <activity android:name=".submitData.SubmitDataActivity" />
-        <activity android:name=".InsertFeedbackActivity" />
-        <activity android:name=".views.settings.SettingsActivity" />
-        <activity android:name=".views.update_curhat.UpdateCurhatActivity" />
+        <activity android:name=".views.feedback.FeedbackActivity" android:label="@string/title_activity_feedback"/>
+        <activity android:name=".submitData.SubmitDataActivity" android:label="@string/title_activity_submit_data"/>
+        <activity android:name=".InsertFeedbackActivity" android:label="@string/title_activity_insert_feedback"/>
+        <activity android:name=".views.settings.SettingsActivity" android:label="@string/title_activity_settings"/>
+        <activity android:name=".views.update_curhat.UpdateCurhatActivity" android:label="@string/title_activity_update_curhat"/>
         <activity
             android:name=".views.login.LoginActivity"
             android:label="Chantuy">
@@ -43,8 +43,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.insert_curhat.InsertCurhatActivity" />
-        <activity android:name=".views.curhat_detail.CurhatDetailActivity" />
+        <activity android:name=".views.insert_curhat.InsertCurhatActivity" android:label="@string/title_activity_insert_curhat"/>
+        <activity android:name=".views.curhat_detail.CurhatDetailActivity" android:label="@string/title_activity_curhat_detail"/>
         <activity android:name=".MainActivity" />
 
         <receiver android:name=".services.NotificationService" />

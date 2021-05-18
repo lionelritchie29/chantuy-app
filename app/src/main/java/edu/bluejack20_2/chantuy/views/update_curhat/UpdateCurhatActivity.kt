@@ -2,6 +2,7 @@ package edu.bluejack20_2.chantuy.views.update_curhat
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.*
 import androidx.lifecycle.Observer
 import edu.bluejack20_2.chantuy.R
@@ -44,5 +45,14 @@ class UpdateCurhatActivity : AppCompatActivity() {
                 }
             }
         }
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

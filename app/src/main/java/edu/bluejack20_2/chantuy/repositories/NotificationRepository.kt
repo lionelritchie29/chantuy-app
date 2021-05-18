@@ -1,3 +1,4 @@
+
 package edu.bluejack20_2.chantuy.repositories
 
 import com.google.android.gms.tasks.Task
@@ -7,6 +8,7 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.local.QueryResult
 import edu.bluejack20_2.chantuy.models.CommentNotification
+import edu.bluejack20_2.chantuy.models.Notification
 
 class NotificationRepository {
     companion object {
@@ -22,23 +24,25 @@ class NotificationRepository {
                 }
         }
         //curhatPosterUserId
-        fun getNotif(userId: String, sIdx: Timestamp, isFirst: Boolean): Query {
+        fun getNotif(userId: String, lim: Long, callback: (List<Notification>) -> Unit) {
             val db = FirebaseFirestore.getInstance()
-            if(isFirst){
-                return db.collection(COLLECTION_NAME).orderBy("createdAt",Query.Direction.DESCENDING).whereEqualTo("curhatPosterUserId",userId).limit(5)
-            }
-            else{
-                return db.collection(COLLECTION_NAME).orderBy("createdAt",Query.Direction.DESCENDING).whereEqualTo("curhatPosterUserId",userId).startAt(sIdx).limit(5)
-            }
+            db.collection(COLLECTION_NAME).orderBy("createdAt", Query.Direction.DESCENDING).whereEqualTo("curhatPosterUserId", userId).limit(lim)
+                .get().addOnSuccessListener {
+                    val notif = mutableListOf<Notification>()
+                    for (notifSnapshot in it) {
+                        notif.add(notifSnapshot.toObject(Notification::class.java))
+                    }
+                    callback(notif.toList())
+                }
         }
 
-
-
-        fun getNotif(userId: String): Query {
+        fun getNotifCount(callback: (Int) -> Unit) {
             val db = FirebaseFirestore.getInstance()
-            return db.collection(COLLECTION_NAME).orderBy("createdAt",Query.Direction.DESCENDING).whereEqualTo("curhatPosterUserId",userId)
+            db.collection(COLLECTION_NAME).get()
+                .addOnSuccessListener {
+                    callback(it.size())
+                }
         }
-
     }
 
 }
