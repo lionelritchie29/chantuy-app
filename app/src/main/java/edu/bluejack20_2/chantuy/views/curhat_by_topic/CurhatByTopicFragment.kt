@@ -15,6 +15,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.databinding.FragmentCurhatByTopicBinding
 import edu.bluejack20_2.chantuy.utils.InputUtil
@@ -49,6 +50,16 @@ class CurhatByTopicFragment : Fragment() {
         binding.filterTopicAutoComplete.setOnClickListener {
             isScrollingUp = false
         }
+
+        binding.swipeContainer.setOnRefreshListener(object: SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                binding.filterTopicCard.startAnimation(AnimationUtils.loadAnimation(
+                    binding.root.context, R.anim.trans_down
+                ))
+                isScrollingUp = true
+                binding.swipeContainer.isRefreshing = false
+            }
+        })
 
         viewModel.isSizeZero.observe(viewLifecycleOwner, Observer { isZero ->
             if (isZero) {
