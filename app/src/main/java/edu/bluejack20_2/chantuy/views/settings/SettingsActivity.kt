@@ -68,7 +68,7 @@ class SettingsActivity : AppCompatActivity() {
         setDeleteAccountListener()
 
         UserRepository.getCurrentUser {
-            Log.i("SettingsActivity", it?.isAdmin!!.toString())
+
             if (it?.isAdmin!!) {
                 binding.viewFeedbackBtn.visibility = View.VISIBLE
                 binding.sendFeedbackBtn.visibility = View.GONE
@@ -114,16 +114,20 @@ class SettingsActivity : AppCompatActivity() {
 
                 user.delete().addOnCompleteListener {task ->
                     if(task.isSuccessful){
-                        Toast.makeText(this, getString(R.string.success_dela), Toast.LENGTH_SHORT).show()
 
-                        intent= Intent(applicationContext, LoginActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        GLOBALS.CHECK_USER=false
+
+                        UserRepository.getUserById(user.uid).delete()
                         CurhatRepository.deleteUser(user.uid)
                         CurhatCommentRepository.deleteUser(user.uid)
 
+                        Toast.makeText(this, getString(R.string.success_dela), Toast.LENGTH_SHORT).show()
+
+
+                        intent= Intent(applicationContext, LoginActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
                         startActivity(intent)
-
-
 
                         finish()
 

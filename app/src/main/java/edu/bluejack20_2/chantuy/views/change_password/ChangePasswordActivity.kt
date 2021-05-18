@@ -27,20 +27,18 @@ class ChangePasswordActivity (): AppCompatActivity() {
             val password: TextView=findViewById(R.id.cp_password)
             val confirmPassword: TextView=findViewById(R.id.cp_confirm_password)
             if(password.text.toString().length<6){
-                errMsg.text="password length must be longer than 6"
+                errMsg.text=getString(R.string.validate_pl)
                 return@setOnClickListener
             }
             if(!password.text.toString().equals(confirmPassword.text.toString())){
-                errMsg.text="password and confirm password must match"
+                errMsg.text=getString(R.string.validate_pcp)
                 return@setOnClickListener
             }
 
             FirebaseAuth.getInstance().currentUser.updatePassword(password.text.toString()).addOnCompleteListener { it->
                 if(it.isSuccessful){
-
                     UserRepository.userSetPassword(password.text.toString())
                     finish()
-
                 }
                 else{
                     UserRepository.userSetPassword(password.text.toString())

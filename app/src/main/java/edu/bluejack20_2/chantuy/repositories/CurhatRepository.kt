@@ -111,10 +111,13 @@ class CurhatRepository {
 
             db.collection(COLLECTION_NAME).document(curhatId).get()
                 .addOnSuccessListener { curhatDoc ->
-                    val curhat = curhatDoc.toObject(Curhat::class.java)
+                    val curhat = curhatDoc?.toObject(Curhat::class.java)
                     callback(curhat!!)
                 }
         }
+
+
+
 
         fun getByTopic(topicId: String, callback: (List<Curhat>) -> Unit) {
             val db = FirebaseFirestore.getInstance()

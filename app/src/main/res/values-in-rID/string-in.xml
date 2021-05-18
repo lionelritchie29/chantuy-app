@@ -91,7 +91,7 @@
     <string name="confirm_delete_account">Apakah kamu yakin ingin menghapus akun ini ?</string>
     <string name="delete_account_success">Akun berhasil di hapus</string>
     <string name="countNumber">0</string>
-    <string name="dob_hint">Tanggal LAhir</string>
+    <string name="dob_hint">Tanggal Lahir</string>
 
     <string name="password_hint">Kata Sandi</string>
     <string name="title_activity_notification">Notifikasi</string>
@@ -169,6 +169,12 @@
 
     <string name="success_dela">Akun berhasil di delete</string>
     <string name="fail_dela">Delete akun gagal, coba log in ulang!</string>
+    <string name="here">sini</string>
 
+    <string name="dont_have_acc">Tidak punya akun? Register di </string>
+
+    <string name="toast_gsgf">Sign in gagal, silahkan coba lagi!</string>
+
+    <string name="set_password">Set Kata Sandi</string>
 </resources>
 

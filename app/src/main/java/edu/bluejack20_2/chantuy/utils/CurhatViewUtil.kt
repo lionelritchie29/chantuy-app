@@ -204,7 +204,6 @@ class CurhatViewUtil {
                     .into(imageView)
 
             }catch(e: Exception) {
-                Log.i("CurhatViewUtil", e.message.toString())
             }
         }
 
