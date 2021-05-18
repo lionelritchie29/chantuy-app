@@ -64,7 +64,7 @@
     <string name="submit_button_text">Submit</string>
     <string name="submit_data_text">Submit Data</string>
     <string name="delete_account">Delete Account</string>
-    <string name="send_feedback_btn" />
+    <string name="send_feedback_btn" >Send Feedback</string>
     <string name="send_feedback">Send Feedback</string>
     <string name="how_could_we_improve">How could we improve?</string>
     <string name="mark_feedback_solved">Mark as Solved</string>

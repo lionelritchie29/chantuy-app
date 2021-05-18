@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Chantuy</string>
-    <string name="hottest">Terpanas</string>
+
+    <string name="hottest">Terpopuler</string>
     <string name="newest">Terbaru</string>
     <string name="topic">Topik</string>
     <string name="search">Cari</string>
@@ -17,7 +18,7 @@
     <string name="curhat_card_dislike_desc">Benci Curhat</string>
     <string name="view_more">Lihat Lebih</string>
     <string name="curhat_comment_count_viewholder">4</string>
-    <string name="hottest_curhat_text">Curhat Terpanas</string>
+    <string name="hottest_curhat_text">Curhat Terpopuler</string>
     <string name="new_curhat">Curhat Baru</string>
     <string name="insert_curhat_content">Apa yang ada dipikiran anda?</string>
     <string name="insert_curhat_content_hint">Konten</string>
@@ -25,31 +26,35 @@
     <string name="add_curhat">Tambahkan Curhat</string>
     <string name="title_activity_login">Login</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Masuk atau daftar</string>
-    <string name="action_sign_in_short">Masuk</string>
     <string name="welcome">"Selamat Datang !"</string>
     <string name="login_invalid_username">Email tidak ditemukan/Email Invalid </string>
-    <string name="login_invalid_password">Password Salah</string>
+    <string name="login_invalid_password">Kata Sandi Salah</string>
     <string name="register_invalid_email_taken">Email sudah diambil!</string>
-    <string name="register_invalid_email_format">Format Email Invalid!</string>
-    <string name="register_invalid_username">UserName Invalid</string>
-    <string name="register_invalid_confirm_password">Confirm Password harus sesuai Password</string>
+    <string name="register_invalid_email_format">Format Email tidak valid!</string>
+    <string name="register_invalid_username">UserName tidak valid</string>
+    <string name="register_invalid_confirm_password">Konfirmasi kata sandi harus sesuai dengan kata sandi</string>
     <string name="register_invalid_password">Password Invalid </string>
     <string name="login_failed">"Login gagal"</string>
     <string name="title_activity_register">Registrasi</string>
     <string name="invalid_username">Username tidak valid</string>
     <string name="invalid_password">Password harus >5 karakter</string>
+
+    <string name="action_sign_in">Sign in or registrasi</string>
+    <string name="prompt_password">Kata Sandi</string>
+    <string name="action_sign_in_short">Sign in</string>
     <string name="add_comment">Tambahkan sebuah komen...</string>
     <string name="add">Tambah</string>
     <string name="filte_by_topic">Filter</string>
     <string name="find_more_topic">Temukan topik lain</string>
     <string name="is_anonymous">Anonymous</string>
-    <string name="update">Update</string>
-    <string name="delete">Hapus</string>
-    <string name="update_curhat">Perbaharui Curhat</string>
     <string name="curhat_id_label">Curhat ID</string>
     <string name="recent_curhat_text">Curhat(s) Terbaru</string>
+    <string name="submit_data_text">Kumpul Data</string>
+    <string name="delete_account">Hapu Account</string>
+    <string name="send_feedback_btn" >Kirim Feedback</string>
+    <string name="update">Perbaharui</string>
+    <string name="delete">Hapus</string>
+    <string name="update_curhat">Perbaharui Curhat</string>
     <string name="recent_reply_text">Balasan(s) Terbaru</string>
     <string name="search_topic">Cari Topik</string>
     <string name="search_hint">Cari Curhat</string>
@@ -57,15 +62,19 @@
     <string name="great">Bagus</string>
     <string name="cool">Keren</string>
     <string name="love_it">Mantap</string>
+    <string name="update_password_hint">Perbaharui kata sandi</string>
+    <string name="old_password_hint">Kata sandi lama</string>
+    <string name="new_password_hint">Kata sandi baru</string>
+    <string name="change_password">Ganti kata sandi</string>
+    <string name="update_user_profile" >Perbaharui User Profile</string>
+    <string name="update_profile">Perbaharui Profile</string>
+
     <string name="bad">Jelek</string>
     <string name="mad">Gak banget</string>
     <string name="show_more">Tunjukan Lebih</string>
     <string name="enable_notif">Nyalakan Notifikasi</string>
     <string name="change_font_size">Ganti ukuran font</string>
     <string name="submit_button_text">Kumpul</string>
-    <string name="submit_data_text">Kumpul Data</string>
-    <string name="delete_account">Hapus Akun</string>
-    <string name="send_feedback_btn" />
     <string name="send_feedback">Kirim Feedback</string>
     <string name="how_could_we_improve">Bagaimana kita dapat meningkatkan chantuy?</string>
     <string name="mark_feedback_solved">Tandai sebagai Terselesaikan</string>
@@ -85,9 +94,9 @@
     <string name="dob_hint">Tanggal LAhir</string>
 
     <string name="password_hint">Kata Sandi</string>
-    <string name="title_activity_notification">NotificationActivity</string>
+    <string name="title_activity_notification">Notifikasi</string>
     <string name="login_emptyE">Email tidak boleh kosong</string>
-    <string name="login_emptyP">Password tidak boleh kosong</string>
+    <string name="login_emptyP">Kata Sandi tidak boleh kosong</string>
     <string name="login_wrongE">User tidak ditemukan</string>
     <string name="login_wrongP">Kata sandi salah</string>
     <string name="hello_world">Hello Square World!</string>
