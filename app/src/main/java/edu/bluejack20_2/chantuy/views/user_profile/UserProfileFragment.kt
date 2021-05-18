@@ -239,7 +239,7 @@ class UserProfileFragment : Fragment() {
                 Toast
                     .makeText(
                         this.activity,
-                        "Image Uploaded!!",
+                        getString(R.string.toast_img_up),
                         Toast.LENGTH_SHORT
                     )
                     .show()

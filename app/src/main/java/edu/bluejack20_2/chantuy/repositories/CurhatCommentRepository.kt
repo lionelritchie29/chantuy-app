@@ -63,6 +63,7 @@ class CurhatCommentRepository {
             db.collection(COLLECTION_NAME).document(commentId).delete()
                 .addOnSuccessListener {
                     CurhatRepository.decrementCommentCount(curhatId)
+                    NotificationRepository.deleteByCommentId(commentId) {}
                     callback()
                 }
         }
@@ -94,6 +95,7 @@ class CurhatCommentRepository {
                 .addOnSuccessListener {
                     for (doc in it.documents) {
                         doc.reference.delete()
+                        NotificationRepository.deleteByCommentId(doc.id) {}
                     }
                     callback()
                 }
@@ -106,7 +108,9 @@ class CurhatCommentRepository {
 
             curhats.get().addOnSuccessListener { it ->
                 for (a in it){
+                    NotificationRepository.deleteByCommentId(a.id){}
                     collection.document(a.id).delete()
+
                 }
             }
 

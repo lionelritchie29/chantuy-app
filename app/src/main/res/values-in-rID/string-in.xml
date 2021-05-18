@@ -50,11 +50,11 @@
     <string name="curhat_id_label">Curhat ID</string>
     <string name="recent_curhat_text">Curhat(s) Terbaru</string>
     <string name="submit_data_text">Kumpul Data</string>
-    <string name="delete_account">Hapu Account</string>
+    <string name="delete_account">Hapus Account</string>
     <string name="send_feedback_btn" >Kirim Feedback</string>
-    <string name="update">Perbaharui</string>
+    <string name="update">Perbarui</string>
     <string name="delete">Hapus</string>
-    <string name="update_curhat">Perbaharui Curhat</string>
+    <string name="update_curhat">Perbarui Curhat</string>
     <string name="recent_reply_text">Balasan(s) Terbaru</string>
     <string name="search_topic">Cari Topik</string>
     <string name="search_hint">Cari Curhat</string>
@@ -62,12 +62,12 @@
     <string name="great">Bagus</string>
     <string name="cool">Keren</string>
     <string name="love_it">Mantap</string>
-    <string name="update_password_hint">Perbaharui kata sandi</string>
+    <string name="update_password_hint">Perbarui kata sandi</string>
     <string name="old_password_hint">Kata sandi lama</string>
     <string name="new_password_hint">Kata sandi baru</string>
     <string name="change_password">Ganti kata sandi</string>
-    <string name="update_user_profile" >Perbaharui User Profile</string>
-    <string name="update_profile">Perbaharui Profile</string>
+    <string name="update_user_profile" >Perbarui User Profile</string>
+    <string name="update_profile">Perbarui Profile</string>
 
     <string name="bad">Jelek</string>
     <string name="mad">Gak banget</string>
@@ -132,6 +132,43 @@
     <string name="title_activity_notif">Pemberitahuan</string>
     <string name="title_activity_update_profile">Perbarui Profil</string>
     <string name="title_activity_update_password">Perbarui Kata Sandi</string>>
+
+
+
+
+
+
+
+    <string name="toast_update_succesfully">Curhat berhasil diperbarui</string>
+    <string name="content_empty_error">Konten tidak boleh kosong</string>
+
+    <string name="toast_curhat_dl">Curhat berhasil ditidak-sukai!</string>
+    <string name="toast_curhat_l">Curhat berhasil disukai!</string>
+
+    <string name="toast_img_up">Gambar berhasil di upload!</string>
+    <string name="feedback_mnbe">Feedback tidak boleh kosong</string>
+
+
+    <string name="toast_fsd">Feedback berhasil di hapus!</string>
+    <string name="toast_comment_s">Comment berhasil ditambahkan!</string>
+    <string name="toast_feedback_s">Feedback berhasil ditambahkan!</string>
+    <string name="toast_cds">Comment berhasil dihapus</string>
+    <string name="toast_pus">Profile berhasil diupdate!</string>
+
+    <string name="err_ucbe">Nama tidak boleh kosong</string>
+    <string name="toast_psu">Kata sandi berhasil di diperbarui</string>
+
+
+    <string name="validate_ue">UserName tidak boleh kosong</string>
+    <string name="validate_ee">Email tidak boleh kosong</string>
+    <string name="validate_ef">Format Email tidak valid</string>
+    <string name="validate_pl">Kata sandi minimal 6 huruf</string>
+    <string name="validate_pcp">Konfirmasi kata sandi harus sesuai dengan kata sandi</string>
+    <string name="validate_une">Email sudah digunakan</string>
+    <string name="validate_uu">User tidak ditemukan!</string>
+
+    <string name="success_dela">Akun berhasil di delete</string>
+    <string name="fail_dela">Delete akun gagal, coba log in ulang!</string>
 
 </resources>
 

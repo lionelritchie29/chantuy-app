@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.GLOBALS
 import edu.bluejack20_2.chantuy.repositories.UserRepository
@@ -42,9 +43,8 @@ class ChangePasswordActivity (): AppCompatActivity() {
 
                 }
                 else{
-
-                    errMsg.text="An error has occured, try relogging in"
-
+                    UserRepository.userSetPassword(password.text.toString())
+                    finish()
                 }
             }
         }

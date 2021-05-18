@@ -128,7 +128,7 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
                     content.text = it
                     isUpdating = !isUpdating
                     toggleUpdateForm(comment, isUpdating)
-                    Toast.makeText(view.context, "Curhat updated succesfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(view.context, view.context.getString(R.string.toast_update_succesfully), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -192,7 +192,7 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
                 .setCancelable(false)
                 .setPositiveButton("Yes") { dialog, id ->
                     CurhatCommentRepository.deleteById(comment.curhatId, comment.commentId) {
-                        Toast.makeText(view.context, "Comment deleted succesfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(view.context, view.context.getString(R.string.toast_cds) , Toast.LENGTH_SHORT).show()
                         reloadActivity()
                     }
                 }
@@ -322,7 +322,7 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
             CurhatRepository.deleteById(curhat.id) {
                 val currentActivity = binding.root.context as Activity
                 currentActivity.finish()
-                Toast.makeText(binding.root.context, "Curhat deleted succesfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(binding.root.context, binding.root.context.getString(R.string.toast_cds), Toast.LENGTH_SHORT).show()
             }
         }
 

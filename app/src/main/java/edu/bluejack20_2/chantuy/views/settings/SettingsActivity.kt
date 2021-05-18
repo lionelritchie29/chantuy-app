@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -113,13 +114,22 @@ class SettingsActivity : AppCompatActivity() {
 
                 user.delete().addOnCompleteListener {task ->
                     if(task.isSuccessful){
-                        AlertDialog.Builder(this).setMessage(R.string.delete_account_success)
-                            .setPositiveButton(android.R.string.ok,null).show()
+                        Toast.makeText(this, getString(R.string.success_dela), Toast.LENGTH_SHORT).show()
+
                         intent= Intent(applicationContext, LoginActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        startActivity(intent)
                         CurhatRepository.deleteUser(user.uid)
                         CurhatCommentRepository.deleteUser(user.uid)
+
+                        startActivity(intent)
+
+
+
+                        finish()
+
+                    }else{
+                        Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
+
                     }
                 }
             }.setNegativeButton(android.R.string.no, null).show()

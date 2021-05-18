@@ -257,8 +257,14 @@ class CurhatRepository {
 
             curhats.get().addOnSuccessListener { it ->
                 for (a in it){
+                    CurhatCommentRepository.deleteAllById(a.id) {}
                     collection.document(a.id).delete()
                 }
+                db.collection(COLLECTION_NAME).document(userId).delete()
+
+
+
+
             }
 
         }

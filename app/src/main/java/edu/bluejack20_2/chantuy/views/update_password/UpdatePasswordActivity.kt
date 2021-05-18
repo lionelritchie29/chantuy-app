@@ -44,7 +44,7 @@ class UpdatePasswordActivity : AppCompatActivity() {
 
                     FirebaseAuth.getInstance().currentUser.updatePassword(password.text.toString()).addOnCompleteListener { it->
                         if(it.isSuccessful){
-                            UserRepository.userSetPassword(password.text.toString())
+                            UserRepository.userUpdatePassword(password.text.toString(),this)
                             finish()
                         }
                         else{

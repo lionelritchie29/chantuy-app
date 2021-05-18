@@ -63,7 +63,7 @@ class CurhatViewUtil {
                                 val resetedCurhat = resetReactionList(curhat)
                                 resetedCurhat.usersGiveThumbDowns = addUserIdToReactionList(resetedCurhat.usersGiveThumbDowns!!, userId)
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
-                                Toast.makeText(view.context, "Curhat succesfully disliked!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(view.context, view.context.getString(R.string.toast_curhat_dl), Toast.LENGTH_SHORT).show()
                                 callback()
                             }
                             true
@@ -73,7 +73,7 @@ class CurhatViewUtil {
                                 val resetedCurhat = resetReactionList(curhat)
                                 resetedCurhat.usersGiveAngry = addUserIdToReactionList(resetedCurhat.usersGiveAngry!!, userId)
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
-                                Toast.makeText(view.context, "Curhat succesfully disliked!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(view.context, view.context.getString(R.string.toast_curhat_dl), Toast.LENGTH_SHORT).show()
                                 callback()
                             }
                             true
@@ -102,7 +102,7 @@ class CurhatViewUtil {
                                 val resetedCurhat = resetReactionList(curhat)
                                 resetedCurhat.usersGiveThumbUp = addUserIdToReactionList(resetedCurhat.usersGiveThumbUp!!, userId)
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
-                                Toast.makeText(view.context, "Curhat succesfully liked!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(view.context, view.context.getString(R.string.toast_curhat_l), Toast.LENGTH_SHORT).show()
                                 callback()
                             }
                             true
@@ -112,7 +112,7 @@ class CurhatViewUtil {
                             resetedCurhat.usersGiveCool = addUserIdToReactionList(resetedCurhat.usersGiveCool!!, userId)
                             CurhatReactionRepository.addLikeReaction(curhat.id, CurhatReaction.COOL) {
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
-                                Toast.makeText(view.context, "Curhat succesfully liked!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(view.context, view.context.getString(R.string.toast_curhat_l), Toast.LENGTH_SHORT).show()
                                 callback()
                             }
                             true
@@ -122,7 +122,7 @@ class CurhatViewUtil {
                             resetedCurhat.usersGiveLove = addUserIdToReactionList(resetedCurhat.usersGiveLove!!, userId)
                             CurhatReactionRepository.addLikeReaction(curhat.id, CurhatReaction.LOVE) {
                                 setReactionBtnColor(likeBtn, dislikeBtn, curhat, view)
-                                Toast.makeText(view.context, "Curhat succesfully liked!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(view.context, view.context.getString(R.string.toast_curhat_l), Toast.LENGTH_SHORT).show()
                                 callback()
                             }
                             true
