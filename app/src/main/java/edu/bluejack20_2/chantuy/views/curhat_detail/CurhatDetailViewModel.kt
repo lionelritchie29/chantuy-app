@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatComment
 import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
@@ -69,9 +70,11 @@ class CurhatDetailViewModel: ViewModel() {
             if ((toIndex + 1) % 5 != 1) {
                 toIndex += 1
             }
-            Toast.makeText(content.context, "Comment succesfully added!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(content.context, content.context.getString(R.string.toast_comment_s), Toast.LENGTH_SHORT).show()
             getCurhatDetail(null)
-            NotificationRepository.addNotif(newCommentId, curhat.user) {}
+            NotificationRepository.addNotif(newCommentId, curhat.user) {
+
+            }
         }
     }
 

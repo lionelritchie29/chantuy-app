@@ -43,6 +43,17 @@ class NotificationRepository {
                     callback(it.size())
                 }
         }
+
+        fun deleteByCommentId(commentId: String, callback: () -> Unit) {
+            val db = FirebaseFirestore.getInstance()
+            db.collection(COLLECTION_NAME).whereEqualTo("commentId", commentId).get()
+                .addOnSuccessListener {
+                    it.documents.forEach {
+                        it.reference.delete()
+                    }
+                    callback()
+                }
+        }
     }
 
 }

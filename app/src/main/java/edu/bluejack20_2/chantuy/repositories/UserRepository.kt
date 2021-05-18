@@ -1,8 +1,10 @@
 package edu.bluejack20_2.chantuy.repositories
 
+import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.bumptech.glide.annotation.GlideModule
 import com.google.android.gms.tasks.Continuation
@@ -17,6 +19,7 @@ import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
+import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
@@ -34,6 +37,7 @@ class UserRepository {
             val db = FirebaseFirestore.getInstance()
             val user=db.collection(UserRepository.COLLECTION_NAME).document(id)
 
+
             user.set(
                 hashMapOf(
                     "email" to email,
@@ -50,16 +54,26 @@ class UserRepository {
             val currUser=getCurrentUser()
             val user=db.collection(UserRepository.COLLECTION_NAME).document(currUser.uid)
 
-            user.set(
-                hashMapOf(
-                    "email" to currUser.email ,
-                    "name" to currUser.displayName,
-                    "password" to password
-                ), SetOptions.merge()
-            )
+            if(currUser.displayName==null){
+                user.set(
+                    hashMapOf(
+                        "email" to currUser.email ,
+                        "name" to currUser.email.substringBefore("@"),
+                        "password" to password
+                    ), SetOptions.merge()
+                )
+            }else{
+                user.set(
+                    hashMapOf(
+                        "email" to currUser.email ,
+                        "name" to currUser.displayName,
+                        "password" to password
+                    ), SetOptions.merge()
+                )
+            }
 
         }
-        fun userUpdatePassword(password:String){
+        fun userUpdatePassword(password:String,context: Context){
             val db = FirebaseFirestore.getInstance()
             val currUser=getCurrentUser()
             val user=db.collection(UserRepository.COLLECTION_NAME).document(currUser.uid)
@@ -69,6 +83,7 @@ class UserRepository {
                     "password" to password
                 ), SetOptions.merge()
             )
+            Toast.makeText(context, context.getString(R.string.toast_psu),Toast.LENGTH_SHORT)
 
         }
 
@@ -80,21 +95,36 @@ class UserRepository {
                         .setPhotoUri(Uri.parse(url))
                         .build()
                 ).addOnSuccessListener {
-                    getUserById(currUser.uid).set(
-                        hashMapOf(
-                            "email" to currUser.email ,
-                            "name" to currUser.displayName,
-                            "profileImageId" to url,
-                            "gender" to gender,
-                            "dateOfBirth" to dob,
-                            "isAdmin" to false,
-                            "joinedAt" to Timestamp.now()
-                        ), SetOptions.merge())
+                    if(currUser.displayName==null){
+                        getUserById(currUser.uid).set(
+                            hashMapOf(
+                                "email" to currUser.email ,
+                                "name" to currUser.email.substringBefore("@"),
+                                "profileImageId" to url,
+                                "gender" to gender,
+                                "dateOfBirth" to dob,
+                                "isAdmin" to false,
+                                "joinedAt" to Timestamp.now()
+                            ), SetOptions.merge())
+
+                    }else{
+                        getUserById(currUser.uid).set(
+                            hashMapOf(
+                                "email" to currUser.email ,
+                                "name" to currUser.displayName,
+                                "profileImageId" to url,
+                                "gender" to gender,
+                                "dateOfBirth" to dob,
+                                "isAdmin" to false,
+                                "joinedAt" to Timestamp.now()
+                            ), SetOptions.merge())
+
+                    }
                 }
             }
         }
 
-        fun userUpdateProfile(userName:String, gender: String, dob: Timestamp){
+        fun userUpdateProfile(userName:String, gender: String, dob: Timestamp, context:Context){
             val currUser= FirebaseAuth.getInstance().currentUser
             FirebaseAuth.getInstance().currentUser?.let { user ->
                 user.updateProfile(
@@ -109,7 +139,9 @@ class UserRepository {
                             "name" to userName,
                             "gender" to gender,
                             "dateOfBirth" to dob
-                        ), SetOptions.merge())
+                        ), SetOptions.merge()).addOnSuccessListener {
+                        Toast.makeText(context, context.getString(R.string.toast_pus), Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -142,12 +174,21 @@ class UserRepository {
         fun setUser(id: String, email: String, name:String) {
             val db = FirebaseFirestore.getInstance()
             val user=db.collection(UserRepository.COLLECTION_NAME).document(id)
-            user.set(
+            if(name==null){
+                user.set(
+                    hashMapOf(
+                        "email" to email,
+                        "name" to email.substringBefore("@")
+                    ), SetOptions.merge()
+                )
+            }else {
+                user.set(
                     hashMapOf(
                         "email" to email,
                         "name" to name
                     ), SetOptions.merge()
-            )
+                )
+            }
         }
 
         fun getUser(id: String):Task<DocumentSnapshot> {

@@ -33,14 +33,14 @@ class UpdateCurhatActivity : AppCompatActivity() {
 
         updateBtn.setOnClickListener {
             if (contentTv.text.isEmpty()) {
-              contentTv.error = "Content must not be empty"
+              contentTv.error = getString(R.string.content_empty_error)
             }  else {
                 viewModel.onUpdate(
                     contentTv,
                     topicTv.text.toString(),
                     anonymousCb.isChecked
                 ) {
-                    Toast.makeText(this, "Curhat Updated Succesfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.toast_update_succesfully), Toast.LENGTH_SHORT).show()
                     finish()
                 }
             }

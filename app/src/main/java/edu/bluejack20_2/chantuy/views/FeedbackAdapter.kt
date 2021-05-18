@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.databinding.FeedbackCardItemBinding
 import edu.bluejack20_2.chantuy.models.Feedback
 import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
@@ -51,7 +52,7 @@ class FeedbackAdapter : ListAdapter<Feedback, FeedbackAdapter.ViewHolder>(Feedba
                     .setPositiveButton("Yes") { dialog, id ->
                         FeedbackRepository.deleteById(feedback.id) {
                             reloadActivity()
-                            Toast.makeText(binding.root.context, "The feedback si succesfully deleted!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(binding.root.context, binding.root.context.getString(R.string.toast_fsd), Toast.LENGTH_SHORT).show()
                         }
                     }
                     .setNegativeButton("No") { dialog, id ->

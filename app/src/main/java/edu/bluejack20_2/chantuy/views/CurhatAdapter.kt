@@ -80,6 +80,7 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
 
         private fun updateLikeDislikeCount(curhatId: String) {
             CurhatRepository.getLikeDislikeCount(curhatId) { likeCount: Long, dislikeCount: Long ->
+
                 binding.curhatCardLikeCount.text = likeCount.toString()
                 binding.curhatCardDislikeCount.text = dislikeCount.toString()
             }

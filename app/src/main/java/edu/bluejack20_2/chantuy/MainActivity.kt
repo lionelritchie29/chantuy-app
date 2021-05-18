@@ -129,7 +129,6 @@ class MainActivity : AppCompatActivity() {
             else -> {
                 val themeID: Int = R.style.Theme_Chantuy
                 setTheme(themeID)
-                Log.wtf("testis", "else")
             }
         }
     }
@@ -137,7 +136,6 @@ class MainActivity : AppCompatActivity() {
     private fun testPushNotification() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.w("MainActivity", "Fetching FCM registration token failed", task.exception)
                 return@addOnCompleteListener
             }
 
@@ -145,7 +143,6 @@ class MainActivity : AppCompatActivity() {
             val token = task.result
 
             // Log and toast
-            Log.d("MainActivity", token!!)
         }
     }
 

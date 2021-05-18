@@ -47,26 +47,28 @@ class RegisterActivity : AppCompatActivity() {
             val password=passwordText.text.toString()
             val confirmPassword=confirmPasswordText.text.toString()
             if(userName.isEmpty()){
-                errorText.text="UserName cannot be empty"
+                errorText.text=getString(R.string.validate_ue)
                 return@setOnClickListener
             }
 
             if(email.isEmpty()){
-                errorText.text="Email cannot be empty"
+                errorText.text=getString(R.string.validate_ee)
                 return@setOnClickListener
             }
 
             if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                errorText.text="Invalid email format"
+                errorText.text=getString(R.string.validate_ef)
+
                 return@setOnClickListener
             }
 
             if(password.length<6){
-                errorText.text="Password must contain at least 6 characters"
+                errorText.text=getString(R.string.validate_pl)
+
                 return@setOnClickListener
             }
             if(!confirmPassword.equals(password)){
-                errorText.text="Confirm password doesn't match password"
+                errorText.text=getString(R.string.validate_pcp)
                 return@setOnClickListener
             }
             UserRepository.getUserByEmail(emailText.text.toString()).addOnSuccessListener { it->
@@ -89,8 +91,8 @@ class RegisterActivity : AppCompatActivity() {
                     }
                     return@addOnSuccessListener
                 }
-                val itUser=its[0]
-                errorText.text="User with this email have already existed"
+
+                errorText.text=getString(R.string.validate_une)
             }
         }
     }

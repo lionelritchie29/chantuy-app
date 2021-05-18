@@ -126,4 +126,35 @@
     <string name="title_activity_notif">Notifications</string>
     <string name="title_activity_update_profile">Update Profile</string>
     <string name="title_activity_update_password">Update Password</string>
+    <string name="toast_update_succesfully">Curhat Updated Succesfully</string>
+    <string name="content_empty_error">Content must not be empty</string>
+
+    <string name="toast_curhat_dl">Curhat succesfully disliked!</string>
+    <string name="toast_curhat_l">Curhat succesfully liked!</string>
+
+    <string name="toast_img_up">Image Uploaded!</string>
+    <string name="feedback_mnbe">Feedback must not be empty</string>
+
+
+    <string name="toast_fsd">Feedback succesfully deleted!</string>
+    <string name="toast_comment_s">Comment succesfully added!</string>
+    <string name="toast_feedback_s">Feedback added succesfully!</string>
+    <string name="toast_cds">Comment deleted succesfully</string>
+    <string name="toast_pus">Profile Updated succesfully!</string>
+
+    <string name="err_ucbe">Username cannot be empty</string>
+    <string name="toast_psu">Password succesfully updated</string>
+
+
+    <string name="validate_ue">UserName cannot be empty</string>
+    <string name="validate_ee">Email cannot be empty</string>
+    <string name="validate_ef">Invalid email format</string>
+    <string name="validate_pl">Password must contain at least 6 characters</string>
+    <string name="validate_pcp">Confirm password doesn\'t match password</string>
+    <string name="validate_une">This email is already taken</string>
+    <string name="validate_uu">User not found!</string>
+    <string name="success_dela">Account has been succesfully deleted</string>
+    <string name="fail_dela">Delete account failed, try relogging in!</string>
+
+
 </resources>

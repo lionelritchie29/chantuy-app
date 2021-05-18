@@ -68,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
             val errorText: TextView=findViewById(R.id.login_error)
             var passwordString= passwordText.text.toString()
             if(emailText.text.toString().isEmpty()){
-                errorText.text="Email cannot be empty"
+                errorText.text=getString(R.string.validate_une)
                 return@setOnClickListener
             }
 
@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
             UserRepository.getUserByEmail(emailText.text.toString()).addOnSuccessListener {it->
                 val its=it.toObjects(User::class.java)
                 if(its.isEmpty()){
-                    errorText.text="User not found!"
+                    errorText.text=getString(R.string.validate_uu)
                     return@addOnSuccessListener
                 }
                 val itUser=its[0]
@@ -93,7 +93,7 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     }else{
-                        errorText.text="Login Failed"
+                        errorText.text=getString(R.string.login_failed)
                     }
                 }
 

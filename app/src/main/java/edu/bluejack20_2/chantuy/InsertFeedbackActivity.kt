@@ -31,7 +31,7 @@ class InsertFeedbackActivity : AppCompatActivity() {
             val content = binding.insertFeedbackContentEditText.text.toString()
 
             if (binding.insertFeedbackContentEditText.text.isEmpty()) {
-                binding.insertFeedbackContentEditText.error = "Feedback must not be empty"
+                binding.insertFeedbackContentEditText.error = getString(R.string.feedback_mnbe)
             } else {
                 FeedbackRepository.addFeedback(content) {
                     showSuccessToast()
@@ -42,7 +42,7 @@ class InsertFeedbackActivity : AppCompatActivity() {
     }
 
     private fun showSuccessToast() {
-        Toast.makeText(this, "Feedback added succesfully!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, this.getString(R.string.toast_feedback_s), Toast.LENGTH_SHORT).show()
     }
 
 }

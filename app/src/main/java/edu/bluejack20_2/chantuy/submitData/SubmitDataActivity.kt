@@ -207,7 +207,7 @@ class SubmitDataActivity : AppCompatActivity() {
                 Toast
                     .makeText(
                         this,
-                        "Image Uploaded!!",
+                        getString(R.string.toast_img_up),
                         Toast.LENGTH_SHORT
                     )
                     .show()

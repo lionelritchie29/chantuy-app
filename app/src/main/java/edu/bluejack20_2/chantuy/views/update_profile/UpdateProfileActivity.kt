@@ -36,7 +36,7 @@ class UpdateProfileActivity : AppCompatActivity() {
         var picker : DatePickerDialog
 
         val userEditText: EditText = this.findViewById(R.id.update_user_name)
-
+        val errMsg: TextView= this.findViewById(R.id.update_profile_error)
         val dobButton: TextView = this.findViewById(R.id.update_dob_submit)
         UserRepository.getUserById(FirebaseAuth.getInstance().currentUser.uid).get().addOnSuccessListener {
             viewModel.userName=it["name"].toString()
@@ -86,7 +86,14 @@ class UpdateProfileActivity : AppCompatActivity() {
         submitButton.setOnClickListener{
             viewModel.dob= Timestamp(Date(year-1900,month,day,0,0))
             viewModel.userName=userEditText.text.toString()
-            UserRepository.userUpdateProfile(viewModel.userName,viewModel.genderString,viewModel.dob)
+
+            if(viewModel.userName.isEmpty()){
+                errMsg.setText(getString(R.string.err_ucbe))
+                return@setOnClickListener
+            }
+
+            UserRepository.userUpdateProfile(viewModel.userName,viewModel.genderString,viewModel.dob,this)
+
 
             finish()
 
