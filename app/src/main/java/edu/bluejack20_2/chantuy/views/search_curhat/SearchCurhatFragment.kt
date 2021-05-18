@@ -40,9 +40,9 @@ class SearchCurhatFragment : Fragment() {
         val sortedByTv: TextView = rootView.findViewById(R.id.search_sorted_by)
 
         rv.layoutManager = object: LinearLayoutManager(rootView.context) {
-            override fun canScrollVertically(): Boolean {
-                return false
-            }
+//            override fun canScrollVertically(): Boolean {
+//                return false
+//            }
         }
 
         setFilterPopUp(rootView,viewModel, filterButton, sortedByTv)
