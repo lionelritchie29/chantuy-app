@@ -94,6 +94,26 @@ class UserRepository {
             }
         }
 
+        fun userUpdateProfile(userName:String, gender: String, dob: Timestamp){
+            val currUser= FirebaseAuth.getInstance().currentUser
+            FirebaseAuth.getInstance().currentUser?.let { user ->
+                user.updateProfile(
+                    userProfileChangeRequest {
+                        displayName=userName
+                    }
+
+
+                ).addOnSuccessListener {
+                    getUserById(currUser.uid).set(
+                        hashMapOf(
+                            "name" to userName,
+                            "gender" to gender,
+                            "dateOfBirth" to dob
+                        ), SetOptions.merge())
+                }
+            }
+        }
+
         fun getUserByEmail(email:String):Task<QuerySnapshot>{
             val db= Firebase.firestore
             val user = db.collection(COLLECTION_NAME).whereEqualTo("email",email)

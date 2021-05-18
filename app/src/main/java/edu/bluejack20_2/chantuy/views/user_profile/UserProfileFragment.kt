@@ -38,6 +38,8 @@ import edu.bluejack20_2.chantuy.views.ProfileRepliedCurhatAdapter
 import edu.bluejack20_2.chantuy.views.login.LoginActivity
 import edu.bluejack20_2.chantuy.views.Text
 import edu.bluejack20_2.chantuy.views.TextAdapter
+import edu.bluejack20_2.chantuy.views.update_password.UpdatePasswordActivity
+import edu.bluejack20_2.chantuy.views.update_profile.UpdateProfileActivity
 import java.io.IOException
 import java.lang.Exception
 import java.util.*
@@ -54,7 +56,6 @@ class UserProfileFragment : Fragment() {
         imageView= rootView.findViewById(R.id.user_profile_image_view)
 
         try {
-            Log.i("Testing",viewModel.currUser.photoUrl.toString())
             val storageReference=FirebaseStorage.getInstance().getReferenceFromUrl(viewModel
                 .currUser.photoUrl.toString())
 
@@ -94,10 +95,13 @@ class UserProfileFragment : Fragment() {
         val noCurhatPosted: TextView = rootView.findViewById(R.id.profile_no_curhat_posted)
         val noReplyPosted: TextView = rootView.findViewById(R.id.profile_no_reply_posted)
 
+
+
         UserRepository.getCurrentUser {
             nameView.text = it?.name
             emailView.text = it?.email
             joinedAtView.text = UserUtil.formatDate(it?.joinedAt)
+
         }
 
         imageView.setOnClickListener{
@@ -127,8 +131,21 @@ class UserProfileFragment : Fragment() {
         viewModel.curhatCount.observe(viewLifecycleOwner,totalPostObserver)
         viewModel.replyCount.observe(viewLifecycleOwner,totalReplyObserver)
 
+        val passwordButton: Button = rootView.findViewById(R.id.user_cp_button)
+
+        passwordButton.setOnClickListener {
+            val intent = Intent(this.activity, UpdatePasswordActivity::class.java)
+            startActivity(intent)
+        }
+        val updateButton: Button = rootView.findViewById(R.id.user_uprof_btn)
+
+        updateButton.setOnClickListener {
+            val intent = Intent(this.activity, UpdateProfileActivity::class.java)
+            startActivity(intent)
+        }
 
         val logOutButton: Button = rootView.findViewById(R.id.log_out_button)
+
         logOutButton.setOnClickListener {
             AuthUI.getInstance()
                     .signOut(this.requireActivity())
