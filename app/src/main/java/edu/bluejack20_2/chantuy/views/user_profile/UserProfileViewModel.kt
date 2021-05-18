@@ -15,75 +15,76 @@ import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 
 class UserProfileViewModel {
-    var initCurhats : List<Curhat>? = listOf()
-    var initReplies : List<CurhatComment>? = listOf()
+    var initCurhats: List<Curhat>? = listOf()
+    var initReplies: List<CurhatComment>? = listOf()
 
-    val curhatCount : MutableLiveData<Int> by lazy{
+    val curhatCount: MutableLiveData<Int> by lazy {
         MutableLiveData<Int>()
     }
-    val replyCount : MutableLiveData<Int> by lazy{
+    val replyCount: MutableLiveData<Int> by lazy {
         MutableLiveData<Int>()
     }
 
-    var recentReplies: MutableLiveData<List<CurhatComment>> = MutableLiveData<List<CurhatComment>>().apply {
-        postValue(initReplies)
-    }
+    var recentReplies: MutableLiveData<List<CurhatComment>> =
+        MutableLiveData<List<CurhatComment>>().apply {
+            postValue(initReplies)
+        }
 
     var recentCurhats: MutableLiveData<List<Curhat>> = MutableLiveData<List<Curhat>>().apply {
         postValue(initCurhats)
     }
 
-    val currUser=FirebaseAuth.getInstance().currentUser
+    val currUser = FirebaseAuth.getInstance().currentUser
 
-    constructor(){
-        CurhatRepository.countUserPost(currUser.uid).addSnapshotListener{value,e ->
-            if(e!=null){
-                curhatCount.value=0
+    constructor() {
+        CurhatRepository.countUserPost(currUser.uid).addSnapshotListener { value, e ->
+            if (e != null) {
+                curhatCount.value = 0
                 return@addSnapshotListener
             }
-            if(value!=null){
-                curhatCount.value=value?.size()
-            }
-            else{
-                curhatCount.value=0
+            if (value != null) {
+                curhatCount.value = value?.size()
+            } else {
+                curhatCount.value = 0
             }
         }
 
-        CurhatCommentRepository.countUserComment(currUser.uid).addSnapshotListener{value,e ->
-            if(e!=null){
-                replyCount.value=0
+        CurhatCommentRepository.countUserComment(currUser.uid).addSnapshotListener { value, e ->
+            if (e != null) {
+                replyCount.value = 0
 
                 return@addSnapshotListener
             }
-            if(value!=null){
-                replyCount.value=value.size()
-            }
-            else{
-                replyCount.value=0
+            if (value != null) {
+                replyCount.value = value.size()
+            } else {
+                replyCount.value = 0
             }
         }
-        CurhatRepository.userProfilePost(currUser.uid).addSnapshotListener{value,e ->
-            if(e!=null){
-                return@addSnapshotListener
-            }
-            recentCurhats.value=value?.toObjects(Curhat::class.java)
-        }
 
-        CurhatCommentRepository.userProfilePost(currUser.uid).addSnapshotListener{value, e ->
-            if(e!=null){
-                return@addSnapshotListener
-            }
-            recentReplies.value=value?.toObjects(CurhatComment::class.java)
-        }
-
-
+        getRecentCurhats()
+        getRecentReplies()
     }
 
-    fun getRecentCurhats(){
-
+    fun getRecentCurhats() {
+        CurhatRepository.userProfilePost(currUser.uid).addSnapshotListener { value, e ->
+            if (e != null) {
+                return@addSnapshotListener
+            }
+            recentCurhats.value = value?.toObjects(Curhat::class.java)
+        }
     }
 
-    fun uploadImage(){
+    fun getRecentReplies() {
+        CurhatCommentRepository.userProfilePost(currUser.uid).addSnapshotListener { value, e ->
+            if (e != null) {
+                return@addSnapshotListener
+            }
+            recentReplies.value = value?.toObjects(CurhatComment::class.java)
+        }
+    }
+
+    fun uploadImage() {
 
     }
 }
