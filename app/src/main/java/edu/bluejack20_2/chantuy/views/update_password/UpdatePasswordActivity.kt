@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
+import android.view.MenuItem
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import org.w3c.dom.Text
@@ -17,6 +18,7 @@ class UpdatePasswordActivity : AppCompatActivity() {
 
         setButtonListener()
     }
+    
     fun setButtonListener(){
         val passwordButton: Button = findViewById(R.id.upassword_button)
         passwordButton.setOnClickListener {
@@ -56,5 +58,13 @@ class UpdatePasswordActivity : AppCompatActivity() {
 
 
         }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
