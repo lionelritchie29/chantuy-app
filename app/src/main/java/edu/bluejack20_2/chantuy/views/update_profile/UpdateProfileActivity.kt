@@ -14,6 +14,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import edu.bluejack20_2.chantuy.GlideApp
+import android.view.MenuItem
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import java.io.IOException
@@ -32,7 +33,6 @@ class UpdateProfileActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_profile)
-
         var picker : DatePickerDialog
 
         val userEditText: EditText = this.findViewById(R.id.update_user_name)
@@ -122,9 +122,16 @@ class UpdateProfileActivity : AppCompatActivity() {
                 id: Long
             ) {
                 viewModel.genderString = options.get(position)
-
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
 
             }
         }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

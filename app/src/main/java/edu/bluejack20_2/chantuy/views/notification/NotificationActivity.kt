@@ -3,6 +3,7 @@ package edu.bluejack20_2.chantuy.views.notification
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import androidx.databinding.DataBindingUtil
@@ -17,38 +18,40 @@ import edu.bluejack20_2.chantuy.views.TextAdapter
 
 class NotificationActivity : AppCompatActivity() {
     val viewModel=NotificationViewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_notification)
         val viewModel= NotificationViewModel()
-        addButtonListener(viewModel)
-        val notificationAdapter=TextAdapter(
-            viewModel.nList.value!!
-        )
-
-
+        val notificationAdapter = NotificationAdapter()
         val notificationRV: RecyclerView = findViewById(R.id.notification_comment_rv)
-        notificationRV.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        notificationRV.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        notificationRV.adapter = notificationAdapter
 
-        notificationRV.adapter=notificationAdapter
-
-
-
+        val btn: Button = findViewById(R.id.mn_btn)
         viewModel.nList.observe(this, Observer {
-
-            notificationAdapter.setList(viewModel.nList.value!!)
-
+            if (it.size == viewModel.listSize) {
+                btn.visibility = View.GONE
+            } else {
+                btn.visibility = View.VISIBLE
+            }
+            notificationAdapter.submitList(it)
         })
 
-
-    }
-    fun addButtonListener(viewModel: NotificationViewModel){
-        val btn: Button = findViewById(R.id.mn_btn)
         btn.setOnClickListener {
+            viewModel.limit = viewModel.limit + 5
             viewModel.getData()
         }
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }

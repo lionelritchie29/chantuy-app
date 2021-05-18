@@ -115,4 +115,15 @@
     <string name="change_password">Change Password</string>
     <string name="update_user_profile" >Update User Profile</string>
     <string name="update_profile">Update Profile</string>
+    <string name="commented_on_your_curhat">commented:</string>
+    <string name="title_activity_feedback">Feedback</string>
+    <string name="title_activity_submit_data">Submit Data</string>
+    <string name="title_activity_insert_feedback">Insert Feedback</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_update_curhat">Update Curhat</string>
+    <string name="title_activity_insert_curhat">Insert Curhat</string>
+    <string name="title_activity_curhat_detail">Curhat Detail</string>
+    <string name="title_activity_notif">Notifications</string>
+    <string name="title_activity_update_profile">Update Profile</string>
+    <string name="title_activity_update_password">Update Password</string>
 </resources>
