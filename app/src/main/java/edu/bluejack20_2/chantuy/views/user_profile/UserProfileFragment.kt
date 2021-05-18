@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.firebase.ui.auth.AuthUI
@@ -76,6 +77,13 @@ class UserProfileFragment : Fragment() {
             override fun canScrollVertically(): Boolean {
                 return false
             }
+        }
+
+        val swipeContainer = rootView.findViewById<SwipeRefreshLayout>(R.id.swipeContainer)
+        swipeContainer.setOnRefreshListener {
+            viewModel.getRecentCurhats()
+            viewModel.getRecentReplies()
+            swipeContainer.isRefreshing = false
         }
 
         val replyAdapter = ProfileRepliedCurhatAdapter()
