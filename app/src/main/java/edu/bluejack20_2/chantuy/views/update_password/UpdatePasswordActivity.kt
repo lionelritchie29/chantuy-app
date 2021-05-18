@@ -36,7 +36,7 @@ class UpdatePasswordActivity : AppCompatActivity() {
             }
 
             UserRepository.getUserById(FirebaseAuth.getInstance().currentUser.uid).get().addOnSuccessListener {
-                Log.i("Testing"," a "+ it["password"])
+
                 if(!it["password"]?.equals(oldPassword.text.toString())!!){
                     errMsg.text="Wrong old password"
                     return@addOnSuccessListener

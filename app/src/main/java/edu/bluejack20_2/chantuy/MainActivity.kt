@@ -115,7 +115,6 @@ class MainActivity : AppCompatActivity() {
             AlarmManager.INTERVAL_HOUR,
             pendingIntent
         )
-        Log.i("SettingsActivity", "Notification Set!")
     }
 
     private fun setFontSize() {
@@ -126,7 +125,7 @@ class MainActivity : AppCompatActivity() {
             true -> {
                 val themeID: Int = R.style.Theme_Chantuy_FontLarge
                 setTheme(themeID)
-                Log.wtf("testis", "hehehe")
+
             }
             else -> {
                 val themeID: Int = R.style.Theme_Chantuy

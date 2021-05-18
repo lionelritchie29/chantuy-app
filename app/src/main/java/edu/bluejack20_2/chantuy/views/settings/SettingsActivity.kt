@@ -68,7 +68,7 @@ class SettingsActivity : AppCompatActivity() {
         setDeleteAccountListener()
 
         UserRepository.getCurrentUser {
-            Log.i("SettingsActivity", it?.isAdmin!!.toString())
+
             if (it?.isAdmin!!) {
                 binding.viewFeedbackBtn.visibility = View.VISIBLE
                 binding.sendFeedbackBtn.visibility = View.GONE

@@ -32,8 +32,7 @@ class HottestCurhatViewModel : ViewModel(){
         _isFetchingData.value = true
         CurhatRepository.getHottestCurhat (null) { curhats ->
             _isSizeZero.value = curhats.isEmpty()
-            Log.i("HottestCurhatViewModel", "Size: " + curhats.size)
-            Log.i("HottestCurhatViewModel", "Size Zero: " + _isSizeZero.value)
+
             _curhats.value = curhats
             _isFetchingData.value = false
             callback()
@@ -68,7 +67,7 @@ class HottestCurhatViewModel : ViewModel(){
     ) {
         if ((visibleItemCount + pastVisibleItem) >= totalItemCount) {
             isLoadingMore = true
-            Log.i("HottestCurhatViewModel", "Loading more data")
+
 
             CurhatRepository.getHottestCurhat(lastCurhat) {
                 _curhats.value = _curhats.value?.plus(it)

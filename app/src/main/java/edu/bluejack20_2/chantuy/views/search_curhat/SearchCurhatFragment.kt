@@ -63,7 +63,7 @@ class SearchCurhatFragment : Fragment() {
         return rootView
     }
     private fun showRadioButtonDialog(rootView: View, viewModel: SearchCurhatViewModel) {
-        Log.i("SearchCurhatFragment", "Clickedddd")
+
         // custom dialog
 
         val dialog = Dialog(rootView.context)

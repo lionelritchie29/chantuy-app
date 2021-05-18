@@ -15,7 +15,6 @@ class FeedbackViewModel: ViewModel() {
 
     init {
         FeedbackRepository.getAll {
-            Log.i("FeedbackViewModel", it.toString())
             _feedbacks.value = it
         }
     }

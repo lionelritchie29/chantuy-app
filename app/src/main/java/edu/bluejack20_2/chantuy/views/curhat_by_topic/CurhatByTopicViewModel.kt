@@ -55,9 +55,9 @@ class CurhatByTopicViewModel
                 _isSizeZero.value = curhats.isEmpty()
                 _filteredCurhats.value = curhats
                 for (curhat in _filteredCurhats.value!!) {
-                    Log.i("CurhatByTopicViewModel", curhat.content)
+
                 }
-                Log.i("CurhatByTopicViewModel", _filteredCurhats.value!!.size.toString())
+
             }
         }
     }
