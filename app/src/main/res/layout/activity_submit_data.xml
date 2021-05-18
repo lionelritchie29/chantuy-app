@@ -29,6 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
+        android:background="@drawable/edit_text_black_outline_background"
         android:hint="@string/dob_hint"
         android:textAlignment="textStart"
         android:textSize="18sp"
