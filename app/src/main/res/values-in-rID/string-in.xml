@@ -176,5 +176,9 @@
     <string name="toast_gsgf">Sign in gagal, silahkan coba lagi!</string>
 
     <string name="set_password">Set Kata Sandi</string>
+    <string name="curhats_posted">curhat telah dipost</string>
+    <string name="replies_posted">reply telah dipost</string>
+    <string name="change_password_value">Ganti Password</string>
+
 </resources>
 

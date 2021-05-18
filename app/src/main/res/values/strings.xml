@@ -160,4 +160,8 @@
 
     <string name="toast_gsgf">Sign in failed, try signing in again!</string>
     <string name="set_password">Set Password</string>
+    <string name="curhats_posted">curhat(s) posted</string>
+    <string name="replies_posted">reply(s) posted</string>
+    <string name="change_password_value">Change Password</string>
+
 </resources>

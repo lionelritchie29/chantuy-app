@@ -118,7 +118,9 @@ class SettingsActivity : AppCompatActivity() {
                         GLOBALS.CHECK_USER=false
 
                         UserRepository.getUserById(user.uid).delete()
+
                         CurhatRepository.deleteUser(user.uid)
+
                         CurhatCommentRepository.deleteUser(user.uid)
 
                         Toast.makeText(this, getString(R.string.success_dela), Toast.LENGTH_SHORT).show()
