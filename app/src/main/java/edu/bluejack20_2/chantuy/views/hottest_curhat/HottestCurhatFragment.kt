@@ -42,9 +42,8 @@ class HottestCurhatFragment : Fragment() {
         })
 
         viewModel.isSizeZero.observe(viewLifecycleOwner, Observer {isZero ->
-            Log.i("HottestCurhatFragment", isZero.toString())
             if (isZero) {
-                Log.i("HottestCurhatFragment", "is true: " + isZero.toString())
+
                 binding.hottestNoCurhatImg.visibility = View.VISIBLE
             } else {
                 binding.hottestNoCurhatImg.visibility = View.GONE

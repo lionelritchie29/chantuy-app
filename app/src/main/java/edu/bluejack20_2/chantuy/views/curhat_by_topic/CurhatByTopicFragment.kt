@@ -82,7 +82,6 @@ class CurhatByTopicFragment : Fragment() {
             RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 
-                Log.i("CurhatByTopicFragment", dy.toString())
                 if (dy < 0) { //scroll down
                     if (!isScrollingUp) {
                         binding.filterTopicCard.startAnimation(AnimationUtils.loadAnimation(

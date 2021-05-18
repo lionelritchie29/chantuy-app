@@ -31,12 +31,12 @@ class UpdatePasswordActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             else if(!password.text.toString().equals(confirmPassword.text.toString())){
-                errMsg.text="password and confirm password must match"
+                errMsg.text=getText(R.string.validate_pcp)
                 return@setOnClickListener
             }
 
             UserRepository.getUserById(FirebaseAuth.getInstance().currentUser.uid).get().addOnSuccessListener {
-                Log.i("Testing"," a "+ it["password"])
+
                 if(!it["password"]?.equals(oldPassword.text.toString())!!){
                     errMsg.text="Wrong old password"
                     return@addOnSuccessListener

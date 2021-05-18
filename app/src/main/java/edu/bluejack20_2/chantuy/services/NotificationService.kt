@@ -26,7 +26,7 @@ class NotificationService: BroadcastReceiver() {
 
             val notificationManager = NotificationManagerCompat.from(context!!)
             notificationManager.notify(200, builder!!.build())
-            Log.i("NotificationService", "Alarm Called!")
+
         }
     }
 

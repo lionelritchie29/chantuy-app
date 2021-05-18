@@ -22,7 +22,7 @@ class SearchCurhatViewModel {
     @RequiresApi(Build.VERSION_CODES.O)
 
     fun search(){
-        Log.i("Testing","Masuk sih")
+
         chooseQuery().addOnSuccessListener { docs->
             val results= docs.toObjects(Curhat::class.java)
 

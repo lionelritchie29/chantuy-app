@@ -68,7 +68,7 @@ class NewestCurhatViewModel : ViewModel() {
         if ((visibleItemCount + pastVisibleItem) >= totalItemCount) {
             isLoadingMore = true
             _isFetchingData.value = true
-            Log.i("NewestCurhatViewModel", "Loading more data")
+
 
             CurhatRepository.getNewestCurhat(lastCurhat) {
                 _curhats.value = _curhats.value?.plus(it)
