@@ -110,21 +110,14 @@ class UserProfileFragment : Fragment() {
 
         val curhatCountView : TextView = rootView.findViewById(R.id.total_post)
         val totalPostObserver = Observer<Int>{totalPostCount->
-            if(totalPostCount==1){
-                curhatCountView.setText(""+ totalPostCount + " curhat posted")
-            }else{
-                curhatCountView.setText(""+ totalPostCount + " curhats posted")
-            }
+                curhatCountView.setText(""+ totalPostCount + " "+ getText(R.string.curhats_posted))
+
         }
 
         val replyCountView : TextView = rootView.findViewById(R.id.total_reply)
 
         val totalReplyObserver = Observer<Int>{totalReplyCount->
-            if(totalReplyCount==1){
-                replyCountView.setText(""+ totalReplyCount + " reply posted")
-            }else{
-                replyCountView.setText(""+ totalReplyCount + " replies posted")
-            }
+            replyCountView.setText(""+ totalReplyCount + " "+getText(R.string.replies_posted))
         }
 
 
