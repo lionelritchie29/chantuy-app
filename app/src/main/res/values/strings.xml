@@ -155,6 +155,9 @@
     <string name="validate_uu">User not found!</string>
     <string name="success_dela">Account has been succesfully deleted</string>
     <string name="fail_dela">Delete account failed, try relogging in!</string>
+    <string name="here">here</string>
+    <string name="dont_have_acc">Don\'t have an account? Register</string>
 
-
+    <string name="toast_gsgf">Sign in failed, try signing in again!</string>
+    <string name="set_password">Set Password</string>
 </resources>

@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         disableNightMode()
         setFontSize()
+        GLOBALS.CHECK_USER=true
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -72,9 +73,10 @@ class MainActivity : AppCompatActivity() {
 
     var checkUserIntent:Intent?=null
     private fun checkUser(){
+
         UserRepository.getUserById(UserRepository.getCurrentUser().uid).addSnapshotListener{
             user,e ->
-            if(user==null) return@addSnapshotListener;
+            if(user==null||GLOBALS.CHECK_USER==false) return@addSnapshotListener;
             else if(user?.get("password")==null){
                 val intent  = Intent(this, ChangePasswordActivity::class.java)
                 startActivity(intent)

@@ -120,24 +120,18 @@ class LoginActivity : AppCompatActivity() {
                 //                val user = FirebaseAuth.getInstance().currentUser
                 // ...
 
-                UserRepository.setUser(FirebaseAuth.getInstance().currentUser.uid,FirebaseAuth.getInstance().currentUser.email, FirebaseAuth.getInstance().currentUser.displayName)
 
 
-
-
-
+//                UserRepository.setUser(FirebaseAuth.getInstance().currentUser.uid,FirebaseAuth.getInstance().currentUser.email, FirebaseAuth.getInstance().currentUser.displayName)
                 val intent  = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-
-
-
                 finish()
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
                 // response.getError().getErrorCode() and handle the error.
                 // ...
-
+                Toast.makeText(this, this.getString(R.string.toast_gsgf), Toast.LENGTH_SHORT).show()
             }
         }
     }
