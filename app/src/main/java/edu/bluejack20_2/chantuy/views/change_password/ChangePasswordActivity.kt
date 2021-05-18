@@ -16,12 +16,8 @@ class ChangePasswordActivity (): AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_change_password)
-        setText()
-        setButtonListener()
-    }
-    fun setText(){
-        val titleTextView:TextView=this.findViewById(R.id.password_label)
-        titleTextView.text=GLOBALS.PASSWORD_CONTEXT
+
+       setButtonListener()
     }
     fun setButtonListener(){
         val passwordButton: Button = findViewById(R.id.password_button)

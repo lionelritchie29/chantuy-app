@@ -109,4 +109,10 @@
     <string name="joined_at">Joined at</string>
     <string name="click_photo_to_update">Click photo to update</string>
     <string name="already_have_account">Already have an account? login</string>
+    <string name="update_password_hint">Update Password</string>
+    <string name="old_password_hint">Old Password</string>
+    <string name="new_password_hint">New Password</string>
+    <string name="change_password">Change Password</string>
+    <string name="update_user_profile" >Update User Profile</string>
+    <string name="update_profile">Update Profile</string>
 </resources>

@@ -79,7 +79,6 @@ class MainActivity : AppCompatActivity() {
             user,e ->
             if(user==null) return@addSnapshotListener;
             else if(user?.get("password")==null){
-                GLOBALS.PASSWORD_CONTEXT="Input Password"
                 val intent  = Intent(this, ChangePasswordActivity::class.java)
                 startActivity(intent)
             }

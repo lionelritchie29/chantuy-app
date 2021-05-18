@@ -8,9 +8,9 @@ data class User (
     val name: String="Kosong",
     var age: Int?=1,
     val email:String?="",
-    val gender:String? = "",
-    val password:String?="",
-    val dateOfBirth: Timestamp? = null,
+    var gender:String? = "",
+    var password:String?="",
+    var dateOfBirth: Timestamp? = null,
     val joinedAt: Timestamp?=null,
     var isAdmin: Boolean?=false,
     val profileImageId: String?=""
