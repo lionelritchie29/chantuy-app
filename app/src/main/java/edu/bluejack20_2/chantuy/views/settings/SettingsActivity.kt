@@ -126,16 +126,8 @@ class SettingsActivity : AppCompatActivity() {
 
         intent= Intent(applicationContext, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
         startActivity(intent)
         finish()
-//
-//        if(this is Activity){
-//            (this as Activity).finish()
-//        }
-//
-//        Runtime.getRuntime().exit(0)
-
     }
     private fun setDeleteAccountListener() {
         binding.deleteAccountBtn.setOnClickListener {

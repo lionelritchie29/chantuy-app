@@ -40,7 +40,7 @@ class CurhatDetailActivity : AppCompatActivity() {
         val addCommentTv: TextView = findViewById(R.id.add_comment_edit_text)
         addBtn.setOnClickListener {
             if (addCommentTv.text.isEmpty()) {
-                addCommentTv.error = "Comment must not be empty"
+                addCommentTv.error = getString(R.string.add_comment_val)
             } else {
                 viewModel.addComment(addCommentTv)
             }

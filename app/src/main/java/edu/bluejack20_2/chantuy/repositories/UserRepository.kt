@@ -254,9 +254,11 @@ class UserRepository {
                 }
             }
         }
+
         fun getCurrentUser(): FirebaseUser{
             val user=Firebase.auth.currentUser
             return user
         }
+
     }
 }

@@ -50,6 +50,7 @@ class InsertCurhatActivity : AppCompatActivity() {
         topicAutoCompleteView.setAdapter(adapter)
     }
 
+
     private fun onAddCurhat() {
         val addBtn: Button = findViewById(R.id.insert_feedback_btn)
         val content: TextView = findViewById(R.id.insert_feedback_content_edit_text)
@@ -57,9 +58,9 @@ class InsertCurhatActivity : AppCompatActivity() {
 
         addBtn.setOnClickListener {
             if (content.text.isEmpty()) {
-                content.error = "Curhat content must not be empty"
+                content.error =getString(R.string.curhat_content_validation)
             } else if (topicAutoCompleteView.text.isEmpty()) {
-                topicAutoCompleteView.error = "Topic must not be empty"
+                topicAutoCompleteView.error = getString(R.string.curhat_topic_validation)
             } else {
                 addCurhat(content, anonymousCheckbox, it)
             }
@@ -85,7 +86,8 @@ class InsertCurhatActivity : AppCompatActivity() {
                 moveToMainActivity()
             }
         }
-        Toast.makeText(it.context, "Succesfully added new curhat!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(it.context, getString(R.string.add_curhat_success), Toast.LENGTH_SHORT).show()
+
     }
 
     private fun moveToMainActivity() {

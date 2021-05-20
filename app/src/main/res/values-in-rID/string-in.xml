@@ -196,6 +196,10 @@
     <string name="yes">Iya</string>
     <string name="no">Tidak</string>
     <string name="add_curhat_success">Berhasil menambahkan curhat baru!</string>
+    <string name="curhat_topic_validation">Topik tidak boleh kosong</string>
+    <string name="curhat_content_validation">Konten Curhat tidak boleh kosong</string>
+    <string name="aditional_info">Info Tambahan</string>
+    <string name="add_comment_val">Comment must not be empty</string>
 
 
 
