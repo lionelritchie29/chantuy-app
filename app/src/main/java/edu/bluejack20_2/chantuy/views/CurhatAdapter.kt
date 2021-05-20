@@ -57,6 +57,12 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
             binding.curhatCardDislikeCount.text = curhat.dislikeCount.toString()
             setOnViewMoreListener(curhat.id)
 
+            if (curhat.updatedAt?.nanoseconds != curhat.createdAt?.nanoseconds) {
+                binding.curhatCardEdited.visibility = View.VISIBLE
+            } else {
+                binding.curhatCardEdited.visibility = View.GONE
+            }
+
             UserRepository.getUserById(curhat.user) { user ->
                 binding.curhatCardUsername.text = if (curhat.isAnonymous) "Anonymous" else user?.name
                 CurhatViewUtil.setCurhatUserImage(curhat.isAnonymous, user!!, binding.curhatCardUserimage, binding.root)

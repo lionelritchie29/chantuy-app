@@ -164,4 +164,6 @@
     <string name="replies_posted">reply(s) posted</string>
     <string name="change_password_value">Change Password</string>
 
+    <string name="edited">(edited)</string>
+
 </resources>

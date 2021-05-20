@@ -67,26 +67,18 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
         }
     }
 
-    fun addHeaderAndSubmitList(curhat: Curhat, list: List<CurhatComment>, shouldShowMore: Boolean) {
-        val items = when (list) {
-            null -> listOf(DataItem.DetailHeader(curhat))
-            else -> {
-                val newList = excludeLastItem(list)
-                listOf(DataItem.DetailHeader(curhat)) + newList.map { DataItem.CurhatCommentItem(it) } +
-                        if (shouldShowMore) listOf(DataItem.ShowMoreItem())
-                        else listOf()
+    fun addHeaderAndSubmitList(curhat: Curhat, list: List<CurhatComment>) {
+        CurhatCommentRepository.getCommentCount(curhat.id) {commentCount ->
+            val items = when (list) {
+                null -> listOf(DataItem.DetailHeader(curhat))
+                else -> {
+                    listOf(DataItem.DetailHeader(curhat)) + list.map { DataItem.CurhatCommentItem(it) } +
+                            if (commentCount != list.size) listOf(DataItem.ShowMoreItem())
+                            else listOf()
+                }
             }
+            submitList(items)
         }
-        submitList(items)
-    }
-
-    private fun excludeLastItem(list: List<CurhatComment>): List<CurhatComment> {
-        if (list.isNotEmpty() && list.size == 6) {
-            val newList = list.toMutableList()
-            newList.remove(newList.last())
-            return newList.toList()
-        }
-        return list
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -122,13 +114,17 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
 
         private fun setUpdateEventListener(comment: CurhatComment) {
             updateBtn.setOnClickListener {
-                CurhatCommentRepository.updateComment(
-                    comment.commentId, editContent.text.toString()
-                ) {
-                    content.text = it
-                    isUpdating = !isUpdating
-                    toggleUpdateForm(comment, isUpdating)
-                    Toast.makeText(view.context, view.context.getString(R.string.toast_update_succesfully), Toast.LENGTH_SHORT).show()
+                if (editContent.text.isEmpty()) {
+                    editContent.error = "Content must not be empty"
+                } else {
+                    CurhatCommentRepository.updateComment(
+                        comment.commentId, editContent.text.toString()
+                    ) {
+                        content.text = it
+                        isUpdating = !isUpdating
+                        toggleUpdateForm(comment, isUpdating)
+                        Toast.makeText(view.context, view.context.getString(R.string.toast_update_succesfully), Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -171,6 +167,9 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
         fun toggleUpdateForm(comment: CurhatComment, isUpdating: Boolean): Boolean {
 
             if (isUpdating) {
+                CurhatCommentRepository.getComment(comment.commentId).addOnSuccessListener {
+                    editContent.setText(it.getString("content"))
+                }
                 content.visibility = View.GONE
                 createdAt.visibility = View.GONE
                 editContent.visibility = View.VISIBLE
@@ -229,6 +228,12 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
             binding.curhatDetailCommentCount.text = curhat.commentCount.toString() + " comment(s)"
             binding.curhatDetailLikeCount.text = curhat.likeCount.toString()
             binding.curhatDetailDislikeCount.text = curhat.dislikeCount.toString()
+
+            if (curhat.updatedAt?.nanoseconds != curhat.createdAt?.nanoseconds) {
+                binding.curhatDetailEdited.visibility = View.VISIBLE
+            } else {
+                binding.curhatDetailEdited.visibility = View.GONE
+            }
 
             setActionBtnVisibility(curhat.user)
 

@@ -193,7 +193,9 @@ class CurhatRepository {
                     "topic",
                     curhat.get("topic"),
                     "anonymous",
-                    curhat.get("anonymous")
+                    curhat.get("anonymous"),
+                    "updatedAt",
+                    Timestamp.now()
                 )
                 .addOnSuccessListener {
                     callback()
