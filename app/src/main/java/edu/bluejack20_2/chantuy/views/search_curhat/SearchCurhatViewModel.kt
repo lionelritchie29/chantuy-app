@@ -33,7 +33,9 @@ class SearchCurhatViewModel {
                 }
             }
             curhats.value=tempResult.toList()
+
         }
+
 
 
     }

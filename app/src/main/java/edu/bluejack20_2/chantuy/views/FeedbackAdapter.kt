@@ -47,15 +47,15 @@ class FeedbackAdapter : ListAdapter<Feedback, FeedbackAdapter.ViewHolder>(Feedba
         private fun OnDeleteButtonClicked(feedback: Feedback) {
             binding.deleteFeedbackBtn.setOnClickListener {
                 val builder = AlertDialog.Builder(binding.root.context)
-                builder.setMessage("Are you sure ?")
+                builder.setMessage(binding.root.context.getString(R.string.sureq))
                     .setCancelable(false)
-                    .setPositiveButton("Yes") { dialog, id ->
+                    .setPositiveButton(binding.root.context.getString(R.string.yes)) { dialog, id ->
                         FeedbackRepository.deleteById(feedback.id) {
                             reloadActivity()
                             Toast.makeText(binding.root.context, binding.root.context.getString(R.string.toast_fsd), Toast.LENGTH_SHORT).show()
                         }
                     }
-                    .setNegativeButton("No") { dialog, id ->
+                    .setNegativeButton(binding.root.context.getString(R.string.no)) { dialog, id ->
                         dialog.dismiss()
                     }
                 val alert = builder.create()
@@ -74,15 +74,16 @@ class FeedbackAdapter : ListAdapter<Feedback, FeedbackAdapter.ViewHolder>(Feedba
         private fun OnMarkSolvedBtnClicked(feedback: Feedback) {
             binding.feedbackMarkSolvedBtn.setOnClickListener {
                 val builder = AlertDialog.Builder(binding.root.context)
-                builder.setMessage("Mark this feedback as Solved ?")
+
+                builder.setMessage(binding.root.context.getString(R.string.marked_solveq))
                     .setCancelable(false)
-                    .setPositiveButton("Yes") { dialog, id ->
+                    .setPositiveButton(binding.root.context.getString(R.string.yes)) { dialog, id ->
                         FeedbackRepository.updateStatusSolved(feedback.id) {
                             setStatusChip("SOLVED")
-                            Toast.makeText(binding.root.context, "Marked as Solved!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(binding.root.context, binding.root.context.getString(R.string.marked_solved), Toast.LENGTH_SHORT).show()
                         }
                     }
-                    .setNegativeButton("No") { dialog, id ->
+                    .setNegativeButton(binding.root.context.getString(R.string.no)) { dialog, id ->
                         dialog.dismiss()
                     }
                 val alert = builder.create()

@@ -169,5 +169,16 @@
     <string name="age">age</string>
 
     <string name="edited">(edited)</string>
+    <string name="date">date</string>
+    <string name="err_relog">An error has occured, try relogging in!</string>
+    <string name="login_google">Log in with Google</string>
+    <string name="register_google">Register with Google</string>
+    <string name="wrong_old">Wrong old password</string>
+    <string name="marked_solved">Marked as Solved</string>
+    <string name="marked_solveq">Marked this feedback as Solved ?</string>
+    <string name="sureq">Are you sure ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="add_curhat_success">Succesfully added new curhat!</string>
 
 </resources>

@@ -28,11 +28,13 @@ import edu.bluejack20_2.chantuy.views.change_password.ChangePasswordActivity
 import edu.bluejack20_2.chantuy.views.curhat_by_topic.CurhatByTopicFragment
 import edu.bluejack20_2.chantuy.views.hottest_curhat.HottestCurhatFragment
 import edu.bluejack20_2.chantuy.views.insert_curhat.InsertCurhatActivity
+import edu.bluejack20_2.chantuy.views.login.LoginActivity
 import edu.bluejack20_2.chantuy.views.newest_curhat.NewestCurhatFragment
 import edu.bluejack20_2.chantuy.views.notification.NotificationActivity
 import edu.bluejack20_2.chantuy.views.search_curhat.SearchCurhatFragment
 import edu.bluejack20_2.chantuy.views.settings.SettingsActivity
 import edu.bluejack20_2.chantuy.views.user_profile.UserProfileFragment
+import java.lang.Exception
 import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
@@ -52,9 +54,11 @@ class MainActivity : AppCompatActivity() {
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        GLOBALS.CHECK_USER=true
+
         disableNightMode()
         setFontSize()
-        GLOBALS.CHECK_USER=true
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -68,12 +72,12 @@ class MainActivity : AppCompatActivity() {
         testPushNotification()
         setNotification()
         checkUser()
+
     }
 
 
     var checkUserIntent:Intent?=null
     private fun checkUser(){
-
         UserRepository.getUserById(UserRepository.getCurrentUser().uid).addSnapshotListener{
             user,e ->
             if(user==null||GLOBALS.CHECK_USER==false) return@addSnapshotListener;

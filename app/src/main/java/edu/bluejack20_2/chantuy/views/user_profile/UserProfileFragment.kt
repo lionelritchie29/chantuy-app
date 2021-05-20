@@ -31,9 +31,11 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import edu.bluejack20_2.chantuy.GlideApp
 import edu.bluejack20_2.chantuy.R
+import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.utils.CurhatUtil
+import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 import edu.bluejack20_2.chantuy.utils.UserUtil
 import edu.bluejack20_2.chantuy.views.ProfileCurhatPostedAdapter
 import edu.bluejack20_2.chantuy.views.ProfileRepliedCurhatAdapter
@@ -114,7 +116,7 @@ class UserProfileFragment : Fragment() {
             emailView.text=user?.email
             genderView.text=user?.gender
             ageView.text=AgeCalculatorUtil.calculateAge(user?.dateOfBirth?.toDate()!!).toString()
-
+            joinedAtView.text=CurhatViewUtil.formatDate(user?.joinedAt)
         }
         imageView.setOnClickListener{
             launchGallery()

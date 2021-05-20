@@ -15,7 +15,11 @@ import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.auth.User
 import com.google.firebase.ktx.Firebase
 import edu.bluejack20_2.chantuy.InsertFeedbackActivity
 import edu.bluejack20_2.chantuy.R
@@ -25,6 +29,7 @@ import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.services.NotificationService
+import edu.bluejack20_2.chantuy.utils.AuthUtil
 import edu.bluejack20_2.chantuy.views.feedback.FeedbackActivity
 import edu.bluejack20_2.chantuy.views.login.LoginActivity
 
@@ -35,7 +40,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var sharedPrefEdit: SharedPreferences.Editor
     var isLarge: Boolean = false
     var isNotificationOn: Boolean = false
-
+    lateinit var pass:String
     override fun onCreate(savedInstanceState: Bundle?) {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings)
@@ -43,6 +48,8 @@ class SettingsActivity : AppCompatActivity() {
         sharedPrefEdit = appSettingPreferences.edit()
         isLarge = appSettingPreferences.getBoolean(GLOBALS.SETTINGS_LARGE_KEY, false)
         isNotificationOn = appSettingPreferences.getBoolean(GLOBALS.SETTINGS_NOTIFICATION_KEY, false)
+
+
 
 //        delete_account_btn
 
@@ -76,6 +83,7 @@ class SettingsActivity : AppCompatActivity() {
                 binding.viewFeedbackBtn.visibility = View.GONE
                 binding.sendFeedbackBtn.visibility = View.VISIBLE
             }
+            pass=it.password!!
         }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -101,7 +109,34 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+    private fun finalize(userId: String) {
+        GLOBALS.CHECK_USER=false
 
+        UserRepository.getUserById(userId).delete()
+
+        //delete user curhat
+        CurhatRepository.deleteUser(userId)
+
+        //delete user comment
+        CurhatCommentRepository.deleteUser(userId)
+
+
+        Toast.makeText(this, getString(R.string.success_dela), Toast.LENGTH_SHORT).show()
+
+
+        intent= Intent(applicationContext, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+        startActivity(intent)
+        finish()
+//
+//        if(this is Activity){
+//            (this as Activity).finish()
+//        }
+//
+//        Runtime.getRuntime().exit(0)
+
+    }
     private fun setDeleteAccountListener() {
         binding.deleteAccountBtn.setOnClickListener {
 
@@ -111,34 +146,52 @@ class SettingsActivity : AppCompatActivity() {
                 // Delete all
 
                 val user= Firebase.auth.currentUser!!
-
+                val userId=user.uid
                 user.delete().addOnCompleteListener {task ->
                     if(task.isSuccessful){
 
-                        GLOBALS.CHECK_USER=false
-
-                        UserRepository.getUserById(user.uid).delete()
-
-                        CurhatRepository.deleteUser(user.uid)
-
-                        CurhatCommentRepository.deleteUser(user.uid)
-
-                        Toast.makeText(this, getString(R.string.success_dela), Toast.LENGTH_SHORT).show()
-
-
-                        intent= Intent(applicationContext, LoginActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
-                        startActivity(intent)
-
-                        finish()
+                        finalize(userId)
 
                     }else{
-                        Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
+                        AuthUtil.reAuthGoogle(this).addOnCompleteListener() { task->
+                            if(task.isSuccessful){
+                                FirebaseAuth.getInstance().currentUser.delete().addOnCompleteListener { it->
+                                    if(it.isSuccessful){
+                                        finalize(userId)
+                                    }
+                                    else{
+                                        Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            }else{
+                                AuthUtil.reAuthEmail(pass!!).addOnCompleteListener {
+                                    if(task.isSuccessful){
+                                        FirebaseAuth.getInstance().currentUser.delete().addOnCompleteListener { it->
+                                            if(it.isSuccessful){
+                                                finalize(userId)
+                                            }
+                                            else{
+
+                                                Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+
+                                    }else{
+
+                                        Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            }
+
+
+                            }
+                        }
+
+
 
                     }
                 }
-            }.setNegativeButton(android.R.string.no, null).show()
+            .setNegativeButton(android.R.string.no, null).show()
 
         }
     }

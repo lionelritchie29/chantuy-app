@@ -56,6 +56,7 @@ class SearchCurhatFragment : Fragment() {
         rv.adapter=curhatAdapter
         viewModel.curhats.observe(viewLifecycleOwner, Observer {curhats->
             curhatAdapter.submitList(curhats.toList())
+            rv.smoothScrollToPosition(0)
         })
 
 

@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import android.view.MenuItem
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.repositories.UserRepository
+import edu.bluejack20_2.chantuy.utils.AuthUtil
 import org.w3c.dom.Text
 
 class UpdatePasswordActivity : AppCompatActivity() {
@@ -27,7 +28,7 @@ class UpdatePasswordActivity : AppCompatActivity() {
             val password: TextView =findViewById(R.id.up_password)
             val confirmPassword: TextView =findViewById(R.id.up_confirm_password)
             if(password.text.toString().length<6){
-                errMsg.text="password length must be longer than 6"
+                errMsg.text=getText(R.string.validate_pl)
                 return@setOnClickListener
             }
             else if(!password.text.toString().equals(confirmPassword.text.toString())){
@@ -35,22 +36,58 @@ class UpdatePasswordActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+
             UserRepository.getUserById(FirebaseAuth.getInstance().currentUser.uid).get().addOnSuccessListener {
 
                 if(!it["password"]?.equals(oldPassword.text.toString())!!){
-                    errMsg.text="Wrong old password"
+                    errMsg.text=getString(R.string.wrong_old)
                     return@addOnSuccessListener
                 }
-
-                    FirebaseAuth.getInstance().currentUser.updatePassword(password.text.toString()).addOnCompleteListener { it->
-                        if(it.isSuccessful){
-                            UserRepository.userUpdatePassword(password.text.toString(),this)
-                            finish()
-                        }
-                        else{
-                            errMsg.text="An error has occured, try relogging in"
-                        }
+                FirebaseAuth.getInstance().currentUser.updatePassword(password.text.toString()).addOnCompleteListener { it->
+                    if(it.isSuccessful){
+                        UserRepository.userUpdatePassword(password.text.toString(),this)
+                        finish()
                     }
+                    else{
+                        AuthUtil.reAuthEmail(oldPassword.text.toString()).addOnCompleteListener() {task->
+                            if(task.isSuccessful){
+                                FirebaseAuth.getInstance().currentUser.updatePassword(password.text.toString()).addOnCompleteListener { it->
+                                    if(it.isSuccessful){
+                                        UserRepository.userUpdatePassword(password.text.toString(),this)
+                                        finish()
+                                    }
+                                    else{
+
+                                        errMsg.text=getString(R.string.err_relog)
+                                    }
+                                }
+                            }else{
+                                AuthUtil.reAuthGoogle(this).addOnCompleteListener {
+                                    if(task.isSuccessful){
+                                        FirebaseAuth.getInstance().currentUser.updatePassword(password.text.toString()).addOnCompleteListener { it->
+                                            if(it.isSuccessful){
+                                                UserRepository.userUpdatePassword(password.text.toString(),this)
+                                                finish()
+                                            }
+                                            else{
+
+                                                errMsg.text=getString(R.string.err_relog)
+                                            }
+                                        }
+
+                                    }else{
+
+                                        errMsg.text=getString(R.string.err_relog)
+                                    }
+                                }
+                            }
+
+                        }
+
+                    }
+                }
+
+
 
             }
 

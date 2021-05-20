@@ -71,7 +71,7 @@
         android:backgroundTint="@color/white"
         android:drawableLeft="@drawable/googleg_standard_color_18"
         android:padding="16dp"
-        android:text="Login with Google"
+        android:text="@string/register_google"
         android:textColor="@color/primary_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/register_button"
