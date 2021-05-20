@@ -184,5 +184,20 @@
 
     <string name="gender">jenis kelamin</string>
     <string name="age">umur</string>
+    <string name="edited">(diedit)</string>
+    <string name="date">Tanggal</string>
+    <string name="err_relog">Sebuah error telah terjadi, coba log in ulang!</string>
+    <string name="login_google">Log in dengan Google</string>
+    <string name="register_google">Register dengan Google</string>
+    <string name="wrong_old">Kata sandi lama salah</string>
+    <string name="marked_solved">Ditandai sebagai salah</string>
+    <string name="marked_solveq">Tandai feedback sudah Solved ?</string>
+    <string name="sureq">Apakah anda yakin ?</string>
+    <string name="yes">Iya</string>
+    <string name="no">Tidak</string>
+    <string name="add_curhat_success">Berhasil menambahkan curhat baru!</string>
+
+
+
 </resources>
 

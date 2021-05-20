@@ -24,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         super.onCreate(savedInstanceState)
@@ -32,13 +33,23 @@ class LoginActivity : AppCompatActivity() {
         setTheme(R.style.Theme_Chantuy_SplashScreen)
 
         setContentView(R.layout.activity_login)
+//        if(GLOBALS.CHECK_USER){
+//            Toast.makeText(this, "check user true" , Toast.LENGTH_SHORT).show()
+//        }else{
+//            Toast.makeText(this, "check user false" , Toast.LENGTH_SHORT).show()
+//
+//        }
 
-        if(FirebaseAuth.getInstance().currentUser!=null){
+
+
+
+        if(FirebaseAuth.getInstance().currentUser!=null && GLOBALS.CHECK_USER){
             val intent  = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }
-        else{
+        } else{
+            Toast.makeText(this, "Error ter aneh" , Toast.LENGTH_SHORT).show()
+
             setLoginListener()
             setLinkListener()
         }
@@ -81,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 val itUser=its[0]
                 if(passwordText.text.toString()!=itUser.password){
-                    errorText.text="Wrong Password!"
+                    errorText.text=getString(R.string.login_wrongP)
                     return@addOnSuccessListener
                 }
                 if(passwordString==null)passwordString=""

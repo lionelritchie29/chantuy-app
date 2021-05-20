@@ -173,7 +173,7 @@ class UserRepository {
 
         fun setUser(id: String, email: String, name:String) {
             val db = FirebaseFirestore.getInstance()
-            val user=db.collection(UserRepository.COLLECTION_NAME).document(id)
+            val user=db.collection(COLLECTION_NAME).document(id)
             if(name==null){
                 user.set(
                     hashMapOf(
@@ -255,7 +255,7 @@ class UserRepository {
             }
         }
         fun getCurrentUser(): FirebaseUser{
-            val user=Firebase.auth.currentUser!!
+            val user=Firebase.auth.currentUser
             return user
         }
     }

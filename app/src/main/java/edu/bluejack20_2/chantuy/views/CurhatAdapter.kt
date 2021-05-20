@@ -66,6 +66,7 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
             UserRepository.getUserById(curhat.user) { user ->
                 binding.curhatCardUsername.text = if (curhat.isAnonymous) "Anonymous" else user?.name
                 CurhatViewUtil.setCurhatUserImage(curhat.isAnonymous, user!!, binding.curhatCardUserimage, binding.root)
+
             }
 
             CurhatViewUtil.setReactionBtnColor(
