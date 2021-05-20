@@ -3,6 +3,8 @@ package edu.bluejack20_2.chantuy.views.feedback
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
@@ -17,10 +19,18 @@ class FeedbackActivity : AppCompatActivity() {
         val adapter = FeedbackAdapter()
         val recycler = findViewById<RecyclerView>(R.id.feedback_recycler)
         recycler.adapter = adapter
+        val feedbackEmptyTv: TextView = findViewById(R.id.feedback_empty)
 
         viewModel.feedbacks.observe(this, Observer {
             adapter.submitList(it)
+
+            if (it.isEmpty()) {
+                feedbackEmptyTv.visibility = View.VISIBLE
+            } else {
+                feedbackEmptyTv.visibility = View.GONE
+            }
         })
+
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

@@ -39,27 +39,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView5"
+                <ImageButton
+                    android:id="@+id/posted_curhat_thumb_up_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                    app:layout_constraintStart_toEndOf="@+id/curhat_card_like_count"
-                    app:layout_constraintTop_toTopOf="@+id/imageView2"
-                    app:srcCompat="@drawable/outline_thumb_down_24"
-                    app:tint="@color/dark_red" />
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/curhat_card_view_btn"
+                    android:layout_marginStart="16dp"
+                    android:background="@color/transparent"
+                    android:padding="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/curhat_card_view_btn"
-                    app:srcCompat="@drawable/outline_thumb_up_24"
-                    app:tint="@color/green" />
+                    app:srcCompat="@drawable/outline_thumb_up_24" />
 
                 <TextView
                     android:id="@+id/curhat_card_date"
@@ -87,6 +76,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/curhat_card_date" />
 
+                <ImageButton
+                    android:id="@+id/posted_curhat_thumb_down_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:background="@color/transparent"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/posted_curhat_thumb_up_btn"
+                    app:layout_constraintStart_toEndOf="@+id/curhat_card_like_count"
+                    app:layout_constraintTop_toTopOf="@+id/posted_curhat_thumb_up_btn"
+                    app:srcCompat="@drawable/outline_thumb_down_24" />
+
                 <Button
                     android:id="@+id/curhat_card_view_btn"
                     android:layout_width="wrap_content"
@@ -105,21 +106,19 @@
                     android:id="@+id/curhat_card_like_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:text="@string/countNumber"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                    app:layout_constraintStart_toEndOf="@+id/imageView2"
-                    app:layout_constraintTop_toTopOf="@+id/imageView2" />
+                    app:layout_constraintBottom_toBottomOf="@+id/posted_curhat_thumb_up_btn"
+                    app:layout_constraintStart_toEndOf="@+id/posted_curhat_thumb_up_btn"
+                    app:layout_constraintTop_toTopOf="@+id/posted_curhat_thumb_up_btn" />
 
                 <TextView
                     android:id="@+id/curhat_card_dislike_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:text="@string/countNumber"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView5"
-                    app:layout_constraintTop_toTopOf="@+id/imageView5" />
+                    app:layout_constraintBottom_toBottomOf="@+id/posted_curhat_thumb_down_btn"
+                    app:layout_constraintStart_toEndOf="@+id/posted_curhat_thumb_down_btn"
+                    app:layout_constraintTop_toTopOf="@+id/posted_curhat_thumb_down_btn" />
 
                 <ImageButton
                     android:id="@+id/curhat_card_info_btn"

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.databinding.ProfilePostedCurhatCardItemBinding
 import edu.bluejack20_2.chantuy.models.Curhat
+import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.utils.CurhatUtil
 import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
 
@@ -25,6 +26,25 @@ class ProfileCurhatPostedAdapter(): ListAdapter<Curhat, ProfileCurhatPostedAdapt
 
             binding.curhatCardViewBtn.setOnClickListener {
                 CurhatUtil.moveToCurhatDetail(curhat.id, binding.root.context)
+            }
+
+            CurhatViewUtil.setReactionBtnColor(
+                binding.postedCurhatThumbUpBtn,
+                binding.postedCurhatThumbDownBtn,
+                curhat, binding.root)
+            CurhatViewUtil.setLikePopupMenu(binding.postedCurhatThumbUpBtn, binding.postedCurhatThumbDownBtn, curhat, binding.root) {
+                updateLikeDislikeCount(curhat.id)
+            }
+            CurhatViewUtil.setDislikePopupMenu(binding.postedCurhatThumbUpBtn, binding.postedCurhatThumbDownBtn, curhat, binding.root) {
+                updateLikeDislikeCount(curhat.id)
+            }
+        }
+
+        private fun updateLikeDislikeCount(curhatId: String) {
+            CurhatRepository.getLikeDislikeCount(curhatId) { likeCount: Long, dislikeCount: Long ->
+
+                binding.curhatCardLikeCount.text = likeCount.toString()
+                binding.curhatCardDislikeCount.text = dislikeCount.toString()
             }
         }
 
