@@ -25,6 +25,8 @@ import edu.bluejack20_2.chantuy.views.CurhatAdapter
 
 
 class SearchCurhatFragment : Fragment() {
+    val viewModel=SearchCurhatViewModel()
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +34,6 @@ class SearchCurhatFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_search_curhat, container, false)
-        val viewModel=SearchCurhatViewModel()
         var searchButton: Button= rootView.findViewById(R.id.search_curhat_btn)
         var filterButton: ImageButton= rootView.findViewById(R.id.filter_button)
         val searchTextView: EditText= rootView.findViewById(R.id.search_auto_complete)
@@ -45,7 +46,7 @@ class SearchCurhatFragment : Fragment() {
 //            }
         }
 
-        setFilterPopUp(rootView,viewModel, filterButton, sortedByTv)
+        setFilterPopUp(rootView,viewModel, filterButton, sortedByTv,searchTextView)
 
         searchButton.setOnClickListener{
             viewModel.searchString=searchTextView.text.toString()
@@ -62,39 +63,42 @@ class SearchCurhatFragment : Fragment() {
 
         return rootView
     }
-    private fun showRadioButtonDialog(rootView: View, viewModel: SearchCurhatViewModel) {
-
-        // custom dialog
-
-        val dialog = Dialog(rootView.context)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.filter_popup_choice)
-        val stringList: MutableList<String> = ArrayList() // here is list
-        stringList.add("Sort search by most like")
-        stringList.add("Sort search by most dislike")
-        stringList.add("Filter curhats posted last 24 hour")
-        stringList.add("Filter curhats posted last week")
-        stringList.add("Filter curhats posted last month")
-        stringList.add("Filter curhats posted last year")
-
-        val rg = dialog.findViewById(R.id.radio_group) as RadioGroup
-        for (i in stringList.indices) {
-            val rb = RadioButton(rootView.context) // dynamically creating RadioButton and adding to RadioGroup.
-            rb.text = stringList[i]
-            rg.addView(rb)
-        }
-
-        dialog.show()
-    }
+//    private fun showRadioButtonDialog(rootView: View, viewModel: SearchCurhatViewModel) {
+//
+//        // custom dialog
+//
+//        val dialog = Dialog(rootView.context)
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        dialog.setContentView(R.layout.filter_popup_choice)
+//        val stringList: MutableList<String> = ArrayList() // here is list
+//        stringList.add("Sort search by most like")
+//        stringList.add("Sort search by most dislike")
+//        stringList.add("Filter curhats posted last 24 hour")
+//        stringList.add("Filter curhats posted last week")
+//        stringList.add("Filter curhats posted last month")
+//        stringList.add("Filter curhats posted last year")
+//
+//        val rg = dialog.findViewById(R.id.radio_group) as RadioGroup
+//        for (i in stringList.indices) {
+//            val rb = RadioButton(rootView.context) // dynamically creating RadioButton and adding to RadioGroup.
+//            rb.text = stringList[i]
+//            rg.addView(rb)
+//        }
+//
+//        dialog.show()
+//    }
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("RestrictedApi")
     fun setFilterPopUp(
         rootView: View,
         viewModel: SearchCurhatViewModel,
         filterButton: ImageButton,
-        sortedByTv: TextView
+        sortedByTv: TextView,
+        searchTextView: EditText
     ){
         val userId = UserRepository.getCurrentUserId()
         filterButton.setOnClickListener {
+            viewModel.searchString=searchTextView.text.toString()
             val popupMenu = PopupMenu(rootView.context, it)
             popupMenu.inflate(R.menu.filter_menu)
 
@@ -133,8 +137,10 @@ class SearchCurhatFragment : Fragment() {
                     }
                     else -> false
                 }
-            }
 
+                viewModel.search()
+                true
+            }
             val popupHelper = MenuPopupHelper(rootView.context, popupMenu.menu as MenuBuilder, it)
             popupHelper.setForceShowIcon(true)
             popupHelper.show()

@@ -34,6 +34,8 @@ class SearchCurhatViewModel {
             }
             curhats.value=tempResult.toList()
         }
+
+
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun chooseQuery(): Task<QuerySnapshot>{
