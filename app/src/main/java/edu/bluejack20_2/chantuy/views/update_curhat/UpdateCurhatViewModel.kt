@@ -1,5 +1,6 @@
 package edu.bluejack20_2.chantuy.views.update_curhat
 
+import android.R
 import android.content.Intent
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -13,6 +14,7 @@ import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatTopicRepository
+import edu.bluejack20_2.chantuy.views.TopicAutoCompleteAdapter
 
 class UpdateCurhatViewModel : ViewModel() {
     private var _curhat: MutableLiveData<Curhat> =
@@ -53,8 +55,7 @@ class UpdateCurhatViewModel : ViewModel() {
     }
 
     fun setTopicAutocomplete(topicTv: AutoCompleteTextView) {
-        val adapter: ArrayAdapter<String>
-                = ArrayAdapter(topicTv.context, android.R.layout.select_dialog_item, topicsString)
+        val adapter = TopicAutoCompleteAdapter(topicTv.context, R.layout.simple_list_item_1, topicsString)
         topicTv.threshold = 1
         topicTv.setAdapter(adapter)
     }

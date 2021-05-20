@@ -19,7 +19,7 @@ class TopicAutoCompleteAdapter(
 
     var topics = allTopics
     var allTopicsContainer = allTopics
-    private val MAX_RESULT = 10
+    private val MAX_RESULT = 5
 
     override fun getCount(): Int {
         return topics.size
