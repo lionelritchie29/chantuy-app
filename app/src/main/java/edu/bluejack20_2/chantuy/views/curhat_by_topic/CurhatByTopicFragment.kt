@@ -21,6 +21,7 @@ import edu.bluejack20_2.chantuy.databinding.FragmentCurhatByTopicBinding
 import edu.bluejack20_2.chantuy.utils.InputUtil
 import edu.bluejack20_2.chantuy.views.CurhatAdapter
 import edu.bluejack20_2.chantuy.views.CurhatTopicChipAdapter
+import edu.bluejack20_2.chantuy.views.TopicAutoCompleteAdapter
 
 class CurhatByTopicFragment : Fragment() {
 
@@ -51,15 +52,13 @@ class CurhatByTopicFragment : Fragment() {
             isScrollingUp = false
         }
 
-        binding.swipeContainer.setOnRefreshListener(object: SwipeRefreshLayout.OnRefreshListener {
-            override fun onRefresh() {
-                binding.filterTopicCard.startAnimation(AnimationUtils.loadAnimation(
-                    binding.root.context, R.anim.trans_down
-                ))
-                isScrollingUp = true
-                binding.swipeContainer.isRefreshing = false
-            }
-        })
+        binding.swipeContainer.setOnRefreshListener {
+            binding.filterTopicCard.startAnimation(AnimationUtils.loadAnimation(
+                binding.root.context, R.anim.trans_down
+            ))
+            isScrollingUp = true
+            binding.swipeContainer.isRefreshing = false
+        }
 
         viewModel.isSizeZero.observe(viewLifecycleOwner, Observer { isZero ->
             if (isZero) {
@@ -112,5 +111,10 @@ class CurhatByTopicFragment : Fragment() {
         })
 
         return adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Toast.makeText(context, "On Resume", Toast.LENGTH_SHORT).show()
     }
 }

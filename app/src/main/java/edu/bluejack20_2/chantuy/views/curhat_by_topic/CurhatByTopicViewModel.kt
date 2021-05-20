@@ -2,7 +2,6 @@ package edu.bluejack20_2.chantuy.views.curhat_by_topic
 
 import android.app.Application
 import android.util.Log
-import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -11,6 +10,8 @@ import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatTopicRepository
+import edu.bluejack20_2.chantuy.views.TopicAutoCompleteAdapter
+
 
 class CurhatByTopicViewModel
     (application: Application) : AndroidViewModel(application) {
@@ -41,10 +42,16 @@ class CurhatByTopicViewModel
     }
 
     fun setTopicAutocomplete(view: AutoCompleteTextView) {
-        val adapter: ArrayAdapter<String> =
-            ArrayAdapter(getApplication(), android.R.layout.select_dialog_item, topicsString)
+        val adapter = TopicAutoCompleteAdapter(view.context, android.R.layout.simple_list_item_1, topicsString)
         view.threshold = 1
         view.setAdapter(adapter)
+
+        view.setOnItemClickListener { parent, _, position, id ->
+            val selectedTopic = parent.adapter.getItem(position) as String
+            view.setText(selectedTopic)
+
+            Log.i("CurhatByTopicViewModel", adapter.topics.toString())
+        }
     }
 
     fun OnFilter(topicName: String) {
