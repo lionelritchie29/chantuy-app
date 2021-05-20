@@ -103,7 +103,6 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = CurhatCardItemBinding.inflate(layoutInflater, parent, false)
-
                 return ViewHolder(binding)
             }
         }

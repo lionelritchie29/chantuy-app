@@ -180,6 +180,12 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="add_curhat_success">Succesfully added new curhat!</string>
+    <string name="curhat_topic_validation">Topic must not be empty</string>
+    <string name="curhat_content_validation">Curhat content must not be empty</string>
+    <string name="aditional_info">Additional Info</string>
+    <string name="add_comment_val">Comment must not be empty</string>
     <string name="no_feedback">There is no feedback</string>
+
+
 
 </resources>

@@ -43,12 +43,11 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-        if(FirebaseAuth.getInstance().currentUser!=null && GLOBALS.CHECK_USER){
+        if(FirebaseAuth.getInstance().currentUser!=null ){
             val intent  = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         } else{
-            Toast.makeText(this, "Error ter aneh" , Toast.LENGTH_SHORT).show()
 
             setLoginListener()
             setLinkListener()
