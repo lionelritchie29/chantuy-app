@@ -9,6 +9,7 @@ import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.CurhatTopic
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatTopicRepository
+import edu.bluejack20_2.chantuy.views.TopicAutoCompleteAdapter
 
 class InsertCurhatActivity : AppCompatActivity() {
     private lateinit var topicAutoCompleteView: AutoCompleteTextView
@@ -44,8 +45,7 @@ class InsertCurhatActivity : AppCompatActivity() {
 
     private fun setTopicAutocomplete() {
         topicAutoCompleteView = findViewById(R.id.update_topic_auto_complete)
-        val adapter: ArrayAdapter<String>
-                = ArrayAdapter<String>(this, android.R.layout.select_dialog_item, topicsString)
+        val adapter = TopicAutoCompleteAdapter(this, android.R.layout.simple_list_item_1, topicsString)
         topicAutoCompleteView.threshold = 1
         topicAutoCompleteView.setAdapter(adapter)
     }

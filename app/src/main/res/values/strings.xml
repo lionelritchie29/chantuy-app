@@ -180,5 +180,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="add_curhat_success">Succesfully added new curhat!</string>
+    <string name="no_feedback">There is no feedback</string>
 
 </resources>
