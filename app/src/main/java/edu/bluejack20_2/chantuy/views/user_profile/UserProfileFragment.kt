@@ -112,8 +112,8 @@ class UserProfileFragment : Fragment() {
             val user=value?.toObject(User::class.java)
             nameView.text=user?.name
             emailView.text=user?.email
-            genderView.text=user?.gender
-            ageView.text=AgeCalculatorUtil.calculateAge(user?.dateOfBirth?.toDate()!!).toString()
+            genderView.text= user?.gender
+            ageView.text = "(${ AgeCalculatorUtil.calculateAge(user?.dateOfBirth?.toDate()!!).toString() } years)"
 
         }
         imageView.setOnClickListener{
