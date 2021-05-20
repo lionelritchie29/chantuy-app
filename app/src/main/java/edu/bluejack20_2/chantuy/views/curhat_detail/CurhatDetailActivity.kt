@@ -47,7 +47,7 @@ class CurhatDetailActivity : AppCompatActivity() {
         }
 
         viewModel.comments.observe(this , Observer { comments ->
-            adapter.addHeaderAndSubmitList(viewModel.curhat as Curhat, comments, viewModel.shouldShowMore())
+            adapter.addHeaderAndSubmitList(viewModel.curhat, comments)
         })
 
         viewModel.isFetchingData.observe(this, Observer { isFetchingData ->

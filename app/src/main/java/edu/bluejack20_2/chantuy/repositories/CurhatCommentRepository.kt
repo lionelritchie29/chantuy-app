@@ -36,27 +36,36 @@ class CurhatCommentRepository {
                 }
         }
 
-        fun getCommentsByCurhatId(curhatId: String, callback: (List<CurhatComment>?) -> Unit) {
+        fun getCommentsByCurhatId(curhatId: String, lim: Long? = null, callback: (List<CurhatComment>?) -> Unit) {
             val db = FirebaseFirestore.getInstance()
-            db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId)
-                .orderBy("createdAt").get()
-                .addOnSuccessListener {
-                    val comments = mutableListOf<CurhatComment>()
-                    for (doc in it.documents) {
-                        val comment = doc.toObject(CurhatComment::class.java)
-                        comments.add(comment!!)
+            if (lim == null) {
+                db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId)
+                    .orderBy("createdAt").get()
+                    .addOnSuccessListener {
+                        val comments = mutableListOf<CurhatComment>()
+                        for (doc in it.documents) {
+                            val comment = doc.toObject(CurhatComment::class.java)
+                            comments.add(comment!!)
+                        }
+                        callback(comments)
                     }
-                    callback(comments)
-                }
+            } else {
+                db.collection(COLLECTION_NAME).whereEqualTo("curhatId", curhatId).limit(lim)
+                    .orderBy("createdAt").get()
+                    .addOnSuccessListener {
+                        val comments = mutableListOf<CurhatComment>()
+                        for (doc in it.documents) {
+                            val comment = doc.toObject(CurhatComment::class.java)
+                            comments.add(comment!!)
+                        }
+                        callback(comments)
+                    }
+            }
         }
         fun getComment(commentId: String): Task<DocumentSnapshot> {
             val db=FirebaseFirestore.getInstance()
             return db.collection(COLLECTION_NAME).document(commentId).get()
         }
-
-
-
-
         fun deleteById(curhatId: String, commentId: String, callback: () -> Unit)  {
             val db = FirebaseFirestore.getInstance()
 

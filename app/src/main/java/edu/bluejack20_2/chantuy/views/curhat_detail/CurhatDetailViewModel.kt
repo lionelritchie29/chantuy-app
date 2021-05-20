@@ -29,8 +29,7 @@ class CurhatDetailViewModel: ViewModel() {
     var curhat: Curhat = Curhat()
     private var id = ""
 
-    private var fromIndex = 0
-    private var toIndex = 5
+    var lim: Long = 5
 
     fun getCurhatDetail(intent: Intent?) {
         _isFetchingData.value = true
@@ -40,20 +39,20 @@ class CurhatDetailViewModel: ViewModel() {
 
         CurhatRepository.getById(id) {
             curhat = it
-            CurhatCommentRepository.getCommentsByCurhatId(id) { comments ->
-                if (comments != null) {
-                    allCurhats = comments
-                    val toBeSliced = comments
-                    if (comments.isNotEmpty() && comments.size >= 5) {
-                        _comments.value = toBeSliced.subList(fromIndex, toIndex)
-                    } else {
-                        _comments.value = comments
-                    }
-                } else {
-                    _comments.value = listOf()
-                }
+            getComments() {
                 _isFetchingData.value = false
             }
+        }
+    }
+
+    fun getComments(callback: () -> Unit) {
+        CurhatCommentRepository.getCommentsByCurhatId(id, lim) { comments ->
+            if (comments != null) {
+                _comments.value = comments
+            } else {
+                _comments.value = listOf()
+            }
+            callback()
         }
     }
 
@@ -67,9 +66,6 @@ class CurhatDetailViewModel: ViewModel() {
         val currentUserId = UserRepository.getCurrentUserId()
         CurhatCommentRepository.addComment(id, currentUserId, content.text.toString()) {newCommentId ->
             content.text = ""
-            if ((toIndex + 1) % 5 != 1) {
-                toIndex += 1
-            }
             Toast.makeText(content.context, content.context.getString(R.string.toast_comment_s), Toast.LENGTH_SHORT).show()
             getCurhatDetail(null)
             if(currentUserId!=curhat.user)NotificationRepository.addNotif(newCommentId, curhat.user) {
@@ -79,21 +75,11 @@ class CurhatDetailViewModel: ViewModel() {
     }
 
     fun showMoreComments() {
-        fromIndex += 5
-        toIndex = getToIndex(toIndex)
-
-        _comments.value = allCurhats.subList(fromIndex, toIndex)
-    }
-
-    private fun getToIndex(idx: Int): Int {
-        if ((idx + 5) >= allCurhats.size) {
-            return allCurhats.size
+        lim = lim + 5
+        _isFetchingData.value = true
+        getComments {
+            _isFetchingData.value = false
         }
-        return idx + 5
-    }
-
-    fun shouldShowMore(): Boolean {
-        return toIndex != allCurhats.size && _comments.value!!.isNotEmpty() && _comments.value!!.size >= 5
     }
 }
 
