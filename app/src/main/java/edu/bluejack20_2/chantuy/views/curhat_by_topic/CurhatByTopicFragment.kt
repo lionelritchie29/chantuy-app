@@ -21,11 +21,13 @@ import edu.bluejack20_2.chantuy.databinding.FragmentCurhatByTopicBinding
 import edu.bluejack20_2.chantuy.utils.InputUtil
 import edu.bluejack20_2.chantuy.views.CurhatAdapter
 import edu.bluejack20_2.chantuy.views.CurhatTopicChipAdapter
+import edu.bluejack20_2.chantuy.views.TopicAutoCompleteAdapter
 
 class CurhatByTopicFragment : Fragment() {
 
     private lateinit var binding: FragmentCurhatByTopicBinding
     private var isScrollingUp = false
+    private lateinit var viewModel: CurhatByTopicViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +36,8 @@ class CurhatByTopicFragment : Fragment() {
 
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_curhat_by_topic, container, false)
-        val viewModel = CurhatByTopicViewModel(requireActivity().application)
+        viewModel = CurhatByTopicViewModel(requireActivity().application)
 
-//        val topicAdapter = setTopicChipRecyclerView(view)
         val curhatAdapter = setFilteredCurhatRecyclerView()
         viewModel.setTopicAutocomplete(binding.filterTopicAutoComplete)
 
@@ -51,15 +52,13 @@ class CurhatByTopicFragment : Fragment() {
             isScrollingUp = false
         }
 
-        binding.swipeContainer.setOnRefreshListener(object: SwipeRefreshLayout.OnRefreshListener {
-            override fun onRefresh() {
-                binding.filterTopicCard.startAnimation(AnimationUtils.loadAnimation(
-                    binding.root.context, R.anim.trans_down
-                ))
-                isScrollingUp = true
-                binding.swipeContainer.isRefreshing = false
-            }
-        })
+        binding.swipeContainer.setOnRefreshListener {
+            binding.filterTopicCard.startAnimation(AnimationUtils.loadAnimation(
+                binding.root.context, R.anim.trans_down
+            ))
+            isScrollingUp = true
+            binding.swipeContainer.isRefreshing = false
+        }
 
         viewModel.isSizeZero.observe(viewLifecycleOwner, Observer { isZero ->
             if (isZero) {
@@ -112,5 +111,12 @@ class CurhatByTopicFragment : Fragment() {
         })
 
         return adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (viewModel != null) {
+            viewModel.updateTopicList(binding.filterTopicAutoComplete)
+        }
     }
 }
