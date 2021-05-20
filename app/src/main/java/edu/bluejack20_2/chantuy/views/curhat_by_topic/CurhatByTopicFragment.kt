@@ -27,6 +27,7 @@ class CurhatByTopicFragment : Fragment() {
 
     private lateinit var binding: FragmentCurhatByTopicBinding
     private var isScrollingUp = false
+    private lateinit var viewModel: CurhatByTopicViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +36,8 @@ class CurhatByTopicFragment : Fragment() {
 
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_curhat_by_topic, container, false)
-        val viewModel = CurhatByTopicViewModel(requireActivity().application)
+        viewModel = CurhatByTopicViewModel(requireActivity().application)
 
-//        val topicAdapter = setTopicChipRecyclerView(view)
         val curhatAdapter = setFilteredCurhatRecyclerView()
         viewModel.setTopicAutocomplete(binding.filterTopicAutoComplete)
 
@@ -115,6 +115,8 @@ class CurhatByTopicFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Toast.makeText(context, "On Resume", Toast.LENGTH_SHORT).show()
+        if (viewModel != null) {
+            viewModel.updateTopicList(binding.filterTopicAutoComplete)
+        }
     }
 }

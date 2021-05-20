@@ -54,6 +54,19 @@ class CurhatByTopicViewModel
         }
     }
 
+    fun updateTopicList(view: AutoCompleteTextView) {
+            CurhatTopicRepository.getAll {
+                _topics = it
+                topicsString.clear()
+                for (topic in it) {
+                    topicsString.add(topic.name)
+                }
+                view.setAdapter(null)
+                val adapter = TopicAutoCompleteAdapter(view.context, android.R.layout.simple_list_item_1, topicsString)
+                view.setAdapter(adapter)
+            }
+    }
+
     fun OnFilter(topicName: String) {
         val index = topicsString.indexOf(topicName)
         _isSizeZero.value = false
