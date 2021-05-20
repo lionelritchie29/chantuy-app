@@ -12,6 +12,7 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.fragment.app.Fragment
@@ -63,16 +64,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        createNotificationChannel()
         setViewPager()
         setViewPager()
         setBottomMenuItemListener()
 
         setBottomMenuItemListener()
-        testPushNotification()
-        setNotification()
+
+//        createNotificationChannel()
+//        testPushNotification()
+//        setNotification()
+
         checkUser()
+        subscribe()
+    }
 
+    private fun subscribe() {
+        FirebaseMessaging.getInstance().subscribeToTopic("reminder-topic")
+            .addOnCompleteListener { task ->
+                Toast.makeText(this, "Subscribed!", Toast.LENGTH_SHORT).show()
+                if (!task.isSuccessful) {
+                    Toast.makeText(this, "Failed to Subscribe!", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
 

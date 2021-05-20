@@ -44,7 +44,14 @@
         <activity android:name=".views.curhat_detail.CurhatDetailActivity" android:label="@string/title_activity_curhat_detail"/>
         <activity android:name=".MainActivity" />
 
-        <receiver android:name=".services.NotificationService" />
+        <service
+            android:name=".services.MyFirebaseMessagingServices"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <receiver android:name=".services.NotificationBroadcastReceiver" />
     </application>
 
 </manifest>
