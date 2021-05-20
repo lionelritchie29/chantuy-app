@@ -1,5 +1,9 @@
+
 package edu.bluejack20_2.chantuy.submitData
 
+
+
+import edu.bluejack20_2.chantuy.submitData.SubmitDataActivityViewModel
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
@@ -34,7 +38,7 @@ class SubmitDataActivity : AppCompatActivity() {
     var day: Int = cldr.get(Calendar.DAY_OF_MONTH)
     var month: Int = cldr.get(Calendar.MONTH)
     var year: Int = cldr.get(Calendar.YEAR)
-
+    var hasPicked: Boolean=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +49,7 @@ class SubmitDataActivity : AppCompatActivity() {
         val submitButton: Button = this.findViewById(R.id.register_submit_btn)
         val genderSpinner: Spinner = this.findViewById(R.id.register_spinner_gender)
         imageView= this.findViewById(R.id.user_profile_image_view)
+
 
 
         imageView.setOnClickListener{
@@ -125,6 +130,7 @@ class SubmitDataActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
+
 //                try {
 //                    val storageReference=FirebaseStorage.getInstance().getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/chantuy-app.appspot.com/o/imageUploads%2FYWlGIoLwwnhR1hUDtP2wilrMERu1?alt=media&token=186b600a-8b65-48da-8462-e6e48131a448")
 //
@@ -133,12 +139,14 @@ class SubmitDataActivity : AppCompatActivity() {
 //                }catch(e: Exception) {
 //                }
                 viewModel.genderString = options.get(position)
+                if(hasPicked)return
                 if (viewModel.genderString == "Male") {
+
                     viewModel.imageUrl =
                         "https://firebasestorage.googleapis.com/v0/b/chantuy-app.appspot.com/o/imageUploads%2Fdefault_male.png?alt=media&token=9ef4eebb-ba41-4bb3-9f90-fb33218cffe1"
 
                 }
-                else {
+                else{
                     viewModel.imageUrl =
                         "https://firebasestorage.googleapis.com/v0/b/chantuy-app.appspot.com/o/imageUploads%2Fdefault_female.png?alt=media&token=3d6d2148-b6ff-4ae6-9a4c-927362739300"
 
@@ -163,9 +171,11 @@ class SubmitDataActivity : AppCompatActivity() {
 
                 val bitmap = MediaStore.Images.Media.getBitmap(this?.contentResolver, filePath)
                 imageView.setImageBitmap(bitmap)
+
             } catch (e: IOException) {
                 e.printStackTrace()
             }
+            hasPicked=true
             uploadImage()
         }
     }

@@ -31,6 +31,7 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import edu.bluejack20_2.chantuy.GlideApp
 import edu.bluejack20_2.chantuy.R
+import edu.bluejack20_2.chantuy.models.User
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.utils.CurhatUtil
 import edu.bluejack20_2.chantuy.utils.UserUtil
@@ -99,19 +100,22 @@ class UserProfileFragment : Fragment() {
 
         val nameView : TextView = rootView.findViewById(R.id.user_profile_name)
         val emailView : TextView = rootView.findViewById(R.id.user_profile_email)
+        val genderView : TextView = rootView.findViewById(R.id.up_gender)
+        val ageView : TextView = rootView.findViewById(R.id.up_age)
         val joinedAtView: TextView = rootView.findViewById(R.id.user_profile_joined_at)
         val noCurhatPosted: TextView = rootView.findViewById(R.id.profile_no_curhat_posted)
         val noReplyPosted: TextView = rootView.findViewById(R.id.profile_no_reply_posted)
+        
 
 
-
-        UserRepository.getCurrentUser {
-            nameView.text = it?.name
-            emailView.text = it?.email
-            joinedAtView.text = UserUtil.formatDate(it?.joinedAt)
+        UserRepository.getUserById(FirebaseAuth.getInstance().currentUser.uid).addSnapshotListener { value, error ->
+            val user=value?.toObject(User::class.java)
+            nameView.text=user?.name
+            emailView.text=user?.email
+            genderView.text=user?.gender
+            ageView.text=AgeCalculatorUtil.calculateAge(user?.dateOfBirth?.toDate()!!).toString()
 
         }
-
         imageView.setOnClickListener{
             launchGallery()
         }
@@ -119,7 +123,6 @@ class UserProfileFragment : Fragment() {
         val curhatCountView : TextView = rootView.findViewById(R.id.total_post)
         val totalPostObserver = Observer<Int>{totalPostCount->
                 curhatCountView.setText(""+ totalPostCount + " "+ getText(R.string.curhats_posted))
-
         }
 
         val replyCountView : TextView = rootView.findViewById(R.id.total_reply)
@@ -138,6 +141,7 @@ class UserProfileFragment : Fragment() {
             val intent = Intent(this.activity, UpdatePasswordActivity::class.java)
             startActivity(intent)
         }
+
         val updateButton: Button = rootView.findViewById(R.id.user_uprof_btn)
 
         updateButton.setOnClickListener {

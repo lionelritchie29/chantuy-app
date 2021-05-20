@@ -25,6 +25,7 @@ class NotificationViewModel () {
 
     var limit: Long = 10
     var listSize: Int = 0;
+    var currSize:Int=0
 
     init {
         NotificationRepository.getNotifCount {
@@ -39,6 +40,7 @@ class NotificationViewModel () {
         val currentUserId = UserRepository.getCurrentUserId()
         NotificationRepository.getNotif(currentUserId, limit) {
             nList.value = it
+            currSize+=it.size
         }
 
     }

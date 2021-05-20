@@ -42,7 +42,7 @@ class RegisterActivity : AppCompatActivity() {
             val userNameText: EditText = findViewById(R.id.register_user_name)
             val emailText: EditText =findViewById(R.id.register_email)
             val passwordText: EditText =findViewById(R.id.register_password)
-            val confirmPasswordText: EditText =findViewById(R.id.register_password)
+            val confirmPasswordText: EditText =findViewById(R.id.register_confirm_password)
             val errorText: TextView =findViewById(R.id.register_error)
             val userName=userNameText.text.toString()
             val email=emailText.text.toString()
@@ -93,7 +93,6 @@ class RegisterActivity : AppCompatActivity() {
                     }
                     return@addOnSuccessListener
                 }
-
                 errorText.text=getString(R.string.validate_une)
             }
         }

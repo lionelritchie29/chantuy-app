@@ -179,6 +179,10 @@
     <string name="curhats_posted">curhat telah dipost</string>
     <string name="replies_posted">reply telah dipost</string>
     <string name="change_password_value">Ganti Password</string>
+    <string name="gender_lbl">Jenis kelamin: </string>
+    <string name="age_lbl">Umur: </string>
 
+    <string name="gender">jenis kelamin</string>
+    <string name="age">umur</string>
 </resources>
 

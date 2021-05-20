@@ -163,6 +163,10 @@
     <string name="curhats_posted">curhat(s) posted</string>
     <string name="replies_posted">reply(s) posted</string>
     <string name="change_password_value">Change Password</string>
+    <string name="gender_lbl">Gender: </string>
+    <string name="age_lbl">Age: </string>
+    <string name="gender">gender</string>
+    <string name="age">age</string>
 
     <string name="edited">(edited)</string>
 

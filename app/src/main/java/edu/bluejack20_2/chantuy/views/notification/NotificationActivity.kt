@@ -31,7 +31,7 @@ class NotificationActivity : AppCompatActivity() {
 
         val btn: Button = findViewById(R.id.mn_btn)
         viewModel.nList.observe(this, Observer {
-            if (it.size >= viewModel.listSize-1) {
+            if (viewModel.limit >= viewModel.listSize-1) {
                 btn.visibility = View.GONE
             } else {
                 btn.visibility = View.VISIBLE
