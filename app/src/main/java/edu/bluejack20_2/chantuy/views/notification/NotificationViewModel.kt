@@ -23,7 +23,7 @@ class NotificationViewModel () {
         value = mutableListOf()
     }
 
-    var limit: Long = 5
+    var limit: Long = 10
     var listSize: Int = 0;
 
     init {
@@ -32,6 +32,7 @@ class NotificationViewModel () {
         }
 
         getData()
+
     }
 
     fun getData(){
@@ -39,6 +40,7 @@ class NotificationViewModel () {
         NotificationRepository.getNotif(currentUserId, limit) {
             nList.value = it
         }
+
     }
 
 

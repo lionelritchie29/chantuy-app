@@ -28,7 +28,7 @@ class SearchCurhatViewModel {
 
             val tempResult= mutableListOf<Curhat>()
             for (result in results){
-                if(result.content.toLowerCase().contains(searchString)){
+                if(result.content.toLowerCase().contains(searchString.toLowerCase())){
                     tempResult?.add(result)
                 }
             }

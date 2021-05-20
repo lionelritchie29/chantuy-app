@@ -48,14 +48,14 @@
     <string name="find_more_topic">Temukan topik lain</string>
     <string name="is_anonymous">Anonymous</string>
     <string name="curhat_id_label">Curhat ID</string>
-    <string name="recent_curhat_text">Curhat(s) Terbaru</string>
+    <string name="recent_curhat_text">Curhat Terbaru</string>
     <string name="submit_data_text">Kumpul Data</string>
     <string name="delete_account">Hapus Account</string>
     <string name="send_feedback_btn" >Kirim Feedback</string>
     <string name="update">Perbarui</string>
     <string name="delete">Hapus</string>
     <string name="update_curhat">Perbarui Curhat</string>
-    <string name="recent_reply_text">Balasan(s) Terbaru</string>
+    <string name="recent_reply_text">Balasan Terbaru</string>
     <string name="search_topic">Cari Topik</string>
     <string name="search_hint">Cari Curhat</string>
     <string name="cancel">Batalkan</string>

@@ -80,10 +80,10 @@ class LoginActivity : AppCompatActivity() {
                     return@addOnSuccessListener
                 }
                 val itUser=its[0]
-//                if(passwordText.text.toString()!=itUser.password){
-//                    errorText.text="Wrong Password!"
-//                    return@addOnSuccessListener
-//                }
+                if(passwordText.text.toString()!=itUser.password){
+                    errorText.text="Wrong Password!"
+                    return@addOnSuccessListener
+                }
                 if(passwordString==null)passwordString=""
 
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(emailText.text.toString(),passwordString).addOnCompleteListener(this) {it->

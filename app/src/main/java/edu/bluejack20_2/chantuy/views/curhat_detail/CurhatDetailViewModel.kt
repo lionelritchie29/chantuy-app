@@ -72,7 +72,7 @@ class CurhatDetailViewModel: ViewModel() {
             }
             Toast.makeText(content.context, content.context.getString(R.string.toast_comment_s), Toast.LENGTH_SHORT).show()
             getCurhatDetail(null)
-            NotificationRepository.addNotif(newCommentId, curhat.user) {
+            if(currentUserId!=curhat.user)NotificationRepository.addNotif(newCommentId, curhat.user) {
 
             }
         }
