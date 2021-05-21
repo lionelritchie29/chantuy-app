@@ -44,7 +44,23 @@
         <activity android:name=".views.curhat_detail.CurhatDetailActivity" android:label="@string/title_activity_curhat_detail"/>
         <activity android:name=".MainActivity" />
 
-        <receiver android:name=".services.NotificationService" />
+        <service
+            android:name=".services.MyFirebaseMessagingServices"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <receiver android:name=".services.NotificationBroadcastReceiver" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/chantuy_logo" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/primary_blue" />
     </application>
 
 </manifest>
