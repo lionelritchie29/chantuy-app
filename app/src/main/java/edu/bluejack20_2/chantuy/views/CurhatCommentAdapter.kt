@@ -115,7 +115,7 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
         private fun setUpdateEventListener(comment: CurhatComment) {
             updateBtn.setOnClickListener {
                 if (editContent.text.isEmpty()) {
-                    editContent.error = "Content must not be empty"
+                    editContent.error = editContent.context.getString(R.string.content_empty_error)
                 } else {
                     CurhatCommentRepository.updateComment(
                         comment.commentId, editContent.text.toString()
@@ -225,7 +225,7 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
         fun bind(curhat: Curhat) {
             binding.curhatDetailContent.text = curhat.content
             binding.curhatDetailDate.text = CurhatViewUtil.formatDate(curhat.createdAt,binding.root.context)
-            binding.curhatDetailCommentCount.text = curhat.commentCount.toString() + binding.root.context.getString(R.string.comment)
+            binding.curhatDetailCommentCount.text = curhat.commentCount.toString() + " " + binding.root.context.getString(R.string.comment)
             binding.curhatDetailLikeCount.text = curhat.likeCount.toString()
             binding.curhatDetailDislikeCount.text = curhat.dislikeCount.toString()
 

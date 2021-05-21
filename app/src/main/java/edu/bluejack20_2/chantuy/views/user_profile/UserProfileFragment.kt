@@ -115,7 +115,7 @@ class UserProfileFragment : Fragment() {
                 val user=value?.toObject(User::class.java)
                 nameView.text=user?.name
                 emailView.text=user?.email
-                joinedAtView.text=CurhatViewUtil.formatDate(user?.joinedAt,requireContext())
+                joinedAtView.text=CurhatUtil.formatDate(user?.joinedAt,requireContext())
                 genderView.text= user?.gender
                 ageView.text ="("+ AgeCalculatorUtil.calculateAge(user?.dateOfBirth?.toDate()!!).toString()+" "+getString(R.string.year)
 

@@ -191,6 +191,7 @@
     <string name="ausure">Are you sure ?</string>
     <string name="female">female</string>
     <string name="male">male</string>
-
-
+    <string name="default_topic">leave the field blank to use current topic</string>
+    <string name="current">current</string>
+    <string name="no_notification">No notification</string>
 </resources>
