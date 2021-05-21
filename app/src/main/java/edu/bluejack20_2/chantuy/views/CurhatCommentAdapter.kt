@@ -310,12 +310,12 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
 
         private fun onDelete(curhat: Curhat): Boolean {
             val builder = AlertDialog.Builder(binding.root.context)
-            builder.setMessage("Are you sure ?")
+            builder.setMessage(binding.root.context.getString(R.string.ausure))
                 .setCancelable(false)
-                .setPositiveButton("Yes") { dialog, id ->
+                .setPositiveButton(binding.root.context.getString(R.string.yes)) { dialog, id ->
                     deleteCurhatAndComments(curhat)
                 }
-                .setNegativeButton("No") { dialog, id ->
+                .setNegativeButton(binding.root.context.getString(R.string.no)) { dialog, id ->
                     dialog.dismiss()
                 }
             val alert = builder.create()

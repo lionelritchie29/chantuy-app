@@ -42,5 +42,21 @@ class FeedbackRepository {
             db.collection(COLLECTION_NAME).document(id).update("status", "SOLVED")
                 .addOnSuccessListener { callback() }
         }
+        fun deleteUser(id: String) {
+            val db = FirebaseFirestore.getInstance()
+            val collection=db.collection(COLLECTION_NAME)
+            val feedbacks=db.collection(COLLECTION_NAME).whereEqualTo("userId",id)
+
+
+
+            feedbacks.get().addOnSuccessListener { it ->
+                for (a in it){
+                    NotificationRepository.deleteByCommentId(a.id){}
+                    collection.document(a.id).delete()
+                }
+            }
+
+        }
+
     }
 }

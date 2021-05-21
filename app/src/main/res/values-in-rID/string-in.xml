@@ -150,7 +150,7 @@
 
 
     <string name="toast_fsd">Feedback berhasil di hapus!</string>
-    <string name="toast_comment_s">Comment berhasil ditambahkan!</string>
+    <string name="toast_comment_s">Komen berhasil ditambahkan!</string>
     <string name="toast_feedback_s">Feedback berhasil ditambahkan!</string>
     <string name="toast_cds">Comment berhasil dihapus</string>
     <string name="toast_pus">Profile berhasil diupdate!</string>
@@ -177,7 +177,7 @@
 
     <string name="set_password">Set Kata Sandi</string>
     <string name="curhats_posted">curhat telah dipost</string>
-    <string name="replies_posted">reply telah dipost</string>
+    <string name="replies_posted">balasan telah dipost</string>
     <string name="change_password_value">Ganti Password</string>
     <string name="gender_lbl">Jenis kelamin: </string>
     <string name="age_lbl">Umur: </string>
@@ -204,7 +204,9 @@
     <string name="year"> tahun)</string>
     <string name="at">pada</string>
     <string name="comment">komen</string>
-
+    <string name="ausure">Apakah anda yakin ?</string>
+    <string name="female">perempuan</string>
+    <string name="male">perempuan</string>
 
 
 </resources>

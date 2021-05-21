@@ -27,6 +27,7 @@ import edu.bluejack20_2.chantuy.databinding.ActivitySettingsBinding
 import edu.bluejack20_2.chantuy.models.GLOBALS
 import edu.bluejack20_2.chantuy.repositories.CurhatCommentRepository
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
+import edu.bluejack20_2.chantuy.repositories.FeedbackRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.services.NotificationService
 import edu.bluejack20_2.chantuy.utils.AuthUtil
@@ -116,7 +117,6 @@ class SettingsActivity : AppCompatActivity() {
 
         UserRepository.getUserById(userId).delete()
 
-
         //delete user curhat
         CurhatRepository.deleteUser(userId)
 
@@ -125,6 +125,8 @@ class SettingsActivity : AppCompatActivity() {
         //delete user comment
         CurhatCommentRepository.deleteUser(userId)
 
+        //delete user feedback
+        FeedbackRepository.deleteUser(userId)
 
         Toast.makeText(this, getString(R.string.success_dela), Toast.LENGTH_SHORT).show()
 
@@ -148,7 +150,6 @@ class SettingsActivity : AppCompatActivity() {
                     if(task.isSuccessful){
                         finalize(userId)
                     }else{
-                        Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
                         AuthUtil.reAuthGoogle(this).addOnCompleteListener() { task->
                             if(task.isSuccessful){
                                 FirebaseAuth.getInstance().currentUser.delete().addOnCompleteListener { it->

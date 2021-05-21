@@ -56,6 +56,8 @@ class SubmitDataActivity : AppCompatActivity() {
             launchGallery()
         }
         viewModel.dob=Timestamp.now()
+        dobButton.setText(viewModel.dob.toDate().date.toString() + "/" + (viewModel.dob.toDate().month + 1) + "/" + viewModel.dob.toDate().year)
+
         dobButton.setOnClickListener {
             picker = DatePickerDialog(
                 this,
@@ -89,6 +91,7 @@ class SubmitDataActivity : AppCompatActivity() {
         setGenderSpinner(genderSpinner, options)
 
         submitButton.setOnClickListener{
+
             viewModel.dob= Timestamp(Date(year-1900,month,day,0,0))
 
             UserRepository.userSubmitData(viewModel.imageUrl,viewModel.genderString,viewModel.dob)
