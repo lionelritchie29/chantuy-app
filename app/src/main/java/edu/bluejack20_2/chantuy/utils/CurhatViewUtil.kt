@@ -240,5 +240,10 @@ class CurhatViewUtil {
             dialog.setTitle(context.getString(R.string.aditional_info))
             dialog.show()
         }
+
+        fun trim(content: String): String {
+            if (content.length > 80) return "${content.substring(0, 75)}..."
+            return content
+        }
     }
 }

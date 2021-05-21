@@ -50,7 +50,7 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
     class ViewHolder(var binding: CurhatCardItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(curhat: Curhat) {
-            binding.curhatCardContent.text = curhat.content
+            binding.curhatCardContent.text = CurhatViewUtil.trim(curhat.content)
             binding.curhatCardDate.text = CurhatViewUtil.formatDate(curhat.createdAt,binding.root.context)
             CurhatRepository.incrementViewCount(curhat.id)
             binding.curhatCardLikeCount.text = curhat.likeCount.toString()

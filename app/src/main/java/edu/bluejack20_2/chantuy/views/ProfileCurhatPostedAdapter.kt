@@ -15,7 +15,7 @@ class ProfileCurhatPostedAdapter(): ListAdapter<Curhat, ProfileCurhatPostedAdapt
 
     class ViewHolder(val binding: ProfilePostedCurhatCardItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(curhat: Curhat) {
-            binding.curhatCardContent.text = curhat.content
+            binding.curhatCardContent.text = CurhatViewUtil.trim(curhat.content)
             binding.curhatCardDate.text = CurhatViewUtil.formatDate(curhat.createdAt,binding.root.context)
             binding.curhatCardLikeCount.text = curhat.likeCount.toString()
             binding.curhatCardDislikeCount.text = curhat.dislikeCount.toString()
