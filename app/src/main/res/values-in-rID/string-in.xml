@@ -203,9 +203,9 @@
     <string name="no_feedback">Tidak ada feedback</string>
     <string name="year"> tahun)</string>
     <string name="at">pada</string>
-    <string name="comment">komen</string>
-
-
-
+    <string name="comment">balasan</string>
+    <string name="default_topic">biarkan kosong untuk menggunakan topik yang dipakai sekarang</string>
+    <string name="current">sekarang</string>
+    <string name="no_notification">Tidak ada notifikasi</string>
 </resources>
 

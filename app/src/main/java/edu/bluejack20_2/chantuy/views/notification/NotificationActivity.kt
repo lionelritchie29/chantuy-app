@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,8 +30,15 @@ class NotificationActivity : AppCompatActivity() {
         notificationRV.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         notificationRV.adapter = notificationAdapter
 
+        val noNotifTv: TextView = findViewById(R.id.no_notification_tv)
         val btn: Button = findViewById(R.id.mn_btn)
         viewModel.nList.observe(this, Observer {
+            if (it.isEmpty()) {
+                noNotifTv.visibility = View.VISIBLE
+            } else {
+                noNotifTv.visibility = View.GONE
+            }
+
             if (viewModel.limit >= viewModel.listSize-1) {
                 btn.visibility = View.GONE
             } else {

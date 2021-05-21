@@ -115,7 +115,7 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
         private fun setUpdateEventListener(comment: CurhatComment) {
             updateBtn.setOnClickListener {
                 if (editContent.text.isEmpty()) {
-                    editContent.error = "Content must not be empty"
+                    editContent.error = editContent.context.getString(R.string.content_empty_error)
                 } else {
                     CurhatCommentRepository.updateComment(
                         comment.commentId, editContent.text.toString()

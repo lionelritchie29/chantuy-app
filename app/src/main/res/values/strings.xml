@@ -188,5 +188,7 @@
     <string name="year"> year(s))</string>
     <string name="at">at</string>
     <string name="comment">comment(s)</string>
-
+    <string name="default_topic">leave the field blank to use current topic</string>
+    <string name="current">current</string>
+    <string name="no_notification">No notification</string>
 </resources>

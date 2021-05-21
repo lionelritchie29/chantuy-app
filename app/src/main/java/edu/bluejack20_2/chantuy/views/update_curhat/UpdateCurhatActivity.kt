@@ -1,5 +1,6 @@
 package edu.bluejack20_2.chantuy.views.update_curhat
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,6 +9,7 @@ import androidx.lifecycle.Observer
 import edu.bluejack20_2.chantuy.R
 
 class UpdateCurhatActivity : AppCompatActivity() {
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_curhat)
@@ -27,7 +29,7 @@ class UpdateCurhatActivity : AppCompatActivity() {
             curhatIdTv.text = it.id
             contentTv.setText(it.content)
             currentTopicTv.text =
-                "current: ${viewModel.currentTopicName} (leave the field blank to use current topic)"
+                "${currentTopicTv.context.getString(R.string.current)}: ${viewModel.currentTopicName} (${currentTopicTv.context.getString(R.string.default_topic)})"
             anonymousCb.isChecked = it.isAnonymous
         })
 
