@@ -26,7 +26,6 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
     }
 
     private fun scheduleAlarm(
-        scheduledTimeString: String?,
         title: String?,
         message: String?
     ) {
@@ -39,17 +38,13 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
             }
 
         // Parse Schedule time
-        val scheduledTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-            .parse(scheduledTimeString!!)
 
-        scheduledTime?.let {
-            alarmMgr.setRepeating(
-                AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                it.time + (60 * 100),
-                AlarmManager.INTERVAL_FIFTEEN_MINUTES,
-                alarmIntent
-            )
-        }
+        alarmMgr.setRepeating(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            System.currentTimeMillis(),
+            60 * 1000,
+            alarmIntent
+        )
     }
 
     private fun showNotification(title: String, message: String) {

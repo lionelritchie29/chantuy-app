@@ -225,7 +225,7 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
         fun bind(curhat: Curhat) {
             binding.curhatDetailContent.text = curhat.content
             binding.curhatDetailDate.text = CurhatViewUtil.formatDate(curhat.createdAt,binding.root.context)
-            binding.curhatDetailCommentCount.text = curhat.commentCount.toString() + binding.root.context.getString(R.string.comment)
+            binding.curhatDetailCommentCount.text = curhat.commentCount.toString() + " " + binding.root.context.getString(R.string.comment)
             binding.curhatDetailLikeCount.text = curhat.likeCount.toString()
             binding.curhatDetailDislikeCount.text = curhat.dislikeCount.toString()
 
