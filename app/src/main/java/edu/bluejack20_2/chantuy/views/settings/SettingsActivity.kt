@@ -46,6 +46,23 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings)
+        UserRepository.getCurrentUser {
+
+            if (it?.isAdmin!!) {
+                binding.viewFeedbackBtn.visibility = View.VISIBLE
+                binding.sendFeedbackBtn.visibility = View.GONE
+            } else {
+                binding.viewFeedbackBtn.visibility = View.GONE
+                binding.sendFeedbackBtn.visibility = View.VISIBLE
+            }
+            pass=it.password!!
+            AuthUtil.reAuthGoogle(this).addOnCompleteListener{task ->
+                if(!task.isSuccessful){
+                    AuthUtil.reAuthEmail(pass)
+                }
+            }
+        }
+
         appSettingPreferences = getSharedPreferences(GLOBALS.SETTINGS_PREFERENCES_NAME, 0)
         sharedPrefEdit = appSettingPreferences.edit()
         isLarge = appSettingPreferences.getBoolean(GLOBALS.SETTINGS_LARGE_KEY, false)
@@ -76,17 +93,7 @@ class SettingsActivity : AppCompatActivity() {
         setSendFeedbackListener()
         setDeleteAccountListener()
 
-        UserRepository.getCurrentUser {
 
-            if (it?.isAdmin!!) {
-                binding.viewFeedbackBtn.visibility = View.VISIBLE
-                binding.sendFeedbackBtn.visibility = View.GONE
-            } else {
-                binding.viewFeedbackBtn.visibility = View.GONE
-                binding.sendFeedbackBtn.visibility = View.VISIBLE
-            }
-            pass=it.password!!
-        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -138,7 +145,6 @@ class SettingsActivity : AppCompatActivity() {
     }
     private fun setDeleteAccountListener() {
         binding.deleteAccountBtn.setOnClickListener {
-
             AlertDialog.Builder(this).setMessage(
                  getString(R.string.confirm_delete_account)).setPositiveButton(android.R.string.yes
             ) { _, _ ->
@@ -168,7 +174,6 @@ class SettingsActivity : AppCompatActivity() {
                                                 finalize(userId)
                                             }
                                             else{
-
                                                 Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
                                             }
                                         }

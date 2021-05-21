@@ -154,7 +154,7 @@
     <string name="validate_une">This email is already taken</string>
     <string name="validate_uu">User not found!</string>
     <string name="success_dela">Account has been succesfully deleted</string>
-    <string name="fail_dela">Delete account failed, try relogging in!</string>
+    <string name="fail_dela">Delete account failed, try again!</string>
     <string name="here">here</string>
     <string name="dont_have_acc">Don\'t have an account? Register</string>
 
@@ -170,7 +170,7 @@
 
     <string name="edited">(edited)</string>
     <string name="date">date</string>
-    <string name="err_relog">An error has occured, try relogging in!</string>
+    <string name="err_relog">An error has occured, try again!</string>
     <string name="login_google">Log in with Google</string>
     <string name="register_google">Register with Google</string>
     <string name="wrong_old">Wrong old password</string>
@@ -194,4 +194,7 @@
     <string name="default_topic">leave the field blank to use current topic</string>
     <string name="current">current</string>
     <string name="no_notification">No notification</string>
+    <string name="sd_validate">Date of birth should be filled</string>
+
+
 </resources>
