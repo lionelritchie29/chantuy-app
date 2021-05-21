@@ -21,16 +21,8 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
         // get message
         val title = remoteMessage.data["title"]
         val message = remoteMessage.data["message"]
-        val isScheduled = remoteMessage.data["isScheduled"] == "true"
 
-        if (isScheduled) {
-            // This is Scheduled Notification, Schedule it
-            val scheduledTime = remoteMessage.data["scheduledTime"]
-            scheduleAlarm(scheduledTime, title, message)
-        } else {
-            // This is not scheduled notification, show it now
-            showNotification(title!!, message!!)
-        }
+        showNotification(title!!, message!!)
     }
 
     private fun scheduleAlarm(
@@ -51,7 +43,6 @@ class MyFirebaseMessagingServices : FirebaseMessagingService() {
             .parse(scheduledTimeString!!)
 
         scheduledTime?.let {
-            // With set(), it'll set non repeating one time alarm.
             alarmMgr.setRepeating(
                 AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 it.time + (60 * 100),
