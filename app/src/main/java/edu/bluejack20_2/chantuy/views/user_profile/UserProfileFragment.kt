@@ -111,20 +111,28 @@ class UserProfileFragment : Fragment() {
 
 
         UserRepository.getUserById(FirebaseAuth.getInstance().currentUser.uid).addSnapshotListener { value, error ->
-            val user=value?.toObject(User::class.java)
-            nameView.text=user?.name
-            emailView.text=user?.email
-            joinedAtView.text=CurhatViewUtil.formatDate(user?.joinedAt)
-            genderView.text= user?.gender
-            ageView.text = "(${ AgeCalculatorUtil.calculateAge(user?.dateOfBirth?.toDate()!!).toString() } years)"
+            try{
+                val user=value?.toObject(User::class.java)
+                nameView.text=user?.name
+                emailView.text=user?.email
+                joinedAtView.text=CurhatViewUtil.formatDate(user?.joinedAt,requireContext())
+                genderView.text= user?.gender
+                ageView.text ="("+ AgeCalculatorUtil.calculateAge(user?.dateOfBirth?.toDate()!!).toString()+" "+getString(R.string.year)
+
+            }catch (exception:Exception){
+
+
+            }
+
         }
+
         imageView.setOnClickListener{
             launchGallery()
         }
 
         val curhatCountView : TextView = rootView.findViewById(R.id.total_post)
         val totalPostObserver = Observer<Int>{totalPostCount->
-                curhatCountView.setText(""+ totalPostCount + " "+ getText(R.string.curhats_posted))
+            curhatCountView.setText(""+ totalPostCount + " "+ getText(R.string.curhats_posted))
         }
 
         val replyCountView : TextView = rootView.findViewById(R.id.total_reply)

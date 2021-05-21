@@ -185,5 +185,8 @@
     <string name="aditional_info">Additional Info</string>
     <string name="add_comment_val">Comment must not be empty</string>
     <string name="no_feedback">There is no feedback</string>
+    <string name="year"> year(s))</string>
+    <string name="at">at</string>
+    <string name="comment">comment(s)</string>
 
 </resources>

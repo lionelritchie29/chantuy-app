@@ -111,7 +111,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:text="@string/date"
-                            app:layout_constraintBottom_toBottomOf="@+id/textView5"
                             app:layout_constraintEnd_toEndOf="@+id/user_profile_email"
                             app:layout_constraintStart_toEndOf="@+id/textView5"
                             app:layout_constraintTop_toTopOf="@+id/textView5" />
@@ -158,7 +157,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/gender"
                             app:layout_constraintStart_toStartOf="@+id/textView5"
-                            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                            app:layout_constraintTop_toBottomOf="@+id/user_profile_joined_at" />
 
                         <TextView
                             android:id="@+id/up_age"

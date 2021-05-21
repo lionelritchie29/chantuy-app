@@ -21,7 +21,7 @@ class ProfileRepliedCurhatAdapter(): ListAdapter<CurhatComment, ProfileRepliedCu
             }
 
             binding.profileRepliedContent.text = comment.content
-            binding.profileRepliedDate.text = CurhatViewUtil.formatDate(comment.createdAt)
+            binding.profileRepliedDate.text = CurhatViewUtil.formatDate(comment.createdAt,binding.root.context)
 
             binding.profileRepliedViewBtn.setOnClickListener {
                 CurhatUtil.moveToCurhatDetail(comment.curhatId, binding.root.context)

@@ -51,7 +51,7 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
 
         fun bind(curhat: Curhat) {
             binding.curhatCardContent.text = curhat.content
-            binding.curhatCardDate.text = CurhatViewUtil.formatDate(curhat.createdAt)
+            binding.curhatCardDate.text = CurhatViewUtil.formatDate(curhat.createdAt,binding.root.context)
             CurhatRepository.incrementViewCount(curhat.id)
             binding.curhatCardLikeCount.text = curhat.likeCount.toString()
             binding.curhatCardDislikeCount.text = curhat.dislikeCount.toString()
@@ -66,7 +66,6 @@ class CurhatAdapter() : ListAdapter<Curhat, CurhatAdapter.ViewHolder>(CurhatDiff
             UserRepository.getUserById(curhat.user) { user ->
                 binding.curhatCardUsername.text = if (curhat.isAnonymous) "Anonymous" else user?.name
                 CurhatViewUtil.setCurhatUserImage(curhat.isAnonymous, user!!, binding.curhatCardUserimage, binding.root)
-
             }
 
             CurhatViewUtil.setReactionBtnColor(

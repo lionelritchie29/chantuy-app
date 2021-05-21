@@ -31,7 +31,7 @@ class FeedbackAdapter : ListAdapter<Feedback, FeedbackAdapter.ViewHolder>(Feedba
     class ViewHolder (val binding: FeedbackCardItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(feedback: Feedback) {
             binding.feedbackContent.text = feedback.content
-            binding.feedbackDate.text = CurhatViewUtil.formatDate(feedback.createdAt)
+            binding.feedbackDate.text = CurhatViewUtil.formatDate(feedback.createdAt,binding.root.context)
 
             UserRepository.getUserById(feedback.userId) {
                 if (it != null) {

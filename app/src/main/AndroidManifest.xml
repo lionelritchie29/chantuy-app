@@ -20,7 +20,7 @@
 
         <activity
             android:name=".views.change_password.ChangePasswordActivity"
-            android:label="@string/title_activity_change_password" />
+            android:label="Input Password" />
         <activity
             android:name=".views.register.RegisterActivity"
             android:label="@string/title_activity_register" /> <!-- <activity -->
