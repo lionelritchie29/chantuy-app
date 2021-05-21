@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import edu.bluejack20_2.chantuy.models.GLOBALS
 import edu.bluejack20_2.chantuy.repositories.UserRepository
@@ -74,13 +75,13 @@ class MainActivity : AppCompatActivity() {
         checkUser()
 
     }
-
-
-    var checkUserIntent:Intent?=null
     private fun checkUser(){
-        UserRepository.getUserById(UserRepository.getCurrentUser().uid).addSnapshotListener{
+
+        if(UserRepository.getCurrentUserQ()?.uid==null)return
+        if(!GLOBALS.CHECK_USER)return
+        UserRepository.getUserById(UserRepository.getCurrentUserQ()?.uid!!)!!.addSnapshotListener{
             user,e ->
-            if(user==null||GLOBALS.CHECK_USER==false) return@addSnapshotListener;
+            if(user==null||!GLOBALS.CHECK_USER) return@addSnapshotListener;
             else if(user?.get("password")==null){
                 val intent  = Intent(this, ChangePasswordActivity::class.java)
                 startActivity(intent)

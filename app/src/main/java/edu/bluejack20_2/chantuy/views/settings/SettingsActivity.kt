@@ -110,12 +110,16 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
     private fun finalize(userId: String) {
+
         GLOBALS.CHECK_USER=false
 
         UserRepository.getUserById(userId).delete()
 
+
         //delete user curhat
         CurhatRepository.deleteUser(userId)
+
+
 
         //delete user comment
         CurhatCommentRepository.deleteUser(userId)
@@ -124,7 +128,7 @@ class SettingsActivity : AppCompatActivity() {
         Toast.makeText(this, getString(R.string.success_dela), Toast.LENGTH_SHORT).show()
 
 
-        intent= Intent(applicationContext, LoginActivity::class.java)
+        intent= Intent(this, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         finish()
@@ -141,10 +145,9 @@ class SettingsActivity : AppCompatActivity() {
                 val userId=user.uid
                 user.delete().addOnCompleteListener {task ->
                     if(task.isSuccessful){
-
                         finalize(userId)
-
                     }else{
+                        Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
                         AuthUtil.reAuthGoogle(this).addOnCompleteListener() { task->
                             if(task.isSuccessful){
                                 FirebaseAuth.getInstance().currentUser.delete().addOnCompleteListener { it->
@@ -167,12 +170,12 @@ class SettingsActivity : AppCompatActivity() {
                                                 Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
                                             }
                                         }
-
                                     }else{
 
                                         Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
                                     }
                                 }
+                                if(pass==null)Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
                             }
 
 

@@ -21,7 +21,7 @@ class NotificationAdapter: ListAdapter<Notification, NotificationAdapter.ViewHol
     class ViewHolder(var binding: NotificationItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(notif: Notification) {
             notif.commentId?.let {
-                binding.notificationDate.text = CurhatViewUtil.formatDate(notif.createdAt)
+                binding.notificationDate.text = CurhatViewUtil.formatDate(notif.createdAt,binding.root.context)
                 CurhatCommentRepository.getComment(it).addOnSuccessListener {
                     val comment = it.toObject(CurhatComment::class.java)
                     binding.notificationComment.text = "'${comment?.content}'"

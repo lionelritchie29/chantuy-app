@@ -256,7 +256,11 @@ class UserRepository {
         }
 
         fun getCurrentUser(): FirebaseUser{
-            val user=Firebase.auth.currentUser
+            val user=FirebaseAuth.getInstance().currentUser
+            return user
+        }
+        fun getCurrentUserQ(): FirebaseUser?{
+            val user=FirebaseAuth.getInstance().currentUser
             return user
         }
 

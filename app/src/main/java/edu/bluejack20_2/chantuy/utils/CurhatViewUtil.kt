@@ -38,8 +38,11 @@ import kotlin.random.Random
 
 class CurhatViewUtil {
     companion object {
-        fun formatDate(timestamp: Timestamp?) : String {
-            val sdf = SimpleDateFormat("dd MMM yyyy 'at' HH:mm")
+        fun formatDate(timestamp: Timestamp?, context: Context) : String {
+
+
+
+            val sdf = SimpleDateFormat("dd MMM yyyy '"+context.getString(R.string.at)+"' HH:mm")
             var formatted: String = ""
 
             if (timestamp != null) {
@@ -234,10 +237,8 @@ class CurhatViewUtil {
 
             val dialog = AlertDialog.Builder(context)
             dialog.setView(dialogBinding.root)
-            dialog.setTitle("Additional Info")
-
+            dialog.setTitle(context.getString(R.string.aditional_info))
             dialog.show()
         }
     }
-
 }
