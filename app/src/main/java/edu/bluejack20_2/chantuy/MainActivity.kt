@@ -12,6 +12,7 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.fragment.app.Fragment
@@ -25,6 +26,7 @@ import edu.bluejack20_2.chantuy.models.GLOBALS
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.services.NotificationService
 import edu.bluejack20_2.chantuy.submitData.SubmitDataActivity
+import edu.bluejack20_2.chantuy.utils.FCMSubscribeUtil
 import edu.bluejack20_2.chantuy.views.change_password.ChangePasswordActivity
 import edu.bluejack20_2.chantuy.views.curhat_by_topic.CurhatByTopicFragment
 import edu.bluejack20_2.chantuy.views.hottest_curhat.HottestCurhatFragment
@@ -64,16 +66,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        createNotificationChannel()
-        setViewPager()
-        setViewPager()
-        setBottomMenuItemListener()
 
+        setViewPager()
         setBottomMenuItemListener()
-        testPushNotification()
         setNotification()
         checkUser()
-
     }
     private fun checkUser(){
 
@@ -94,37 +91,11 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name: CharSequence = "ChantuyReminderChannel"
-            val description = "Channel for Chantuy Reminder"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(GLOBALS.NOTIFICATION_CHANNEL_ID, name, importance)
-            channel.description = description
-            val notificationManager = getSystemService(NotificationManager::class.java);
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-    private fun setNotification() {
-        val intent = Intent(this, NotificationService::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        val timeAtNotificationOn = System.currentTimeMillis()
-        val tenSecondsInMillis = 1000 * 10
-
-        alarmManager.setInexactRepeating(
-            AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + tenSecondsInMillis,
-            AlarmManager.INTERVAL_HOUR,
-            pendingIntent
-        )
-    }
 
     private fun setFontSize() {
         appSettingPreferences = getSharedPreferences(GLOBALS.SETTINGS_PREFERENCES_NAME, 0)
         isLarge = appSettingPreferences.getBoolean(GLOBALS.SETTINGS_LARGE_KEY, false)
+
 
         when (isLarge) {
             true -> {
@@ -139,16 +110,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun testPushNotification() {
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                return@addOnCompleteListener
-            }
+    fun setNotification() {
+        appSettingPreferences = getSharedPreferences(GLOBALS.SETTINGS_PREFERENCES_NAME, 0)
 
-            // Get new FCM registration token
-            val token = task.result
-
-            // Log and toast
+        when (appSettingPreferences.getBoolean(GLOBALS.SETTINGS_NOTIFICATION_KEY, false)) {
+            true -> {
+                FCMSubscribeUtil.subscribe()
+            } else -> {
+            FCMSubscribeUtil.unsubscribe()
+        }
         }
     }
 

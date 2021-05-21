@@ -30,6 +30,7 @@ import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.services.NotificationService
 import edu.bluejack20_2.chantuy.utils.AuthUtil
+import edu.bluejack20_2.chantuy.utils.FCMSubscribeUtil
 import edu.bluejack20_2.chantuy.views.feedback.FeedbackActivity
 import edu.bluejack20_2.chantuy.views.login.LoginActivity
 
@@ -206,6 +207,12 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun setSwitchListener() {
         binding.enableNotificationSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                FCMSubscribeUtil.subscribe()
+            } else {
+                FCMSubscribeUtil.unsubscribe()
+            }
+
             sharedPrefEdit.putBoolean(GLOBALS.SETTINGS_NOTIFICATION_KEY, isChecked)
             sharedPrefEdit.commit()
             recreate()
