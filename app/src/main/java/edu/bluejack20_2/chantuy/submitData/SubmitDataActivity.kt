@@ -26,6 +26,7 @@ import com.google.firebase.storage.UploadTask
 import edu.bluejack20_2.chantuy.GlideApp
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.repositories.UserRepository
+import org.w3c.dom.Text
 import java.io.IOException
 import java.sql.Time
 import java.util.*
@@ -48,6 +49,7 @@ class SubmitDataActivity : AppCompatActivity() {
         val dobButton: TextView = this.findViewById(R.id.register_dob_submit)
         val submitButton: Button = this.findViewById(R.id.register_submit_btn)
         val genderSpinner: Spinner = this.findViewById(R.id.register_spinner_gender)
+        val sdValidate: TextView = this.findViewById(R.id.sd_validate)
         imageView= this.findViewById(R.id.user_profile_image_view)
 
 
@@ -62,10 +64,12 @@ class SubmitDataActivity : AppCompatActivity() {
             picker = DatePickerDialog(
                 this,
                 OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
                     dobButton.setText(dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year)
                     this.year=year
                     this.month=monthOfYear
                     this.day=dayOfMonth
+                    this.hasPicked=true
 
                 },
                 year,
@@ -91,11 +95,13 @@ class SubmitDataActivity : AppCompatActivity() {
         setGenderSpinner(genderSpinner, options)
 
         submitButton.setOnClickListener{
+            if(!hasPicked){
+                sdValidate.text=getString(R.string.sd_validate)
+                return@setOnClickListener
+            }
 
             viewModel.dob= Timestamp(Date(year-1900,month,day,0,0))
-
             UserRepository.userSubmitData(viewModel.imageUrl,viewModel.genderString,viewModel.dob)
-
             finish()
 
         }

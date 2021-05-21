@@ -33,11 +33,11 @@
     <string name="register_invalid_email_format">Format Email tidak valid!</string>
     <string name="register_invalid_username">UserName tidak valid</string>
     <string name="register_invalid_confirm_password">Konfirmasi kata sandi harus sesuai dengan kata sandi</string>
-    <string name="register_invalid_password">Password Invalid </string>
+    <string name="register_invalid_password">Kata sandi tidak valik</string>
     <string name="login_failed">"Login gagal"</string>
     <string name="title_activity_register">Registrasi</string>
     <string name="invalid_username">Username tidak valid</string>
-    <string name="invalid_password">Password harus >5 karakter</string>
+    <string name="invalid_password">Kata Sandi harus >5 karakter</string>
 
     <string name="action_sign_in">Sign in or registrasi</string>
     <string name="prompt_password">Kata Sandi</string>
@@ -102,8 +102,8 @@
     <string name="hello_world">Hello Square World!</string>
     <string name="user_name_hint" >UserName</string>>
 
-    <string name="confirm_password">Konfirmasi Password</string>
-    <string name="title_activity_change_password">Password</string>
+    <string name="confirm_password">Konfirmasi Kata sandi</string>
+    <string name="title_activity_change_password">Kata sandi</string>
     <string name="nf_show_more">Tunjukan lebih</string>
     <string name="sorted_by">Urutkan berdasar:</string>
     <string name="most_liked">Like terbanyak</string>
@@ -168,7 +168,7 @@
     <string name="validate_uu">User tidak ditemukan!</string>
 
     <string name="success_dela">Akun berhasil di delete</string>
-    <string name="fail_dela">Delete akun gagal, coba log in ulang!</string>
+    <string name="fail_dela">Delete akun gagal, coba ulang!</string>
     <string name="here">sini</string>
 
     <string name="dont_have_acc">Tidak punya akun? Register di </string>
@@ -178,7 +178,7 @@
     <string name="set_password">Set Kata Sandi</string>
     <string name="curhats_posted">curhat telah dipost</string>
     <string name="replies_posted">balasan telah dipost</string>
-    <string name="change_password_value">Ganti Password</string>
+    <string name="change_password_value">Ganti Kata Sandi</string>
     <string name="gender_lbl">Jenis kelamin: </string>
     <string name="age_lbl">Umur: </string>
 
@@ -186,7 +186,7 @@
     <string name="age">umur</string>
     <string name="edited">(diedit)</string>
     <string name="date">Tanggal</string>
-    <string name="err_relog">Sebuah error telah terjadi, coba log in ulang!</string>
+    <string name="err_relog">Sebuah error telah terjadi, coba ulang!</string>
     <string name="login_google">Log in dengan Google</string>
     <string name="register_google">Register dengan Google</string>
     <string name="wrong_old">Kata sandi lama salah</string>
@@ -210,5 +210,7 @@
     <string name="default_topic">biarkan kosong untuk menggunakan topik yang dipakai sekarang</string>
     <string name="current">sekarang</string>
     <string name="no_notification">Tidak ada notifikasi</string>
+    <string name="sd_validate">Tanggal lahir tidak boleh kosong</string>
+
 </resources>
 
