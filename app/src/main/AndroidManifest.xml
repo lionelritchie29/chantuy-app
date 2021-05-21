@@ -44,15 +44,6 @@
         <activity android:name=".views.curhat_detail.CurhatDetailActivity" android:label="@string/title_activity_curhat_detail"/>
         <activity android:name=".MainActivity" />
 
-        <service
-            android:name=".services.MyFirebaseMessagingServices"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-        <receiver android:name=".services.NotificationBroadcastReceiver" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/chantuy_logo" />
@@ -61,6 +52,16 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/primary_blue" />
+
+        <service
+            android:name=".services.MyFirebaseMessagingServices"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <receiver android:name=".services.NotificationBroadcastReceiver" />
     </application>
 
 </manifest>
