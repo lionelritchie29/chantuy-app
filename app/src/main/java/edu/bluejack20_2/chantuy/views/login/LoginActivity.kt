@@ -75,10 +75,11 @@ class LoginActivity : AppCompatActivity() {
 
             val emailText: EditText=findViewById(R.id.login_email)
             val passwordText: EditText=findViewById(R.id.login_password)
-            val errorText: TextView=findViewById(R.id.login_error)
             var passwordString= passwordText.text.toString()
             if(emailText.text.toString().isEmpty()){
-                errorText.text=getString(R.string.validate_une)
+                Toast.makeText(this,getString(R.string.validate_une), Toast.LENGTH_SHORT).show()
+
+
                 return@setOnClickListener
             }
 
@@ -86,12 +87,15 @@ class LoginActivity : AppCompatActivity() {
             UserRepository.getUserByEmail(emailText.text.toString()).addOnSuccessListener {it->
                 val its=it.toObjects(User::class.java)
                 if(its.isEmpty()){
-                    errorText.text=getString(R.string.validate_uu)
+
+                    Toast.makeText(this,getString(R.string.validate_uu), Toast.LENGTH_SHORT).show()
+
                     return@addOnSuccessListener
                 }
                 val itUser=its[0]
                 if(passwordText.text.toString()!=itUser.password){
-                    errorText.text=getString(R.string.login_wrongP)
+                    Toast.makeText(this,getString(R.string.login_wrongP), Toast.LENGTH_SHORT).show()
+
                     return@addOnSuccessListener
                 }
                 if(passwordString==null)passwordString=""
@@ -103,7 +107,8 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     }else{
-                        errorText.text=getString(R.string.login_failed)
+                        Toast.makeText(this,getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+
                     }
                 }
 

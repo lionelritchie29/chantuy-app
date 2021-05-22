@@ -16,5 +16,6 @@
     <color name="transparent_white">#40000000</color>
     <color name="transparent_50">#80FFFFFF</color>
     <color name="yellow">#ffee58</color>
+    <color name="error_red">#ff002e</color>
     <color name="light_gray">#999</color>
 </resources>

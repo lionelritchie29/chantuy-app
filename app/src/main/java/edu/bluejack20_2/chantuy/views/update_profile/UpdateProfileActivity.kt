@@ -36,7 +36,6 @@ class UpdateProfileActivity : AppCompatActivity() {
         var picker : DatePickerDialog
 
         val userEditText: EditText = this.findViewById(R.id.update_user_name)
-        val errMsg: TextView= this.findViewById(R.id.update_profile_error)
         val dobButton: TextView = this.findViewById(R.id.update_dob_submit)
 
         val submitButton: Button = this.findViewById(R.id.update_submit_btn)
@@ -91,7 +90,9 @@ class UpdateProfileActivity : AppCompatActivity() {
             viewModel.userName=userEditText.text.toString()
 
             if(viewModel.userName.isEmpty()){
-                errMsg.setText(getString(R.string.err_ucbe))
+
+                Toast.makeText(this, getString(R.string.err_ucbe) , Toast.LENGTH_SHORT).show()
+
                 return@setOnClickListener
             }
 

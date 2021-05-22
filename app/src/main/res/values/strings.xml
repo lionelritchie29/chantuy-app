@@ -196,6 +196,7 @@
     <string name="no_notification">No notification</string>
     <string name="sd_validate">Date of birth should be filled</string>
     <string name="input_password">Input Password</string>
+    <string name="regist_error">An error has occurred, please try again</string>
 
 
 </resources>
