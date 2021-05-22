@@ -39,7 +39,7 @@ class NotificationRepository {
 
         fun getNotifCount(callback: (Int) -> Unit) {
             val db = FirebaseFirestore.getInstance()
-            db.collection(COLLECTION_NAME).whereNotEqualTo("curhatPosterUserId",FirebaseAuth.getInstance().currentUser.uid).get()
+            db.collection(COLLECTION_NAME).whereEqualTo("curhatPosterUserId",FirebaseAuth.getInstance().currentUser.uid).get()
                 .addOnSuccessListener {
                     callback(it.size())
                 }

@@ -1,6 +1,7 @@
 package edu.bluejack20_2.chantuy.repositories
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
@@ -111,9 +112,12 @@ class CurhatRepository {
 
             db.collection(COLLECTION_NAME).document(curhatId).get()
                 .addOnSuccessListener { curhatDoc ->
+                    Log.i("CurhatRepo", curhatDoc.toString())
                     val curhat = curhatDoc.toObject(Curhat::class.java)
                     if (curhat != null) {
                         callback(curhat)
+                    } else {
+                        callback(Curhat())
                     }
                 }
         }

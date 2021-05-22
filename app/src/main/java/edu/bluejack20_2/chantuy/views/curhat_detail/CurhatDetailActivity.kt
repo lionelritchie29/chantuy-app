@@ -34,7 +34,9 @@ class CurhatDetailActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.curhat_comment_recycler)
         recyclerView.adapter = adapter
 
-        viewModel.getCurhatDetail(intent)
+        viewModel.getCurhatDetail(intent) {
+            finish()
+        }
 
         val addBtn: Button = findViewById(R.id.add_comment_btn)
         val addCommentTv: TextView = findViewById(R.id.add_comment_edit_text)
@@ -70,6 +72,6 @@ class CurhatDetailActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getCurhatDetail(intent)
+        viewModel.getCurhatDetail(intent) {}
     }
 }

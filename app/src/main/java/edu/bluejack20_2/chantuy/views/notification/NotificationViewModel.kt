@@ -30,21 +30,16 @@ class NotificationViewModel () {
     init {
         NotificationRepository.getNotifCount {
             listSize = it
+            Log.i("NotifViewModel", listSize.toString())
+            getData()
         }
-
-        getData()
-
     }
 
     fun getData(){
         val currentUserId = UserRepository.getCurrentUserId()
         NotificationRepository.getNotif(currentUserId, limit) {
             nList.value = it
-            currSize+=it.size
+            currSize = it.size
         }
-
     }
-
-
-
 }

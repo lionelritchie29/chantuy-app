@@ -39,7 +39,7 @@ class NotificationActivity : AppCompatActivity() {
                 noNotifTv.visibility = View.GONE
             }
 
-            if (viewModel.limit >= viewModel.listSize-1) {
+            if (viewModel.limit >= viewModel.listSize) {
                 btn.visibility = View.GONE
             } else {
                 btn.visibility = View.VISIBLE

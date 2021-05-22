@@ -54,13 +54,15 @@
 
                 <TextView
                     android:id="@+id/new_curhat_content_label"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="48dp"
+                    android:layout_marginEnd="16dp"
                     android:text="@string/how_could_we_improve"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recent_reply_tv" />
 

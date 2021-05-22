@@ -31,16 +31,19 @@ class CurhatDetailViewModel: ViewModel() {
 
     var lim: Long = 5
 
-    fun getCurhatDetail(intent: Intent?) {
+    fun getCurhatDetail(intent: Intent?, callback: () -> Unit) {
         _isFetchingData.value = true
         if (intent != null) {
             id = getCurhatId(intent)
         }
 
         CurhatRepository.getById(id) {
-            curhat = it
-            getComments() {
-                _isFetchingData.value = false
+            if (it.id.isEmpty()) callback()
+            else {
+                curhat = it
+                getComments() {
+                    _isFetchingData.value = false
+                }
             }
         }
     }
@@ -67,7 +70,7 @@ class CurhatDetailViewModel: ViewModel() {
         CurhatCommentRepository.addComment(id, currentUserId, content.text.toString()) {newCommentId ->
             content.text = ""
             Toast.makeText(content.context, content.context.getString(R.string.toast_comment_s), Toast.LENGTH_SHORT).show()
-            getCurhatDetail(null)
+            getCurhatDetail(null) {}
             if(currentUserId!=curhat.user)NotificationRepository.addNotif(newCommentId, curhat.user) {
 
             }
