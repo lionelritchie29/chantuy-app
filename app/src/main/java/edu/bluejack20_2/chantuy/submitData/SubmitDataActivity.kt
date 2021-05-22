@@ -50,7 +50,7 @@ class SubmitDataActivity : AppCompatActivity() {
         val dobButton: TextView = this.findViewById(R.id.register_dob_submit)
         val submitButton: Button = this.findViewById(R.id.register_submit_btn)
         val genderSpinner: Spinner = this.findViewById(R.id.register_spinner_gender)
-        val sdValidate: TextView = this.findViewById(R.id.sd_validate)
+
         imageView= this.findViewById(R.id.user_profile_image_view)
 
 
@@ -97,7 +97,7 @@ class SubmitDataActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener{
             if(!hasPicked){
-                sdValidate.text=getString(R.string.sd_validate)
+                Toast.makeText(this,getString(R.string.sd_validate), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.tasks.OnCompleteListener
@@ -34,15 +35,16 @@ class ChangePasswordActivity (): AppCompatActivity() {
     fun setButtonListener(){
         val passwordButton: Button = findViewById(R.id.password_button)
         passwordButton.setOnClickListener {
-            val errMsg: TextView=findViewById(R.id.password_err)
+
             val password: TextView=findViewById(R.id.cp_password)
             val confirmPassword: TextView=findViewById(R.id.cp_confirm_password)
             if(password.text.toString().length<6){
-                errMsg.text=getString(R.string.validate_pl)
+                Toast.makeText(this, getString(R.string.validate_pl), Toast.LENGTH_SHORT).show()
+
                 return@setOnClickListener
             }
             if(!password.text.toString().equals(confirmPassword.text.toString())){
-                errMsg.text=getString(R.string.validate_pcp)
+                Toast.makeText(this, getString(R.string.validate_pcp), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

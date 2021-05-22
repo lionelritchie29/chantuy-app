@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.firebase.ui.auth.AuthUI
@@ -43,34 +44,35 @@ class RegisterActivity : AppCompatActivity() {
             val emailText: EditText =findViewById(R.id.register_email)
             val passwordText: EditText =findViewById(R.id.register_password)
             val confirmPasswordText: EditText =findViewById(R.id.register_confirm_password)
-            val errorText: TextView =findViewById(R.id.register_error)
             val userName=userNameText.text.toString()
             val email=emailText.text.toString()
             val password=passwordText.text.toString()
             val confirmPassword=confirmPasswordText.text.toString()
             if(userName.isEmpty()){
-                errorText.text=getString(R.string.validate_ue)
+                Toast.makeText(this,getString(R.string.validate_ue), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             if(email.isEmpty()){
-                errorText.text=getString(R.string.validate_ee)
+                Toast.makeText(this,getString(R.string.validate_ee), Toast.LENGTH_SHORT).show()
+
+
                 return@setOnClickListener
             }
 
             if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                errorText.text=getString(R.string.validate_ef)
+                Toast.makeText(this,getString(R.string.validate_ef), Toast.LENGTH_SHORT).show()
 
                 return@setOnClickListener
             }
 
             if(password.length<6){
-                errorText.text=getString(R.string.validate_pl)
+                Toast.makeText(this,getString(R.string.validate_pl), Toast.LENGTH_SHORT).show()
 
                 return@setOnClickListener
             }
             if(!confirmPassword.equals(password)){
-                errorText.text=getString(R.string.validate_pcp)
+                Toast.makeText(this,getString(R.string.validate_pcp), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             UserRepository.getUserByEmail(emailText.text.toString()).addOnSuccessListener { it->
@@ -88,12 +90,12 @@ class RegisterActivity : AppCompatActivity() {
                             startActivity(intent)
                             finish()
                         }else{
-                            errorText.text=task.exception.toString()
+                            Toast.makeText(this,getString(R.string.regist_error), Toast.LENGTH_SHORT).show()
                         }
                     }
                     return@addOnSuccessListener
                 }
-                errorText.text=getString(R.string.validate_une)
+                Toast.makeText(this,getString(R.string.validate_une), Toast.LENGTH_SHORT).show()
             }
         }
     }

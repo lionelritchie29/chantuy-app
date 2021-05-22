@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import android.view.MenuItem
+import android.widget.Toast
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.repositories.UserRepository
 import edu.bluejack20_2.chantuy.utils.AuthUtil
@@ -23,16 +24,15 @@ class UpdatePasswordActivity : AppCompatActivity() {
     fun setButtonListener(){
         val passwordButton: Button = findViewById(R.id.upassword_button)
         passwordButton.setOnClickListener {
-            val errMsg: TextView =findViewById(R.id.upassword_err)
             val oldPassword: TextView=findViewById(R.id.up_old_pass)
             val password: TextView =findViewById(R.id.up_password)
             val confirmPassword: TextView =findViewById(R.id.up_confirm_password)
             if(password.text.toString().length<6){
-                errMsg.text=getText(R.string.validate_pl)
+                Toast.makeText(this, getString(R.string.validate_pl) , Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             else if(!password.text.toString().equals(confirmPassword.text.toString())){
-                errMsg.text=getText(R.string.validate_pcp)
+                Toast.makeText(this, getString(R.string.validate_pcp) , Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -40,7 +40,8 @@ class UpdatePasswordActivity : AppCompatActivity() {
             UserRepository.getUserById(FirebaseAuth.getInstance().currentUser.uid).get().addOnSuccessListener {
 
                 if(!it["password"]?.equals(oldPassword.text.toString())!!){
-                    errMsg.text=getString(R.string.wrong_old)
+                    Toast.makeText(this, getString(R.string.wrong_old) , Toast.LENGTH_SHORT).show()
+
                     return@addOnSuccessListener
                 }
                 FirebaseAuth.getInstance().currentUser.updatePassword(password.text.toString()).addOnCompleteListener { it->
@@ -58,8 +59,8 @@ class UpdatePasswordActivity : AppCompatActivity() {
                                             finish()
                                         }
                                         else{
+                                            Toast.makeText(this, getString(R.string.err_relog) , Toast.LENGTH_SHORT).show()
 
-                                            errMsg.text=getString(R.string.err_relog)
                                         }
                                     }
                                 }else{
@@ -72,20 +73,20 @@ class UpdatePasswordActivity : AppCompatActivity() {
                                                 }
                                                 else{
 
-                                                    errMsg.text=getString(R.string.err_relog)
+                                                    Toast.makeText(this, getString(R.string.err_relog) , Toast.LENGTH_SHORT).show()
                                                 }
                                             }
 
                                         }else{
 
-                                            errMsg.text=getString(R.string.err_relog)
+                                            Toast.makeText(this, getString(R.string.err_relog) , Toast.LENGTH_SHORT).show()
                                         }
                                     }
                                 }
 
                             }
                         }catch(exception:Exception){
-                            errMsg.text=getString(R.string.err_relog)
+                            Toast.makeText(this, getString(R.string.err_relog) , Toast.LENGTH_SHORT).show()
                         }
 
 
