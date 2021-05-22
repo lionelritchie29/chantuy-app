@@ -58,7 +58,7 @@ class SubmitDataActivity : AppCompatActivity() {
             launchGallery()
         }
         viewModel.dob=Timestamp.now()
-        dobButton.setText(viewModel.dob.toDate().date.toString() + "/" + (viewModel.dob.toDate().month + 1) + "/" + viewModel.dob.toDate().year)
+        dobButton.setText(getString(R.string.dob_hint))
 
         dobButton.setOnClickListener {
             picker = DatePickerDialog(

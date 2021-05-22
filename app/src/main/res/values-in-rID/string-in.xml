@@ -211,6 +211,7 @@
     <string name="current">sekarang</string>
     <string name="no_notification">Tidak ada notifikasi</string>
     <string name="sd_validate">Tanggal lahir tidak boleh kosong</string>
+    <string name="input_password">Masukan Kata Sandi</string>
 
 </resources>
 
