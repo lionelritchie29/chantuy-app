@@ -89,7 +89,10 @@ class SubmitDataActivity : AppCompatActivity() {
 
         }
 
-        val options = arrayOf("Female","Male")
+
+
+
+        val options = arrayOf(getString(R.string.female),getString(R.string.male))
 
 
 
@@ -102,7 +105,9 @@ class SubmitDataActivity : AppCompatActivity() {
             }
 
             viewModel.dob= Timestamp(Date(year-1900,month,day,0,0))
+
             UserRepository.userSubmitData(viewModel.imageUrl,viewModel.genderString,viewModel.dob)
+
             finish()
 
         }
@@ -128,7 +133,7 @@ class SubmitDataActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                viewModel.genderString = "Male"
+                viewModel.genderString = getString(R.string.male)
                 viewModel.imageUrl =
                     "https://firebasestorage.googleapis.com/v0/b/chantuy-app.appspot.com/o/imageUploads%2Fdefault_male.png?alt=media&token=9ef4eebb-ba41-4bb3-9f90-fb33218cffe1"
 
@@ -148,7 +153,13 @@ class SubmitDataActivity : AppCompatActivity() {
 //
 //                }catch(e: Exception) {
 //                }
-                viewModel.genderString = options.get(position)
+
+                if(position==0){
+                    viewModel.genderString="Female"
+                }else{
+                    viewModel.genderString="Male"
+                }
+
                 if(hasChosen)return
                 if (viewModel.genderString == "Male") {
 

@@ -116,7 +116,8 @@ class UserProfileFragment : Fragment() {
                 nameView.text=user?.name
                 emailView.text=user?.email
                 joinedAtView.text=CurhatUtil.formatDate(user?.joinedAt,requireContext())
-                genderView.text= user?.gender
+                if(user?.gender.equals("Male")) genderView.text=getString(R.string.male)
+                else genderView.text=getString(R.string.female)
                 ageView.text ="("+ AgeCalculatorUtil.calculateAge(user?.dateOfBirth?.toDate()!!).toString()+" "+getString(R.string.year)
 
             }catch (exception:Exception){
