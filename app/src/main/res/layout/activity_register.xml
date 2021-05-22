@@ -61,7 +61,8 @@
         app:layout_constraintBottom_toTopOf="@+id/register_google_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <Button
         android:id="@+id/register_google_button"
@@ -93,10 +94,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text=""
+        android:textColor="@color/dark_red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_text"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/register_text" />
 
     <TextView
         android:id="@+id/register_link"
