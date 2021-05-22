@@ -49,40 +49,45 @@ class UpdatePasswordActivity : AppCompatActivity() {
                         finish()
                     }
                     else{
-                        AuthUtil.reAuthEmail(oldPassword.text.toString()).addOnCompleteListener() {task->
-                            if(task.isSuccessful){
-                                FirebaseAuth.getInstance().currentUser.updatePassword(password.text.toString()).addOnCompleteListener { it->
-                                    if(it.isSuccessful){
-                                        UserRepository.userUpdatePassword(password.text.toString(),this)
-                                        finish()
-                                    }
-                                    else{
-
-                                        errMsg.text=getString(R.string.err_relog)
-                                    }
-                                }
-                            }else{
-                                AuthUtil.reAuthGoogle(this).addOnCompleteListener {
-                                    if(task.isSuccessful){
-                                        FirebaseAuth.getInstance().currentUser.updatePassword(password.text.toString()).addOnCompleteListener { it->
-                                            if(it.isSuccessful){
-                                                UserRepository.userUpdatePassword(password.text.toString(),this)
-                                                finish()
-                                            }
-                                            else{
-
-                                                errMsg.text=getString(R.string.err_relog)
-                                            }
+                        try{
+                            AuthUtil.reAuthEmail(oldPassword.text.toString()).addOnCompleteListener() {task->
+                                if(task.isSuccessful){
+                                    FirebaseAuth.getInstance().currentUser.updatePassword(password.text.toString()).addOnCompleteListener { it->
+                                        if(it.isSuccessful){
+                                            UserRepository.userUpdatePassword(password.text.toString(),this)
+                                            finish()
                                         }
+                                        else{
 
-                                    }else{
+                                            errMsg.text=getString(R.string.err_relog)
+                                        }
+                                    }
+                                }else{
+                                    AuthUtil.reAuthGoogle(this).addOnCompleteListener {
+                                        if(task.isSuccessful){
+                                            FirebaseAuth.getInstance().currentUser.updatePassword(password.text.toString()).addOnCompleteListener { it->
+                                                if(it.isSuccessful){
+                                                    UserRepository.userUpdatePassword(password.text.toString(),this)
+                                                    finish()
+                                                }
+                                                else{
 
-                                        errMsg.text=getString(R.string.err_relog)
+                                                    errMsg.text=getString(R.string.err_relog)
+                                                }
+                                            }
+
+                                        }else{
+
+                                            errMsg.text=getString(R.string.err_relog)
+                                        }
                                     }
                                 }
-                            }
 
+                            }
+                        }catch(exception:Exception){
+                            errMsg.text=getString(R.string.err_relog)
                         }
+
 
                     }
                 }

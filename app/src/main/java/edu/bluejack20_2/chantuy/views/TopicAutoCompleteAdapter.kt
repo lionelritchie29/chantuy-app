@@ -52,9 +52,7 @@ class TopicAutoCompleteAdapter(
                     filterResults.values = allTopicsContainer
                 }
 
-                Log.i("TopicAdapter", "Init Topic: " + allTopicsContainer.toString())
-                Log.i("TopicAdapter", filterResults.values.toString())
-                Log.i("TopicAdapter", filterResults.values::class.java.toString())
+
 
                 return filterResults
             }
