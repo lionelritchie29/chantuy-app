@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.repositories.UserRepository
+import edu.bluejack20_2.chantuy.utils.AuthUtil
 
 
 class ChangePasswordActivity (): AppCompatActivity() {
@@ -26,17 +27,8 @@ class ChangePasswordActivity (): AppCompatActivity() {
         val currUser=FirebaseAuth.getInstance().currentUser
         val googleAcc= GoogleSignIn.getLastSignedInAccount(this)
         if(googleAcc!=null){
-            val credential =
-                GoogleAuthProvider.getCredential(googleAcc.getIdToken(), null)
+            val credential = GoogleAuthProvider.getCredential(googleAcc.getIdToken(), null)
             currUser.reauthenticate(credential)
-                .addOnCompleteListener(OnCompleteListener<Void?> { task ->
-                    if(task.isSuccessful){
-                        Log.i("Testing","Sukses gan")
-                    }
-                    else{
-                        Log.i("Testing","Gagal")
-                    }
-                })
         }
     }
     fun setButtonListener(){
@@ -64,8 +56,18 @@ class ChangePasswordActivity (): AppCompatActivity() {
                 }
                 else{
 
+                    try{
+                        AuthUtil.reAuthGoogle(this).addOnCompleteListener{task ->
+                            if(task.isSuccessful){
+                                UserRepository.userSetPassword(password.text.toString())
+                            }
 
-                    finish()
+                            finish()
+                        }
+                    }catch (exception:Exception){
+
+                        finish()
+                    }
                 }
             }
         }

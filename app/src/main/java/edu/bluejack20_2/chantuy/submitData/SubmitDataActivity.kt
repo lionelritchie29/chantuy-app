@@ -40,6 +40,7 @@ class SubmitDataActivity : AppCompatActivity() {
     var month: Int = cldr.get(Calendar.MONTH)
     var year: Int = cldr.get(Calendar.YEAR)
     var hasPicked: Boolean=false
+    var hasChosen: Boolean= false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -148,7 +149,7 @@ class SubmitDataActivity : AppCompatActivity() {
 //                }catch(e: Exception) {
 //                }
                 viewModel.genderString = options.get(position)
-                if(hasPicked)return
+                if(hasChosen)return
                 if (viewModel.genderString == "Male") {
 
                     viewModel.imageUrl =
@@ -184,7 +185,7 @@ class SubmitDataActivity : AppCompatActivity() {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-            hasPicked=true
+            hasChosen=true
             uploadImage()
         }
     }

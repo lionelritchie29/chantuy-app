@@ -34,6 +34,7 @@ import edu.bluejack20_2.chantuy.utils.AuthUtil
 import edu.bluejack20_2.chantuy.utils.FCMSubscribeUtil
 import edu.bluejack20_2.chantuy.views.feedback.FeedbackActivity
 import edu.bluejack20_2.chantuy.views.login.LoginActivity
+import java.lang.Exception
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -56,10 +57,19 @@ class SettingsActivity : AppCompatActivity() {
                 binding.sendFeedbackBtn.visibility = View.VISIBLE
             }
             pass=it.password!!
-            AuthUtil.reAuthGoogle(this).addOnCompleteListener{task ->
-                if(!task.isSuccessful){
-                    AuthUtil.reAuthEmail(pass)
+
+
+            try{
+                AuthUtil.reAuthEmail(pass).addOnCompleteListener{task ->
+                    if(!task.isSuccessful){
+                        AuthUtil.reAuthEmail(pass)
+                    }else {
+
+                        AuthUtil.reAuthGoogle(this)
+                    }
                 }
+            }catch (exception: Exception){
+
             }
         }
 
@@ -156,37 +166,42 @@ class SettingsActivity : AppCompatActivity() {
                     if(task.isSuccessful){
                         finalize(userId)
                     }else{
-                        AuthUtil.reAuthGoogle(this).addOnCompleteListener() { task->
-                            if(task.isSuccessful){
-                                FirebaseAuth.getInstance().currentUser.delete().addOnCompleteListener { it->
-                                    if(it.isSuccessful){
-                                        finalize(userId)
-                                    }
-                                    else{
-                                        Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
-                                    }
-                                }
-                            }else{
-                                AuthUtil.reAuthEmail(pass!!).addOnCompleteListener {
-                                    if(task.isSuccessful){
-                                        FirebaseAuth.getInstance().currentUser.delete().addOnCompleteListener { it->
-                                            if(it.isSuccessful){
-                                                finalize(userId)
-                                            }
-                                            else{
-                                                Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
-                                            }
+                        try{
+                            AuthUtil.reAuthEmail(pass!!).addOnCompleteListener() { task->
+                                if(task.isSuccessful){
+                                    FirebaseAuth.getInstance().currentUser.delete().addOnCompleteListener { it->
+                                        if(it.isSuccessful){
+                                            finalize(userId)
                                         }
-                                    }else{
-
-                                        Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
+                                        else{
+                                            Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
+                                        }
                                     }
+                                }else{
+                                    AuthUtil.reAuthGoogle(this).addOnCompleteListener {
+                                        if(task.isSuccessful){
+                                            FirebaseAuth.getInstance().currentUser.delete().addOnCompleteListener { it->
+                                                if(it.isSuccessful){
+                                                    finalize(userId)
+                                                }
+                                                else{
+                                                    Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
+                                                }
+                                            }
+                                        }else{
+
+                                            Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                    if(pass==null)Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
                                 }
-                                if(pass==null)Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
-                            }
 
 
                             }
+                        }catch (exception:Exception){
+                            Toast.makeText(this, getString(R.string.fail_dela), Toast.LENGTH_SHORT).show()
+
+                        }
                         }
 
 

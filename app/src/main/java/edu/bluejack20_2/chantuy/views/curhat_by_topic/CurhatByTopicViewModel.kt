@@ -50,7 +50,6 @@ class CurhatByTopicViewModel
             val selectedTopic = parent.adapter.getItem(position) as String
             view.setText(selectedTopic)
 
-            Log.i("CurhatByTopicViewModel", adapter.topics.toString())
         }
     }
 

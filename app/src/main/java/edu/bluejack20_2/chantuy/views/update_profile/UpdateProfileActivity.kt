@@ -38,17 +38,24 @@ class UpdateProfileActivity : AppCompatActivity() {
         val userEditText: EditText = this.findViewById(R.id.update_user_name)
         val errMsg: TextView= this.findViewById(R.id.update_profile_error)
         val dobButton: TextView = this.findViewById(R.id.update_dob_submit)
+
+        val submitButton: Button = this.findViewById(R.id.update_submit_btn)
+        val genderSpinner: Spinner = this.findViewById(R.id.update_profile_spinner_gender)
+        val options = arrayOf("Female","Male")
+
+
+
+        setGenderSpinner(genderSpinner, options)
         UserRepository.getUserById(FirebaseAuth.getInstance().currentUser.uid).get().addOnSuccessListener {
             viewModel.userName=it["name"].toString()
             viewModel.genderString=it["gender"].toString()
             viewModel.dob= it.getTimestamp("dateOfBirth")!!
             dobButton.setText(viewModel.dob.toDate().date.toString() + "/" + (viewModel.dob.toDate().month + 1).toString() + "/" + (viewModel.dob.toDate().year+1900).toString())
             userEditText.setText(viewModel.userName)
+            if(viewModel.genderString.equals("Male"))genderSpinner.setSelection(1)
+            else genderSpinner.setSelection(0)
 
         }
-
-        val submitButton: Button = this.findViewById(R.id.update_submit_btn)
-        val genderSpinner: Spinner = this.findViewById(R.id.update_profile_spinner_gender)
 
         viewModel.dob= Timestamp.now()
         dobButton.setOnClickListener {
@@ -77,11 +84,7 @@ class UpdateProfileActivity : AppCompatActivity() {
 
         }
 
-        val options = arrayOf("Female","Male")
 
-
-
-        setGenderSpinner(genderSpinner, options)
 
         submitButton.setOnClickListener{
             viewModel.dob= Timestamp(Date(year-1900,month,day,0,0))
@@ -118,7 +121,7 @@ class UpdateProfileActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                viewModel.genderString = "Male"
+
 
             }
 
