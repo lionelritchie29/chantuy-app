@@ -205,8 +205,8 @@
     <string name="at">pada</string>
     <string name="comment">balasan</string>
     <string name="ausure">Apakah anda yakin ?</string>
-    <string name="female">perempuan</string>
-    <string name="male">perempuan</string>
+    <string name="female">Perempuan</string>
+    <string name="male">Laki-laki</string>
     <string name="default_topic">biarkan kosong untuk menggunakan topik yang dipakai sekarang</string>
     <string name="current">sekarang</string>
     <string name="no_notification">Tidak ada notifikasi</string>

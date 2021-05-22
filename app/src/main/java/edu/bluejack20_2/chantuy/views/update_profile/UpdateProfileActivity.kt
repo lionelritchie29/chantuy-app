@@ -40,7 +40,7 @@ class UpdateProfileActivity : AppCompatActivity() {
 
         val submitButton: Button = this.findViewById(R.id.update_submit_btn)
         val genderSpinner: Spinner = this.findViewById(R.id.update_profile_spinner_gender)
-        val options = arrayOf("Female","Male")
+        val options = arrayOf(getString(R.string.female),getString(R.string.male))
 
 
 
@@ -65,7 +65,6 @@ class UpdateProfileActivity : AppCompatActivity() {
                     this.year=year
                     this.month=monthOfYear
                     this.day=dayOfMonth
-
                 },
                 year,
                 month,
@@ -132,7 +131,13 @@ class UpdateProfileActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                viewModel.genderString = options.get(position)
+                if(position==1){
+                    viewModel.genderString="Male"
+                }
+                else{
+                    viewModel.genderString="Female"
+                }
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
