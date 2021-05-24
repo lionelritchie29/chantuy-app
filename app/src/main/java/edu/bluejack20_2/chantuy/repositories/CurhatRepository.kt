@@ -5,11 +5,6 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import edu.bluejack20_2.chantuy.utils.CurhatViewUtil
-import org.w3c.dom.Comment
-import java.text.SimpleDateFormat
 import java.util.*
 import edu.bluejack20_2.chantuy.models.*
 import java.time.LocalDateTime
@@ -21,37 +16,31 @@ class CurhatRepository {
     companion object {
         private val COLLECTION_NAME = "curhats"
 
-        fun getNewestCurhat(curhat: Curhat?, callback: (List<Curhat>) -> Unit) {
+        fun convertQueryToCurhats(query: Query, callback: (List<Curhat>) -> Unit) {
+            query.get().addOnSuccessListener {curhatDocs ->
+                val curhats = mutableListOf<Curhat>()
+                for (curhatDoc in curhatDocs) {
+                    val curhat = curhatDoc.toObject(Curhat::class.java)
+                    curhat.id = curhatDoc.id
+                    curhats.add(curhat)
+                }
+                callback(curhats)
+            }
+        }
+
+        fun getNewestCurhat(curhat: Curhat?): Query {
             val db = FirebaseFirestore.getInstance()
 
             if (curhat == null) {
-                db.collection(COLLECTION_NAME)
+                return db.collection(COLLECTION_NAME)
                     .orderBy("createdAt", Query.Direction.DESCENDING)
                     .orderBy("viewCount", Query.Direction.DESCENDING)
-                    .limit(5).get()
-                    .addOnSuccessListener { curhatDocs ->
-                        val curhats = mutableListOf<Curhat>()
-                        for (curhatDoc in curhatDocs) {
-                            val curhat = curhatDoc.toObject(Curhat::class.java)
-                            curhat.id = curhatDoc.id
-                            curhats.add(curhat)
-                        }
-                        callback(curhats)
-                    }
+                    .limit(5)
             } else {
-                db.collection(COLLECTION_NAME)
+                return db.collection(COLLECTION_NAME)
                     .orderBy("createdAt", Query.Direction.DESCENDING)
                     .orderBy("viewCount", Query.Direction.DESCENDING)
-                    .startAfter(curhat.createdAt, curhat.viewCount).limit(5).get()
-                    .addOnSuccessListener { curhatDocs ->
-                        val curhats = mutableListOf<Curhat>()
-                        for (curhatDoc in curhatDocs) {
-                            val curhat = curhatDoc.toObject(Curhat::class.java)
-                            curhat.id = curhatDoc.id
-                            curhats.add(curhat)
-                        }
-                        callback(curhats)
-                    }
+                    .startAfter(curhat.createdAt, curhat.viewCount).limit(5)
             }
         }
 

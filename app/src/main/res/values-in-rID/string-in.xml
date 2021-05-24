@@ -31,12 +31,12 @@
     <string name="login_invalid_password">Kata Sandi Salah</string>
     <string name="register_invalid_email_taken">Email sudah diambil!</string>
     <string name="register_invalid_email_format">Format Email tidak valid!</string>
-    <string name="register_invalid_username">UserName tidak valid</string>
+    <string name="register_invalid_username">Nama pengguna tidak valid</string>
     <string name="register_invalid_confirm_password">Konfirmasi kata sandi harus sesuai dengan kata sandi</string>
     <string name="register_invalid_password">Kata sandi tidak valik</string>
     <string name="login_failed">"Login gagal"</string>
     <string name="title_activity_register">Registrasi</string>
-    <string name="invalid_username">Username tidak valid</string>
+    <string name="invalid_username">Nama pengguna tidak valid</string>
     <string name="invalid_password">Kata Sandi harus >5 karakter</string>
 
     <string name="action_sign_in">Sign in or registrasi</string>
@@ -100,7 +100,7 @@
     <string name="login_wrongE">User tidak ditemukan</string>
     <string name="login_wrongP">Kata sandi salah</string>
     <string name="hello_world">Hello Square World!</string>
-    <string name="user_name_hint" >UserName</string>>
+    <string name="user_name_hint" >Nama Pengguna</string>>
 
     <string name="confirm_password">Konfirmasi Kata sandi</string>
     <string name="title_activity_change_password">Kata sandi</string>
@@ -159,7 +159,7 @@
     <string name="toast_psu">Kata sandi berhasil di diperbarui</string>
 
 
-    <string name="validate_ue">UserName tidak boleh kosong</string>
+    <string name="validate_ue">Nama Pengguna tidak boleh kosong</string>
     <string name="validate_ee">Email tidak boleh kosong</string>
     <string name="validate_ef">Format Email tidak valid</string>
     <string name="validate_pl">Kata sandi minimal 6 huruf</string>

@@ -32,7 +32,8 @@ class NewestCurhatViewModel : ViewModel() {
     fun loadData(callback : () -> Unit) {
         _curhats.value = listOf()
         _isFetchingData.value = true
-        CurhatRepository.getNewestCurhat(null) { curhats ->
+        val curhatQuery = CurhatRepository.getNewestCurhat(null)
+        CurhatRepository.convertQueryToCurhats(curhatQuery) {curhats ->
             _isSizeZero.value = curhats.isEmpty()
             _curhats.value = curhats
             _isFetchingData.value = false
@@ -69,13 +70,12 @@ class NewestCurhatViewModel : ViewModel() {
             isLoadingMore = true
             _isFetchingData.value = true
 
-
-            CurhatRepository.getNewestCurhat(lastCurhat) {
+            val curhatQuery = CurhatRepository.getNewestCurhat(lastCurhat)
+            CurhatRepository.convertQueryToCurhats(curhatQuery) {it ->
                 _curhats.value = _curhats.value?.plus(it)
                 isLoadingMore = false
                 _isFetchingData.value = false
             }
-
         }
     }
 

@@ -66,7 +66,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         setViewPager()
         setBottomMenuItemListener()
         setNotification()
@@ -152,6 +151,7 @@ class MainActivity : AppCompatActivity() {
         val intent=Intent(this, NotificationActivity::class.java)
         startActivity(intent)
     }
+
     private fun moveToSettingsActivity() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)

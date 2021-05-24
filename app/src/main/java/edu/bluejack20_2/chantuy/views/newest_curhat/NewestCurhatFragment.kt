@@ -1,5 +1,6 @@
 package edu.bluejack20_2.chantuy.views.newest_curhat
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,14 +19,16 @@ import edu.bluejack20_2.chantuy.views.CurhatAdapter
 class NewestCurhatFragment : Fragment() {
     private lateinit var manager: LinearLayoutManager
     private lateinit var binding: FragmentNewestCurhatBinding
+    private lateinit var viewModel: NewestCurhatViewModel
+    private lateinit var curhatAdapter: CurhatAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_newest_curhat, container, false)
-        val viewModel = NewestCurhatViewModel()
-        val curhatAdapter = CurhatAdapter()
+        viewModel = NewestCurhatViewModel()
+        curhatAdapter = CurhatAdapter()
         manager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
         binding.newestCurhatRecycler.adapter = curhatAdapter
@@ -34,8 +37,8 @@ class NewestCurhatFragment : Fragment() {
         viewModel.handleOnScrollListener(binding.newestCurhatRecycler, manager)
 
         viewModel.curhats.observe(viewLifecycleOwner, Observer {curhats ->
-            curhatAdapter.submitList(curhats)
 
+            curhatAdapter.submitList(curhats)
             if (curhats.size > 0) {
                 viewModel.lastCurhat = curhats.get(curhats.size - 1)
             }
@@ -68,5 +71,4 @@ class NewestCurhatFragment : Fragment() {
 
         return binding.root
     }
-
 }
