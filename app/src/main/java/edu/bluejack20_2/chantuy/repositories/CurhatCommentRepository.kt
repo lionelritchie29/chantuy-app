@@ -30,7 +30,7 @@ class CurhatCommentRepository {
             val db = FirebaseFirestore.getInstance()
 
             db.collection(COLLECTION_NAME).document(commentId)
-                .update("content", content)
+                .update("content", content, "updatedAt", Timestamp.now())
                 .addOnSuccessListener {
                     callback(content)
                 }

@@ -15,9 +15,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.R
-import edu.bluejack20_2.chantuy.databinding.CurhatDetailHeaderBinding
-import edu.bluejack20_2.chantuy.databinding.CurhatInfoPopupBinding
-import edu.bluejack20_2.chantuy.databinding.ShowMoreCommentBinding
+import edu.bluejack20_2.chantuy.databinding.*
 import edu.bluejack20_2.chantuy.views.update_curhat.UpdateCurhatActivity
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.models.CurhatComment
@@ -81,29 +79,25 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
         }
     }
 
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val name: TextView = view.findViewById(R.id.curhat_comment_user_name)
-        val content: TextView = view.findViewById(R.id.curhat_comment_content)
-        val createdAt: TextView = view.findViewById(R.id.curhat_comment_date_first)
-        val actionBtn: ImageButton = view.findViewById(R.id.curhat_comment_action_btn)
-        val userImage: ImageView = view.findViewById(R.id.curhat_comment_user_image)
-
-        val updateBtn: Button = view.findViewById(R.id.curhat_comment_update_btn)
-        val cancelBtn: Button = view.findViewById(R.id.curhat_comment_cancel_btn)
-        val editContent: EditText = view.findViewById(R.id.curhat_comment_edit_text)
-
+    class ViewHolder(val binding: CurhatCommentCardItemBinding) : RecyclerView.ViewHolder(binding.root) {
         var isUpdating = false
 
         fun bind(comment: CurhatComment) {
-            content.text = comment.content
-            createdAt.text = CurhatViewUtil.formatDate(comment.createdAt,view.context)
-            editContent.setText(comment.content)
+            binding.curhatCommentContent.text = comment.content
+            binding.curhatCommentDateFirst.text = CurhatViewUtil.formatDate(comment.createdAt, binding.root.context)
+            binding.curhatCommentEditText.setText(comment.content)
 
             if (comment.user.length > 0) {
                 UserRepository.getUserById(comment.user) {user ->
-                    name.text = "${user?.name} (${user?.age}, ${user?.gender})"
-                    CurhatViewUtil.setCurhatUserImage(false, user!!, userImage, view)
+                    binding.curhatCommentUserName.text = "${user?.name} (${user?.age}, ${user?.gender})"
+                    CurhatViewUtil.setCurhatUserImage(false, user!!, binding.curhatCommentUserImage, binding.root)
                 }
+            }
+
+            if (comment.createdAt != comment.updatedAt) {
+                binding.curhatCommentEdited.visibility = View.VISIBLE
+            } else {
+                binding.curhatCommentEdited.visibility = View.GONE
             }
 
             setActionBtnVisibility(comment.user)
@@ -113,24 +107,25 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
         }
 
         private fun setUpdateEventListener(comment: CurhatComment) {
-            updateBtn.setOnClickListener {
-                if (editContent.text.isEmpty()) {
-                    editContent.error = editContent.context.getString(R.string.content_empty_error)
+            binding.curhatCommentUpdateBtn.setOnClickListener {
+                if (binding.curhatCommentEditText.text.isEmpty()) {
+                    binding.curhatCommentEditText.error = binding.root.context.getString(R.string.content_empty_error)
                 } else {
                     CurhatCommentRepository.updateComment(
-                        comment.commentId, editContent.text.toString()
+                        comment.commentId, binding.curhatCommentEditText.text.toString()
                     ) {
-                        content.text = it
+                        binding.curhatCommentContent.text = it
+                        binding.curhatCommentEdited.visibility = View.VISIBLE
                         isUpdating = !isUpdating
                         toggleUpdateForm(comment, isUpdating)
-                        Toast.makeText(view.context, view.context.getString(R.string.toast_update_succesfully), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(binding.root.context, binding.root.context.getString(R.string.toast_update_succesfully), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
 
         private fun setCancelEventListener(comment: CurhatComment) {
-            cancelBtn.setOnClickListener {
+            binding.curhatCommentCancelBtn.setOnClickListener {
                 isUpdating = !isUpdating
                 toggleUpdateForm(comment, isUpdating)
             }
@@ -138,15 +133,15 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
 
         private fun setActionBtnVisibility(userId: String ) {
             if (UserRepository.getCurrentUserId() == userId) {
-                actionBtn.visibility = View.VISIBLE
+                binding.curhatCommentActionBtn.visibility = View.VISIBLE
             } else {
-                actionBtn.visibility = View.INVISIBLE
+                binding.curhatCommentActionBtn.visibility = View.INVISIBLE
             }
         }
 
         private fun setActionBtnListener(comment: CurhatComment) {
-            actionBtn.setOnClickListener {
-                val popupMenu = PopupMenu(view.context, it)
+            binding.curhatCommentActionBtn.setOnClickListener {
+                val popupMenu = PopupMenu(binding.root.context, it)
                 popupMenu.menuInflater.inflate(R.menu.curhat_detail_action_items, popupMenu.menu)
 
                 popupMenu.setOnMenuItemClickListener {
@@ -168,30 +163,30 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
 
             if (isUpdating) {
                 CurhatCommentRepository.getComment(comment.commentId).addOnSuccessListener {
-                    editContent.setText(it.getString("content"))
+                    binding.curhatCommentEditText.setText(it.getString("content"))
                 }
-                content.visibility = View.GONE
-                createdAt.visibility = View.GONE
-                editContent.visibility = View.VISIBLE
-                updateBtn.visibility = View.VISIBLE
-                cancelBtn.visibility = View.VISIBLE
+                binding.curhatCommentContent.visibility = View.GONE
+                binding.curhatCommentDateFirst.visibility = View.GONE
+                binding.curhatCommentEditText.visibility = View.VISIBLE
+                binding.curhatCommentUpdateBtn.visibility = View.VISIBLE
+                binding.curhatCommentCancelBtn.visibility = View.VISIBLE
             } else {
-                content.visibility = View.VISIBLE
-                createdAt.visibility = View.VISIBLE
-                editContent.visibility = View.GONE
-                updateBtn.visibility = View.GONE
-                cancelBtn.visibility = View.GONE
+                binding.curhatCommentContent.visibility = View.VISIBLE
+                binding.curhatCommentDateFirst.visibility = View.VISIBLE
+                binding.curhatCommentEditText.visibility = View.GONE
+                binding.curhatCommentUpdateBtn.visibility = View.GONE
+                binding.curhatCommentCancelBtn.visibility = View.GONE
             }
             return true
         }
 
         private fun deleteComment(comment: CurhatComment): Boolean {
-            val builder = AlertDialog.Builder(view.context)
+            val builder = AlertDialog.Builder(binding.root.context)
             builder.setMessage("Are you sure ?")
                 .setCancelable(false)
                 .setPositiveButton("Yes") { dialog, id ->
                     CurhatCommentRepository.deleteById(comment.curhatId, comment.commentId) {
-                        Toast.makeText(view.context, view.context.getString(R.string.toast_cds) , Toast.LENGTH_SHORT).show()
+                        Toast.makeText(binding.root.context, binding.root.context.getString(R.string.toast_cds) , Toast.LENGTH_SHORT).show()
                         reloadActivity()
                     }
                 }
@@ -204,7 +199,7 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
         }
 
         private fun reloadActivity() {
-            val activity = view.context as Activity
+            val activity = binding.root.context as Activity
             activity.finish()
             activity.overridePendingTransition(0 ,0)
             activity.startActivity(activity.intent)
@@ -213,9 +208,9 @@ class CurhatCommentAdapter (private val callback: () -> Unit ) : ListAdapter<Dat
 
         companion object {
             fun from(parent: ViewGroup) : ViewHolder {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.curhat_comment_card_item, parent, false)
-                return ViewHolder(view)
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = CurhatCommentCardItemBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
             }
         }
     }

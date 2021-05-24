@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.models.Curhat
@@ -36,6 +37,14 @@ class CurhatDetailActivity : AppCompatActivity() {
 
         viewModel.getCurhatDetail(intent) {
             finish()
+        }
+
+        val swipeContainer: SwipeRefreshLayout = findViewById(R.id.swipeContainer)
+        swipeContainer.setOnRefreshListener {
+            viewModel.getCurhatDetail(intent) {
+                finish()
+            }
+            swipeContainer.isRefreshing = false
         }
 
         val addBtn: Button = findViewById(R.id.add_comment_btn)
