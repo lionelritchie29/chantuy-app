@@ -67,11 +67,12 @@ class HottestCurhatViewModel : ViewModel(){
     ) {
         if ((visibleItemCount + pastVisibleItem) >= totalItemCount) {
             isLoadingMore = true
-
+            _isFetchingData.value = true
 
             CurhatRepository.getHottestCurhat(lastCurhat) {
                 _curhats.value = _curhats.value?.plus(it)
                 isLoadingMore = false
+                _isFetchingData.value = false
             }
 
         }

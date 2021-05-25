@@ -218,6 +218,8 @@ class MainActivity : AppCompatActivity() {
 
         override fun getItemCount(): Int = PAGES_COUNT
 
+
+
         override fun createFragment(position: Int): Fragment {
             lateinit var currentFragment: Fragment
             when (position) {
@@ -229,6 +231,7 @@ class MainActivity : AppCompatActivity() {
             }
             return currentFragment
         }
+
 
 
     }

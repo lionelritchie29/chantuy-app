@@ -1,5 +1,6 @@
 package edu.bluejack20_2.chantuy.views.curhat_detail
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log

@@ -3,8 +3,10 @@ package edu.bluejack20_2.chantuy.utils
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.google.firebase.Timestamp
 import edu.bluejack20_2.chantuy.R
+import edu.bluejack20_2.chantuy.models.GLOBALS
 import edu.bluejack20_2.chantuy.views.curhat_detail.CurhatDetailActivity
 import java.text.SimpleDateFormat
 
@@ -26,6 +28,19 @@ class CurhatUtil {
                 formatted = sdf.format(timestamp?.toDate())
             }
             return formatted
+        }
+
+        fun refreshCurhatsIfUpdated(context: Context, callback: () -> Unit) {
+            val appSettingPreferences = context.getSharedPreferences(GLOBALS.SETTINGS_PREFERENCES_NAME, Context.MODE_PRIVATE)
+            val editor = appSettingPreferences.edit()
+
+            val isCurhatUpdated = appSettingPreferences.getBoolean(GLOBALS.CURHAT_UPDATED_KEY, false)
+            Log.i("TESTTT", "UpdateCurhat: " + isCurhatUpdated.toString())
+            if (isCurhatUpdated) {
+                editor.putBoolean(GLOBALS.CURHAT_UPDATED_KEY, false)
+                editor.commit()
+                callback()
+            }
         }
     }
 }

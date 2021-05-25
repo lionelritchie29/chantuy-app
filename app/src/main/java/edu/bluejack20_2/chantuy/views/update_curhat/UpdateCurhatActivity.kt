@@ -1,18 +1,28 @@
 package edu.bluejack20_2.chantuy.views.update_curhat
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.*
 import androidx.lifecycle.Observer
 import edu.bluejack20_2.chantuy.MainActivity
 import edu.bluejack20_2.chantuy.R
+import edu.bluejack20_2.chantuy.models.GLOBALS
 
 class UpdateCurhatActivity : AppCompatActivity() {
-    @SuppressLint("SetTextI18n")
+
+    private lateinit var appSettingPreferences: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        appSettingPreferences = getSharedPreferences(GLOBALS.SETTINGS_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        editor = appSettingPreferences.edit()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_curhat)
 
@@ -45,6 +55,9 @@ class UpdateCurhatActivity : AppCompatActivity() {
                     anonymousCb.isChecked
                 ) {
                     Toast.makeText(this, getString(R.string.toast_update_succesfully), Toast.LENGTH_SHORT).show()
+                    editor.putBoolean(GLOBALS.CURHAT_UPDATED_KEY, true)
+                    editor.commit()
+                    Log.i("TESTTT", "UpdateCurhat: " + appSettingPreferences.getBoolean(GLOBALS.CURHAT_UPDATED_KEY, false).toString())
                     finish()
                 }
             }

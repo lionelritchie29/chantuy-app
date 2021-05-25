@@ -1,7 +1,10 @@
 package edu.bluejack20_2.chantuy.views.newest_curhat
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +17,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import edu.bluejack20_2.chantuy.R
 import edu.bluejack20_2.chantuy.databinding.FragmentNewestCurhatBinding
+import edu.bluejack20_2.chantuy.models.GLOBALS
+import edu.bluejack20_2.chantuy.utils.CurhatUtil
 import edu.bluejack20_2.chantuy.views.CurhatAdapter
 
 class NewestCurhatFragment : Fragment() {
@@ -70,5 +75,13 @@ class NewestCurhatFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        CurhatUtil.refreshCurhatsIfUpdated(binding.root.context) {
+            viewModel.loadData {  }
+        }
     }
 }

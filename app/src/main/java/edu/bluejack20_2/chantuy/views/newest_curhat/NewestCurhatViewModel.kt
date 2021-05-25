@@ -26,7 +26,7 @@ class NewestCurhatViewModel : ViewModel() {
     var lastCurhat: Curhat? = null
 
     init {
-        loadData() {}
+        loadData {}
     }
 
     fun loadData(callback : () -> Unit) {
