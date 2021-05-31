@@ -1,13 +1,13 @@
-import android.util.Log
+package edu.bluejack20_2.chantuy.views.hottest_curhat
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack20_2.chantuy.models.Curhat
 import edu.bluejack20_2.chantuy.repositories.CurhatRepository
 
-class HottestCurhatViewModel : ViewModel(){
+class HottestViewModel {
     private var _curhats: MutableLiveData<List<Curhat>> = MutableLiveData<List<Curhat>>().apply {
         postValue(listOf())
     }
@@ -81,5 +81,4 @@ class HottestCurhatViewModel : ViewModel(){
     fun isScrollingDown(yPosition: Int) : Boolean {
         return yPosition > 0
     }
-
 }

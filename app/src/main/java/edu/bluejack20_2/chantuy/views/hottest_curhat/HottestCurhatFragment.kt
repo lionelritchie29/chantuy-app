@@ -1,6 +1,5 @@
 package edu.bluejack20_2.chantuy.views.hottest_curhat
 
-import HottestCurhatViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +20,7 @@ class HottestCurhatFragment : Fragment() {
     private lateinit var binding: FragmentHottestCurhatBinding
     private lateinit var curhatAdapter: CurhatAdapter
     private lateinit var manager: LinearLayoutManager
+    val viewModel = HottestViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -28,13 +28,12 @@ class HottestCurhatFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_hottest_curhat, container, false)
         curhatAdapter = CurhatAdapter()
         manager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        val viewModel = HottestCurhatViewModel()
         binding.curhatRecyclerView.adapter = curhatAdapter
         binding.curhatRecyclerView.layoutManager = manager
 
         viewModel.curhats.observe(viewLifecycleOwner, Observer {curhats ->
             curhatAdapter.submitList(curhats)
-            if (curhats.size > 0) {
+            if (curhats.isNotEmpty()) {
                 viewModel.lastCurhat = curhats.get(curhats.size - 1)
             }
         })
@@ -74,7 +73,7 @@ class HottestCurhatFragment : Fragment() {
         super.onResume()
 
         CurhatUtil.refreshCurhatsIfUpdated(binding.root.context) {
-            fragmentManager
+            viewModel.loadData {  }
         }
     }
 }
